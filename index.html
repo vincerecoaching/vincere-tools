@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vincere Coaching — Tools</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a0a0a; color: #fff; font-family: system-ui, sans-serif; min-height: 100vh; }
+    header { background: #111; border-bottom: 1px solid #222; padding: 20px 40px; display: flex; align-items: center; gap: 16px; }
+    header h1 { font-size: 18px; font-weight: 700; }
+    header span { color: #E85C2B; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 40px; max-width: 1200px; margin: 0 auto; }
+    .card { background: #111; border: 1px solid #222; border-radius: 8px; padding: 24px; text-decoration: none; color: #fff; transition: transform 0.2s, border-color 0.2s; position: relative; overflow: hidden; }
+    .card:hover { transform: translateY(-4px); border-color: #E85C2B; }
+    .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #E85C2B; }
+    .card h2 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .card p { font-size: 13px; color: #888; line-height: 1.6; }
+    .card .arrow { position: absolute; bottom: 20px; right: 20px; color: #E85C2B; font-size: 18px; }
+    footer { text-align: center; padding: 40px; color: #444; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Vincere Coaching <span>— Tools</span></h1>
+  </header>
+  <div class="grid">
+    <a class="card" href="trade-business-system-stack.html">
+      <h2>Trade Business System Stack</h2>
+      <p>30 systems across 6 pillars. Build your business operating system step by step.</p>
+      <div class="arrow">→</div>
+    </a>
+    <a class="card" href="back-costing-tool.html">
+      <h2>Back Costing Tool</h2>
+      <p>Analyse job profitability and identify where margin is being lost.</p>
+      <div class="arrow">→</div>
+    </a>
+    <a class="card" href="price-increase-tool.html">
+      <h2>Price Increase Impact Tool</h2>
+      <p>Model the revenue and margin impact of a rate increase before you make the call.</p>
+      <div class="arrow">→</div>
+    </a>
+    <a class="card" href="hiring-cost-calculator.html">
+      <h2>Hiring Cost Calculator</h2>
+      <p>Calculate the true cost of hiring a new employee including all on-costs.</p>
+      <div class="arrow">→</div>
+    </a>
+    <a class="card" href="tradesman-ranking-tool.html">
+      <h2>Tradesman Ranking System</h2>
+      <p>Build a structured ranking system to assess and develop your team.</p>
+      <div class="arrow">→</div>
+    </a>
+  </div>
+  <footer>vincerecoaching.com.au</footer>
+</body>
+</html>
