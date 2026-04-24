@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smooth Onboarding Builder – Vincere Coaching</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #E85C2B;
+  --orange-dark: #C44820;
+  --orange-glow: rgba(232,92,43,0.12);
+  --black: #000;
+  --black-mid: #111;
+  --black-light: #1A1A1A;
+  --white: #fff;
+  --muted: #777;
+  --muted2: #555;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --green: #4CAF50;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Barlow', sans-serif; background: var(--black); color: var(--white); min-height: 100vh; }
+
+/* HEADER */
+header {
+  background: var(--black-mid);
+  border-bottom: 3px solid var(--orange);
+  padding: 12px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: 16px;
+}
+.header-left { display: flex; align-items: center; gap: 18px; }
+.logo-placeholder {
+  background: var(--orange);
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  padding: 7px 16px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.header-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.header-right { display: flex; align-items: center; gap: 10px; }
+.tool-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border: 1px solid var(--orange);
+  padding: 5px 12px;
+  border-radius: 3px;
+}
+.btn-export {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--orange);
+  border: none;
+  padding: 7px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-export:hover { background: var(--orange-dark); }
+
+/* WRAPPER */
+.wrapper { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; }
+
+/* PAGE TITLE */
+.page-title { margin-bottom: 28px; }
+.page-title h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.page-title h1 em { color: var(--orange); font-style: normal; }
+.page-title p { margin-top: 10px; font-size: 0.92rem; color: var(--muted); line-height: 1.65; max-width: 600px; }
+
+/* INTRO CARD */
+.intro-card {
+  background: var(--black-mid);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--orange);
+  border-radius: 4px;
+  padding: 22px 26px;
+  margin-bottom: 36px;
+}
+.intro-card h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.intro-card p { font-size: 0.91rem; color: #aaa; line-height: 1.7; }
+
+/* HIRE BAR */
+.hire-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  margin-bottom: 40px;
+  align-items: end;
+  background: var(--black-mid);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 24px;
+}
+.field label {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.field input {
+  width: 100%;
+  background: var(--black-light);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 9px 13px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.95rem;
+  color: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.field input:focus { border-color: var(--orange); }
+.field input[type=date] { color-scheme: dark; }
+.btn-reset {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 9px 18px;
+  border-radius: 4px;
+  border: 1px solid var(--border2);
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-reset:hover { color: var(--white); border-color: var(--border2); }
+
+/* SECTION HEADING */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  margin-top: 52px;
+}
+.section-heading h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--orange);
+  white-space: nowrap;
+}
+.section-heading::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border2);
+}
+
+/* PROGRESS */
+.progress-wrap { margin-bottom: 28px; }
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.progress-label { font-size: 0.88rem; color: var(--muted); }
+.progress-count { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--orange); }
+.progress-track { height: 5px; background: var(--black-light); border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--orange); border-radius: 99px; transition: width 0.35s ease; }
+
+/* CHECKLIST */
+.checklist-group { margin-bottom: 24px; }
+.group-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted2);
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border: 1px solid transparent;
+  margin-bottom: 3px;
+}
+.check-item:hover { background: var(--black-light); border-color: var(--border); }
+.check-item.done { opacity: 0.45; }
+.check-item.done .check-text { text-decoration: line-through; color: var(--muted); }
+.check-box {
+  width: 18px; height: 18px;
+  border: 2px solid var(--muted2);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.check-item.done .check-box { background: var(--orange); border-color: var(--orange); }
+.check-box svg { display: none; }
+.check-item.done .check-box svg { display: block; }
+.check-text { font-size: 0.93rem; line-height: 1.4; }
+.check-note { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+
+/* WEEK GRID */
+.week-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.week-card {
+  background: var(--black-mid);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.week-card:hover { border-color: var(--border2); }
+.week-card-head {
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.week-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--orange);
+  background: var(--orange-glow);
+  border: 1px solid rgba(232,92,43,0.3);
+  padding: 3px 10px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.week-theme {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.edit-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  border: 1px solid var(--border2);
+  background: none;
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+.edit-btn:hover { color: var(--orange); border-color: var(--orange); }
+.week-topics { padding: 12px 16px; }
+.topic-chip {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 3px 9px;
+  border-radius: 3px;
+  background: var(--black-light);
+  color: #aaa;
+  border: 1px solid var(--border);
+  margin: 2px 3px 2px 0;
+}
+.week-sessions { padding: 10px 16px 14px; border-top: 1px solid var(--border); }
+.sess-row { display: flex; align-items: center; gap: 10px; padding: 5px 0; }
+.sess-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; transition: background 0.15s; }
+.sess-dot.done { background: var(--green); }
+.sess-label { font-size: 0.83rem; color: var(--muted); flex: 1; }
+.sess-check { accent-color: var(--orange); width: 14px; height: 14px; cursor: pointer; }
+
+/* STATS ROW */
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+.stat-card { background: var(--black-mid); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+.stat-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.stat-val { font-family: 'Barlow Condensed', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--white); line-height: 1; }
+.stat-val.orange { color: var(--orange); }
+.stat-val.green { color: var(--green); }
+
+/* CALENDAR GRID */
+.cal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.cal-week { background: var(--black-mid); border: 1px solid var(--border); border-radius: 6px; padding: 14px; }
+.cal-wk-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+.cal-wk-theme { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; line-height: 1.3; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.cal-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.cal-day { font-size: 0.8rem; color: var(--muted); width: 36px; flex-shrink: 0; }
+.cal-chk { accent-color: var(--orange); width: 14px; height: 14px; cursor: pointer; }
+.cal-done { font-size: 0.7rem; color: var(--green); margin-left: 2px; }
+
+/* HINT BOX */
+.hint-box {
+  background: var(--black-mid);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  border-radius: 4px;
+  padding: 14px 18px;
+  margin-top: 20px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.hint-box strong { color: var(--white); }
+
+/* MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--black-mid);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 28px;
+  width: 100%;
+  max-width: 400px;
+}
+.modal h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+}
+.modal label {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 5px;
+  margin-top: 14px;
+}
+.modal label:first-of-type { margin-top: 0; }
+.modal input, .modal textarea {
+  width: 100%;
+  background: var(--black-light);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 9px 12px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.88rem;
+  color: var(--white);
+  outline: none;
+  resize: none;
+}
+.modal input:focus, .modal textarea:focus { border-color: var(--orange); }
+.modal-actions { display: flex; gap: 10px; margin-top: 22px; justify-content: flex-end; }
+.btn-ghost {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 8px 18px; border-radius: 4px;
+  border: 1px solid var(--border2); background: none; color: var(--muted); cursor: pointer;
+}
+.btn-primary {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 8px 18px; border-radius: 4px;
+  border: none; background: var(--orange); color: white; cursor: pointer; transition: background 0.15s;
+}
+.btn-primary:hover { background: var(--orange-dark); }
+
+
+/* ADD / DELETE TASK */
+.check-item-wrap { position: relative; display: flex; align-items: flex-start; }
+.check-item-wrap .check-item { flex: 1; }
+.delete-btn {
+  opacity: 0;
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 10px 8px;
+  line-height: 1;
+  transition: opacity 0.15s, color 0.15s;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 1px;
+}
+.check-item-wrap:hover .delete-btn { opacity: 1; }
+.delete-btn:hover { color: #E85C2B; }
+
+.add-task-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+  padding: 0 4px;
+}
+.add-task-input {
+  flex: 1;
+  background: transparent;
+  border: 1px dashed #333;
+  border-radius: 4px;
+  padding: 7px 11px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.88rem;
+  color: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.add-task-input::placeholder { color: #444; }
+.add-task-input:focus { border-color: var(--orange); border-style: solid; }
+.add-task-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 7px 14px;
+  border-radius: 4px;
+  border: 1px solid #333;
+  background: none;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.add-task-btn:hover { color: var(--orange); border-color: var(--orange); }
+
+.add-group-row {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.add-group-input {
+  background: transparent;
+  border: 1px dashed #333;
+  border-radius: 4px;
+  padding: 7px 11px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.88rem;
+  color: var(--white);
+  outline: none;
+  width: 260px;
+  transition: border-color 0.2s;
+}
+.add-group-input::placeholder { color: #444; }
+.add-group-input:focus { border-color: var(--orange); border-style: solid; }
+.add-group-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 7px 16px;
+  border-radius: 4px;
+  border: 1px solid #333;
+  background: none;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.add-group-btn:hover { color: var(--orange); border-color: var(--orange); }
+.delete-group-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: none;
+  border: 1px solid transparent;
+  color: transparent;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 3px;
+  transition: all 0.2s;
+  margin-left: 6px;
+}
+.checklist-group:hover .delete-group-btn { color: #444; border-color: #333; }
+.delete-group-btn:hover { color: var(--orange) !important; border-color: var(--orange) !important; }
+
+@media print {
+  .add-task-row, .add-group-row, .delete-btn, .delete-group-btn { display: none !important; }
+}
+
+/* PRINT / PDF */
+@media print {
+  header { position: static; }
+  .btn-export, .btn-reset, .edit-btn, .no-print { display: none !important; }
+  .modal-overlay { display: none !important; }
+  .check-item:hover { background: none; }
+  body { background: #fff; color: #000; }
+  .intro-card, .hire-bar, .week-card, .cal-week, .stat-card, .hint-box {
+    background: #f5f5f5 !important;
+    border-color: #ccc !important;
+  }
+  .page-title h1, .week-theme, .stat-val { color: #000 !important; }
+  .section-heading h3 { color: var(--orange) !important; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo-placeholder" id="logoArea">VINCERE</div>
+    <div class="header-title">Coaching</div>
+  </div>
+  <div class="header-right">
+    <div class="tool-tag">Smooth Onboarding Builder</div>
+    <button class="btn-export" onclick="exportPDF()">Export as PDF</button>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <div class="page-title">
+    <h1>Smooth <em>Onboarding</em> Builder</h1>
+    <p>Structure your Day 1 onboarding and four-week on-ramp to get every new hire to full effectiveness in the shortest time possible.</p>
+  </div>
+
+  <div class="intro-card">
+    <h2>Why this matters</h2>
+    <p>Most frustrations with new staff come down to a mismatch in expectations — not attitude. A structured onboarding and on-ramp compresses the time from Day 1 to fully effective, reduces errors, and lets anyone in your team run the process consistently every time.</p>
+  </div>
+
+  <div class="hire-bar">
+    <div class="field">
+      <label>New hire name</label>
+      <input type="text" id="hireName" placeholder="e.g. Tim" />
+    </div>
+    <div class="field">
+      <label>Start date</label>
+      <input type="date" id="startDate" oninput="refreshDates()" />
+    </div>
+    <button class="btn-reset no-print" onclick="resetAll()">Reset</button>
+  </div>
+
+  <!-- DAY 1 CHECKLIST -->
+  <div class="section-heading"><h3>Day 1 Checklist</h3></div>
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span class="progress-label" id="progLabel">0 of 18 tasks complete</span>
+      <span class="progress-count" id="progPct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progBar" style="width:0%"></div>
+    </div>
+  </div>
+  <div id="checklistArea"></div>
+
+  <!-- 4-WEEK ON-RAMP -->
+  <div class="section-heading"><h3>4-Week On-Ramp</h3></div>
+  <div class="week-grid" id="weekGrid"></div>
+  <div class="hint-box">
+    <strong>How to use this:</strong> Customise each week's theme and topics to suit your business. The default structure follows the session: Familiarisation &rarr; Standards &rarr; Customer Service &rarr; Efficiency &amp; Sales.
+  </div>
+
+  <!-- COACHING SESSIONS -->
+  <div class="section-heading"><h3>Coaching Sessions</h3></div>
+  <div class="stats-row" id="statsRow"></div>
+  <div class="cal-grid" id="calGrid"></div>
+  <div class="hint-box" style="margin-bottom:0;">
+    <strong>Two 30-minute sessions per week</strong> — Tuesday and Thursday mornings work best. That's just 4 hours of deliberate coaching across the first month, keeping you never more than one day away from your new hire.
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">Edit week</h3>
+    <label>Theme / focus</label>
+    <input type="text" id="mTheme" placeholder="e.g. Standards & expectations" />
+    <label>Topics (comma-separated)</label>
+    <textarea id="mTopics" rows="4" placeholder="e.g. Quality control, customer service standards, job notes"></textarea>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveModal()">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const state = {
+  checks: {},
+  sessions: {},
+  editIdx: null,
+  checklistData: null,
+  weeks: [
+    { theme: 'Familiarisation', topics: ['Job management system', 'Certificates & licences', 'Team members', 'Key clients', 'Daily workflow'] },
+    { theme: 'Standards & Expectations', topics: ['Quality control standards', 'Customer service standards', 'Job completion notes', 'Field expectations'] },
+    { theme: 'Customer Service', topics: ['Quadrant model', 'Client communication', 'Handling complaints', 'First impressions'] },
+    { theme: 'Efficiency & Sales', topics: ['Speed & accuracy', 'Upsells', 'Time management', 'Job reporting'] }
+  ]
+};
+
+const _defaultChecklist = [
+  {
+    group: 'One week before — pre-start',
+    items: [
+      { id: 'p1', text: 'Send new hire info form', note: 'Collect payroll details, emergency contact, software setup info' },
+      { id: 'p2', text: 'Set up payroll', note: '' },
+      { id: 'p3', text: 'Create all software logins', note: '' },
+      { id: 'p4', text: 'Order / prepare uniform', note: '' },
+      { id: 'p5', text: 'Block out Day 1 — no tools, no jobs', note: 'This is a dedicated onboarding day only' },
+    ]
+  },
+  {
+    group: 'Day 1 morning — office setup',
+    items: [
+      { id: 'a1', text: 'Welcome & personal introduction', note: 'Learn about them, make them comfortable' },
+      { id: 'a2', text: 'Office tour', note: '' },
+      { id: 'a3', text: 'Set up & demo all software', note: 'Give them hands-on time to navigate it confidently' },
+    ]
+  },
+  {
+    group: 'Day 1 — employment contract & expectations',
+    items: [
+      { id: 'c1', text: 'Read employment contract cover to cover', note: 'Each section is a trigger to explain expectations' },
+      { id: 'c2', text: 'Explain leave policy & request process', note: 'Written request, minimum 2 weeks notice, flag your busy months' },
+      { id: 'c3', text: 'Explain sick leave procedure', note: '6:30am phone call to you + message to admin team' },
+      { id: 'c4', text: 'Cover zero-tolerance policies', note: 'Drugs, alcohol, sexual harassment' },
+      { id: 'c5', text: 'Cover vehicle policy', note: '' },
+    ]
+  },
+  {
+    group: 'Day 1 — safety',
+    items: [
+      { id: 's1', text: 'Print all SWMS documents', note: '' },
+      { id: 's2', text: 'Review each SWMS together', note: 'Ask if anything needs adding or adjusting' },
+      { id: 's3', text: 'Both sign & date each SWMS', note: 'Scan and save to employee file — documented from Day 1' },
+    ]
+  },
+  {
+    group: 'Day 1 afternoon — meet the team & clients',
+    items: [
+      { id: 'f1', text: 'Pick up uniform (if not already done)', note: '' },
+      { id: 'f2', text: 'Visit wholesalers — introduce & set up purchase order', note: 'Show key staff contacts, explain ordering process' },
+      { id: 'f3', text: 'Drop into job sites — introduce to team', note: 'So they\'re not strangers wearing the same shirt on Day 2' },
+      { id: 'f4', text: 'Visit key clients (e.g. real estate agents)', note: 'Warm introduction to your most important relationships' },
+      { id: 'f5', text: 'End-of-day debrief — answer any questions', note: '' },
+    ]
+  }
+];
+state.checklistData = JSON.parse(JSON.stringify(_defaultChecklist));
+
+let idCounter = 100;
+function uid() { return 'task_' + (idCounter++); }
+
+function allItems() { return state.checklistData.flatMap(g => g.items); }
+
+function buildChecklist() {
+  const area = document.getElementById('checklistArea');
+  area.innerHTML = state.checklistData.map((group, gi) => `
+    <div class="checklist-group" id="group-${gi}">
+      <div style="display:flex;align-items:center;margin-bottom:6px;padding-left:4px;">
+        <div class="group-label" style="margin-bottom:0;">${group.group}</div>
+        <button class="delete-group-btn" onclick="deleteGroup(${gi})" title="Remove section">Remove section</button>
+      </div>
+      ${group.items.map(item => `
+        <div class="check-item-wrap" id="wrap-${item.id}">
+          <div class="check-item ${state.checks[item.id] ? 'done' : ''}" id="ci-${item.id}" onclick="toggleCheck('${item.id}')">
+            <div class="check-box">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="check-text">${item.text}</div>
+              ${item.note ? `<div class="check-note">${item.note}</div>` : ''}
+            </div>
+          </div>
+          <button class="delete-btn" onclick="deleteTask('${item.id}', ${gi})" title="Remove task">&#215;</button>
+        </div>
+      `).join('')}
+      <div class="add-task-row">
+        <input class="add-task-input" id="add-input-${gi}" type="text" placeholder="Add a task to this section..." onkeydown="if(event.key==='Enter') addTask(${gi})" />
+        <button class="add-task-btn" onclick="addTask(${gi})">+ Add</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Add new section row
+  area.innerHTML += `
+    <div class="add-group-row">
+      <input class="add-group-input" id="newGroupInput" type="text" placeholder="New section name..." onkeydown="if(event.key==='Enter') addGroup()" />
+      <button class="add-group-btn" onclick="addGroup()">+ Add section</button>
+    </div>`;
+
+  updateProgress();
+}
+
+function toggleCheck(id) {
+  state.checks[id] = !state.checks[id];
+  const ci = document.getElementById('ci-' + id);
+  if (ci) ci.classList.toggle('done', state.checks[id]);
+  updateProgress();
+}
+
+function deleteTask(id, gi) {
+  state.checklistData[gi].items = state.checklistData[gi].items.filter(i => i.id !== id);
+  delete state.checks[id];
+  buildChecklist();
+}
+
+function deleteGroup(gi) {
+  if (state.checklistData[gi].items.length > 0) {
+    if (!confirm('Remove this entire section and all its tasks?')) return;
+  }
+  state.checklistData[gi].items.forEach(i => delete state.checks[i.id]);
+  state.checklistData.splice(gi, 1);
+  buildChecklist();
+}
+
+function addTask(gi) {
+  const input = document.getElementById('add-input-' + gi);
+  const text = input.value.trim();
+  if (!text) return;
+  state.checklistData[gi].items.push({ id: uid(), text, note: '' });
+  input.value = '';
+  buildChecklist();
+  // Re-focus the input for the same group
+  const newInput = document.getElementById('add-input-' + gi);
+  if (newInput) newInput.focus();
+}
+
+function addGroup() {
+  const input = document.getElementById('newGroupInput');
+  const name = input.value.trim();
+  if (!name) return;
+  state.checklistData.push({ group: name, items: [] });
+  buildChecklist();
+  // Focus the new group's add-task input
+  const newGi = state.checklistData.length - 1;
+  const newInput = document.getElementById('add-input-' + newGi);
+  if (newInput) newInput.focus();
+}
+
+function updateProgress() {
+  const all = allItems();
+  const done = all.filter(i => state.checks[i.id]).length;
+  const total = all.length;
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  document.getElementById('progLabel').textContent = done + ' of ' + total + ' tasks complete';
+  document.getElementById('progPct').textContent = pct + '%';
+  document.getElementById('progBar').style.width = pct + '%';
+}
+
+function buildWeeks() {
+  document.getElementById('weekGrid').innerHTML = state.weeks.map((w, i) => `
+    <div class="week-card">
+      <div class="week-card-head">
+        <div>
+          <span class="week-badge">Week ${i + 1}</span>
+          <div class="week-theme">${w.theme}</div>
+        </div>
+        <button class="edit-btn no-print" onclick="openModal(${i})">Edit</button>
+      </div>
+      <div class="week-topics">
+        ${w.topics.map(t => `<span class="topic-chip">${t}</span>`).join('')}
+      </div>
+      <div class="week-sessions">
+        ${['tue', 'thu'].map(d => {
+          const key = 'w' + i + '_' + d;
+          const done = state.sessions[key];
+          return `
+          <div class="sess-row">
+            <div class="sess-dot ${done ? 'done' : ''}"></div>
+            <span class="sess-label">${d === 'tue' ? 'Tuesday' : 'Thursday'} session</span>
+            <input type="checkbox" class="sess-check" ${done ? 'checked' : ''} onchange="toggleSess('${key}')" onclick="event.stopPropagation()" />
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function openModal(i) {
+  state.editIdx = i;
+  document.getElementById('modalTitle').textContent = 'Edit Week ' + (i + 1);
+  document.getElementById('mTheme').value = state.weeks[i].theme;
+  document.getElementById('mTopics').value = state.weeks[i].topics.join(', ');
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  state.editIdx = null;
+}
+function saveModal() {
+  if (state.editIdx === null) return;
+  const theme = document.getElementById('mTheme').value.trim();
+  const topics = document.getElementById('mTopics').value.split(',').map(t => t.trim()).filter(Boolean);
+  if (theme) state.weeks[state.editIdx].theme = theme;
+  if (topics.length) state.weeks[state.editIdx].topics = topics;
+  closeModal();
+  buildWeeks();
+  buildCalGrid();
+}
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function toggleSess(key) {
+  state.sessions[key] = !state.sessions[key];
+  buildWeeks();
+  buildCalGrid();
+  buildStats();
+}
+
+function addDays(base, n) {
+  const d = new Date(base);
+  d.setDate(d.getDate() + n);
+  return d;
+}
+function fmtDate(d) {
+  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
+}
+
+function buildCalGrid() {
+  const sd = document.getElementById('startDate').value;
+  document.getElementById('calGrid').innerHTML = state.weeks.map((w, i) => {
+    const tKey = 'w' + i + '_tue';
+    const thKey = 'w' + i + '_thu';
+    let tLabel = 'Tue', thLabel = 'Thu';
+    if (sd) {
+      tLabel = fmtDate(addDays(sd, i * 7 + 1));
+      thLabel = fmtDate(addDays(sd, i * 7 + 3));
+    }
+    return `
+      <div class="cal-week">
+        <div class="cal-wk-label">Week ${i + 1}</div>
+        <div class="cal-wk-theme">${w.theme}</div>
+        <div class="cal-row">
+          <span class="cal-day">${tLabel}</span>
+          <input type="checkbox" class="cal-chk" ${state.sessions[tKey] ? 'checked' : ''} onchange="toggleSess('${tKey}')" />
+          ${state.sessions[tKey] ? '<span class="cal-done">Done</span>' : ''}
+        </div>
+        <div class="cal-row">
+          <span class="cal-day">${thLabel}</span>
+          <input type="checkbox" class="cal-chk" ${state.sessions[thKey] ? 'checked' : ''} onchange="toggleSess('${thKey}')" />
+          ${state.sessions[thKey] ? '<span class="cal-done">Done</span>' : ''}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function buildStats() {
+  const done = Object.values(state.sessions).filter(Boolean).length;
+  const remaining = 8 - done;
+  const mins = done * 30;
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-lbl">Sessions complete</div>
+      <div class="stat-val orange">${done} / 8</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Sessions remaining</div>
+      <div class="stat-val">${remaining}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Training time logged</div>
+      <div class="stat-val ${done > 0 ? 'green' : ''}">${mins} min</div>
+    </div>`;
+}
+
+function refreshDates() {
+  buildCalGrid();
+}
+
+function resetAll() {
+  if (!confirm('Reset all progress? This cannot be undone.')) return;
+  Object.keys(state.checks).forEach(k => delete state.checks[k]);
+  Object.keys(state.sessions).forEach(k => delete state.sessions[k]);
+  state.checklistData = JSON.parse(JSON.stringify(_defaultChecklist));
+  buildChecklist();
+  buildWeeks();
+  buildCalGrid();
+  buildStats();
+}
+
+function exportPDF() {
+  window.print();
+}
+
+buildChecklist();
+buildWeeks();
+buildCalGrid();
+buildStats();
+</script>
+</body>
+</html>
