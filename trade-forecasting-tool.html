@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Business Forecasting Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E85C2B;
+    --orange-dark: #c44a1f;
+    --orange-glow: rgba(232,92,43,0.15);
+    --black: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --surface3: #222222;
+    --border: rgba(255,255,255,0.07);
+    --border-active: rgba(232,92,43,0.4);
+    --text: #f0f0f0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #4ade80;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--orange);
+  }
+  .logo span { color: var(--text-dim); font-size: 13px; letter-spacing: 1px; margin-left: 12px; font-family: 'DM Sans', sans-serif; font-weight: 300; }
+
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+  .client-selector {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    min-width: 180px;
+  }
+  .client-selector:focus { outline: none; border-color: var(--orange); }
+
+  .btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--orange); color: white; }
+  .btn-primary:hover { background: var(--orange-dark); }
+  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
+  .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+  .btn-danger { background: transparent; border: 1px solid #f87171; color: #f87171; }
+  .btn-danger:hover { background: #f87171; color: white; }
+
+  /* TABS */
+  .tabs {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    padding: 0 28px;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .tab {
+    padding: 14px 20px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-weight: 500;
+    font-size: 13px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* LAYOUT */
+  .main { padding: 28px; max-width: 1200px; margin: 0 auto; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* SECTION HEADERS */
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 28px;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  /* STAT CARDS */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .stat-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--orange);
+  }
+  .stat-card.green::before { background: var(--green); }
+  .stat-card.yellow::before { background: var(--yellow); }
+  .stat-card.red::before { background: var(--red); }
+  .stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .stat-value { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--text); }
+  .stat-value.orange { color: var(--orange); }
+  .stat-value.green { color: var(--green); }
+  .stat-value.yellow { color: var(--yellow); }
+
+  /* FORM ELEMENTS */
+  .field-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+  .field-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+  .field-input {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  .field-input:focus { outline: none; border-color: var(--orange); background: var(--surface3); }
+  .field-input[type="text"] { font-family: 'DM Sans', sans-serif; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--surface2); }
+  .data-table .mono { font-family: 'DM Mono', monospace; }
+  .data-table input {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    width: 100%;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  .data-table input:focus { outline: none; background: var(--surface3); }
+  .data-table input[type="text"] { font-family: 'DM Sans', sans-serif; }
+
+  /* CALC ROW */
+  .calc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .calc-row:last-child { border-bottom: none; }
+  .calc-row .label { color: var(--text-dim); font-size: 13px; }
+  .calc-row .value { font-family: 'DM Mono', monospace; font-size: 14px; color: var(--text); }
+  .calc-row.total .label { color: var(--text); font-weight: 600; }
+  .calc-row.total .value { color: var(--orange); font-size: 16px; }
+  .calc-row.highlight .value { color: var(--green); }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .badge-orange { background: var(--orange-glow); color: var(--orange); border: 1px solid var(--border-active); }
+  .badge-green { background: rgba(74,222,128,0.1); color: var(--green); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    width: 420px;
+    max-width: 90vw;
+  }
+  .modal h3 { font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; font-size: 20px; margin-bottom: 16px; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* TOP BAR inside pages */
+  .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  .page-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; }
+
+  /* IMPORT/EXPORT */
+  .io-area {
+    background: var(--surface2);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .io-area:hover { border-color: var(--orange); background: var(--orange-glow); }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .main { padding: 16px; }
+    header { padding: 0 16px; }
+    .tabs { padding: 0 16px; }
+  }
+
+  /* Tooltip */
+  .tooltip { position: relative; }
+  .tooltip::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .tooltip:hover::after { opacity: 1; }
+
+  .info-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    background: var(--surface2);
+    border-radius: 6px;
+    border-left: 3px solid var(--orange);
+    margin-bottom: 12px;
+  }
+  .save-indicator {
+    font-size: 11px;
+    color: var(--green);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .save-indicator.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div style="display:flex;align-items:center;gap:16px">
+    <div class="logo">VINCERE COACHING <span>Trade Business Forecasting</span></div>
+  </div>
+  <div class="header-actions">
+    <span class="save-indicator" id="saveIndicator">✓ Saved</span>
+    <select class="client-selector" id="clientSelect" onchange="loadClient(this.value)">
+      <option value="">— Select Client —</option>
+    </select>
+    <button class="btn btn-ghost" onclick="openNewClientModal()">+ New Client</button>
+    <button class="btn btn-ghost" onclick="exportData()">Export JSON</button>
+    <label class="btn btn-ghost" style="cursor:pointer">Import JSON<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+  </div>
+</header>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="showTab('dashboard')">Dashboard</div>
+  <div class="tab" onclick="showTab('overheads')">Overheads</div>
+  <div class="tab" onclick="showTab('labour')">Labour Costs</div>
+  <div class="tab" onclick="showTab('costofops')">Cost of Ops</div>
+  <div class="tab" onclick="showTab('forecasting')">Forecasting</div>
+</div>
+
+<div class="main">
+
+<!-- ========== DASHBOARD ========== -->
+<div class="page active" id="page-dashboard">
+  <div class="page-header">
+    <div class="page-title">OVERVIEW</div>
+    <div id="clientName" style="color:var(--text-dim);font-size:13px">No client selected</div>
+  </div>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-label">Monthly Revenue</div>
+      <div class="stat-value orange" id="dash-revenue">$0</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">Monthly Profit</div>
+      <div class="stat-value green" id="dash-profit">$0</div>
+    </div>
+    <div class="stat-card yellow">
+      <div class="stat-label">Net Profit Margin</div>
+      <div class="stat-value yellow" id="dash-margin">0%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Cost of Ops / Hour</div>
+      <div class="stat-value" id="dash-coo">$0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Annual Profit + Wage</div>
+      <div class="stat-value" id="dash-annual">$0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Target Bill/HR/M</div>
+      <div class="stat-value" id="dash-hours">0</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Revenue Breakdown</div>
+      <div class="calc-row"><span class="label">Labour Billed</span><span class="value" id="dash-labour-billed">$0</span></div>
+      <div class="calc-row"><span class="label">Materials Billed</span><span class="value" id="dash-mat-billed">$0</span></div>
+      <div class="calc-row"><span class="label">Contractors Billed</span><span class="value" id="dash-cont-billed">$0</span></div>
+      <div class="calc-row total"><span class="label">Total Revenue</span><span class="value" id="dash-total-rev">$0</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Cost Summary</div>
+      <div class="calc-row"><span class="label">Monthly Labour Cost</span><span class="value" id="dash-labour-cost">$0</span></div>
+      <div class="calc-row"><span class="label">Monthly Overheads</span><span class="value" id="dash-overhead-cost">$0</span></div>
+      <div class="calc-row"><span class="label">Material Spend</span><span class="value" id="dash-mat-cost">$0</span></div>
+      <div class="calc-row"><span class="label">Contractor Spend</span><span class="value" id="dash-cont-cost">$0</span></div>
+      <div class="calc-row total"><span class="label">Total Costs</span><span class="value" id="dash-total-cost">$0</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Key Metrics</div>
+    <div class="grid-3">
+      <div>
+        <div class="calc-row"><span class="label">Charge Out Rate</span><span class="value" id="dash-charge-rate">$0/hr</span></div>
+        <div class="calc-row"><span class="label">Raw COO/hr</span><span class="value" id="dash-raw-coo">$0/hr</span></div>
+        <div class="calc-row highlight"><span class="label">Profit Per Hour</span><span class="value" id="dash-profit-hr">$0/hr</span></div>
+      </div>
+      <div>
+        <div class="calc-row"><span class="label">Billable Resources</span><span class="value" id="dash-billable-res">0</span></div>
+        <div class="calc-row"><span class="label">Efficiency</span><span class="value" id="dash-efficiency">0%</span></div>
+        <div class="calc-row"><span class="label">Available Hrs/Resource</span><span class="value" id="dash-avail-hrs">0</span></div>
+      </div>
+      <div>
+        <div class="calc-row"><span class="label">Monthly Rev / Resource</span><span class="value" id="dash-rev-per-res">$0</span></div>
+        <div class="calc-row"><span class="label">Weekly Payroll</span><span class="value" id="dash-weekly-payroll">$0</span></div>
+        <div class="calc-row"><span class="label">Overhead / Billable Hour</span><span class="value" id="dash-oh-bill-hr">$0</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== OVERHEADS ========== -->
+<div class="page" id="page-overheads">
+  <div class="page-header">
+    <div class="page-title">OVERHEADS</div>
+  </div>
+  <div class="info-note">Enter costs in ONE frequency column only — the tool converts to monthly automatically. Buffer adds a safety margin to total costs.</div>
+
+  <div class="card">
+    <div class="card-title">Operating Overheads</div>
+    <table class="data-table">
+      <thead><tr>
+        <th style="width:28%">Expense</th>
+        <th>Yearly ($)</th>
+        <th>Quarterly ($)</th>
+        <th>Monthly ($)</th>
+        <th>Weekly ($)</th>
+        <th>Monthly Cost</th>
+        <th style="width:32px"></th>
+      </tr></thead>
+      <tbody id="overheads-tbody"></tbody>
+    </table>
+    <div style="margin-top:12px">
+      <button class="btn btn-ghost" onclick="addOverheadLine()" style="font-size:12px;padding:6px 14px">+ Add Line</button>
+    </div>
+    <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center">
+      <div class="field-group" style="width:200px;margin:0">
+        <label class="field-label">Buffer %</label>
+        <input type="number" class="field-input" id="oh-buffer" value="10" step="1" oninput="recalc()">
+      </div>
+      <div class="calc-row total" style="border:none;gap:20px">
+        <span class="label">Total Monthly Overheads</span>
+        <span class="value" id="oh-total">$0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Vehicle & Tradie Overheads (per additional tradie)</div>
+    <div class="grid-3">
+      <div class="field-group">
+        <label class="field-label">Vehicle Repayments ($/mo)</label>
+        <input type="number" class="field-input" id="veh-repay" value="950" oninput="recalc()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Vehicle Insurance ($/mo)</label>
+        <input type="number" class="field-input" id="veh-insure" value="200" oninput="recalc()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Vehicle Registration ($/mo)</label>
+        <input type="number" class="field-input" id="veh-rego" value="60" oninput="recalc()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Vehicle Fuel ($/mo)</label>
+        <input type="number" class="field-input" id="veh-fuel" value="400" oninput="recalc()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Insurances ($/mo)</label>
+        <input type="number" class="field-input" id="veh-ins2" value="60" oninput="recalc()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Uniform ($/mo)</label>
+        <input type="number" class="field-input" id="veh-uniform" value="40" oninput="recalc()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Tolls / Parking ($/mo)</label>
+        <input type="number" class="field-input" id="veh-tolls" value="0" oninput="recalc()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Additional Tradies #</label>
+        <input type="number" class="field-input" id="veh-tradies" value="0" oninput="recalc()">
+      </div>
+    </div>
+    <div class="calc-row total" style="border:none">
+      <span class="label">Vehicle Total / Month</span>
+      <span class="value" id="veh-total">$1,710</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== LABOUR ========== -->
+<div class="page" id="page-labour">
+  <div class="page-header">
+    <div class="page-title">LABOUR COSTS</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Owners / Directors</div>
+    <table class="data-table">
+      <thead><tr>
+        <th>Role</th><th>Name</th><th>Annual Salary ($)</th><th>Super ($)</th><th>Billable Hrs/Wk</th><th>Non-Billable Hrs/Wk</th><th>Cost/Week</th>
+      </tr></thead>
+      <tbody id="owners-tbody"></tbody>
+    </table>
+    <div style="margin-top:12px"><button class="btn btn-ghost" onclick="addLabourLine('owners')" style="font-size:12px;padding:6px 14px">+ Add Line</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Field Staff</div>
+    <table class="data-table">
+      <thead><tr>
+        <th>Name</th><th>Hourly Rate ($)</th><th>Super ($)</th><th>Cost/Hr</th><th>Hrs/Wk</th><th>Cost/Wk</th><th>Annual Cost</th>
+      </tr></thead>
+      <tbody id="staff-tbody"></tbody>
+    </table>
+    <div style="margin-top:12px"><button class="btn btn-ghost" onclick="addLabourLine('staff')" style="font-size:12px;padding:6px 14px">+ Add Line</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Apprentices</div>
+    <div class="info-note">Utilisation: ratio of output vs full billable resource. Max 0.8 if attending TAFE.</div>
+    <table class="data-table">
+      <thead><tr>
+        <th>Name</th><th>Hourly Rate ($)</th><th>Super ($)</th><th>Cost/Hr</th><th>Hrs/Wk</th><th>Cost/Wk</th><th>Annual Cost</th><th>Utilisation %</th>
+      </tr></thead>
+      <tbody id="apprentices-tbody"></tbody>
+    </table>
+    <div style="margin-top:12px"><button class="btn btn-ghost" onclick="addLabourLine('apprentices')" style="font-size:12px;padding:6px 14px">+ Add Line</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Admin</div>
+    <table class="data-table">
+      <thead><tr>
+        <th>Name</th><th>Hourly Rate ($)</th><th>Super ($)</th><th>Cost/Hr</th><th>Hrs/Wk</th><th>Cost/Wk</th><th>Annual Cost</th>
+      </tr></thead>
+      <tbody id="admin-tbody"></tbody>
+    </table>
+    <div style="margin-top:12px"><button class="btn btn-ghost" onclick="addLabourLine('admin')" style="font-size:12px;padding:6px 14px">+ Add Line</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Labour Totals</div>
+    <div class="grid-2">
+      <div>
+        <div class="calc-row"><span class="label">Billable Resources</span><span class="value" id="lab-billable">0</span></div>
+        <div class="calc-row"><span class="label">Non-Billable Resources</span><span class="value" id="lab-nonbillable">0</span></div>
+        <div class="calc-row" style="margin-top:8px">
+          <span class="label">Superannuation Rate (%)</span>
+          <input type="number" class="field-input" id="super-rate" value="12" step="0.5" oninput="recalc()" style="width:90px;text-align:right">
+        </div>
+      </div>
+      <div>
+        <div class="calc-row"><span class="label">Weekly Labour Cost</span><span class="value" id="lab-weekly">$0</span></div>
+        <div class="calc-row total"><span class="label">Monthly Labour Cost</span><span class="value" id="lab-monthly">$0</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== COST OF OPS ========== -->
+<div class="page" id="page-costofops">
+  <div class="page-header">
+    <div class="page-title">COST OF OPERATIONS</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Monthly Cost of Operations</div>
+      <div class="calc-row"><span class="label">Labour</span><span class="value" id="coo-labour">$0</span></div>
+      <div class="calc-row"><span class="label">Operating Expenses</span><span class="value" id="coo-opex">$0</span></div>
+      <div class="calc-row total"><span class="label">Total</span><span class="value" id="coo-total">$0</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Working Days Calculator</div>
+      <div class="grid-2">
+        <div class="field-group">
+          <label class="field-label">Year</label>
+          <input type="number" class="field-input" id="coo-year" value="2026" oninput="recalc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Total Days</label>
+          <input type="number" class="field-input" id="coo-total-days" value="365" oninput="recalc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Weekend Days</label>
+          <input type="number" class="field-input" id="coo-weekends" value="105" oninput="recalc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label tooltip" data-tip="Mark with *** editable">Public Holidays ★</label>
+          <input type="number" class="field-input" id="coo-ph" value="12" oninput="recalc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label tooltip" data-tip="Mark with *** editable">Annual Leave Days ★</label>
+          <input type="number" class="field-input" id="coo-al" value="20" oninput="recalc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label tooltip" data-tip="Mark with *** editable">Sick Days ★</label>
+          <input type="number" class="field-input" id="coo-sick" value="10" oninput="recalc()">
+        </div>
+        <div class="field-group">
+          <label class="field-label tooltip" data-tip="Mark with *** editable">Rain/Training Days ★</label>
+          <input type="number" class="field-input" id="coo-rain" value="4" oninput="recalc()">
+        </div>
+      </div>
+      <div class="calc-row"><span class="label">Available Days</span><span class="value" id="coo-avail">0</span></div>
+      <div class="calc-row"><span class="label">Avg Days / Month</span><span class="value" id="coo-avg-days">0</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Calculating Cost / Hour</div>
+    <div class="grid-2">
+      <div>
+        <div class="calc-row"><span class="label">Daily COO</span><span class="value" id="coo-daily">$0</span></div>
+        <div class="calc-row"><span class="label">Daily COO / Billable Resource</span><span class="value" id="coo-daily-res">$0</span></div>
+        <div class="calc-row total"><span class="label">COO / Hour (RAW)</span><span class="value" id="coo-hour-raw">$0</span></div>
+      </div>
+      <div>
+        <div class="calc-row"><span class="label">Opex</span><span class="value" id="coo-opex2">$0</span></div>
+        <div class="calc-row"><span class="label">Admin Monthly Cost</span><span class="value" id="coo-nonbill">$0</span></div>
+        <div class="calc-row"><span class="label">Overhead / Resource</span><span class="value" id="coo-oh-res">$0</span></div>
+        <div class="calc-row"><span class="label">Overhead / Resource / Day</span><span class="value" id="coo-oh-day">$0</span></div>
+        <div class="calc-row"><span class="label">Overhead / Hour Raw</span><span class="value" id="coo-oh-hr-raw">$0</span></div>
+        <div class="calc-row highlight"><span class="label">Overhead / Billable Hour</span><span class="value" id="coo-oh-bill-hr">$0</span></div>
+        <div class="calc-row"><span class="label">Available Hours / Resource/Mo</span><span class="value" id="coo-avail-hrs">0</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FORECASTING ========== -->
+<div class="page" id="page-forecasting">
+  <div class="page-header">
+    <div class="page-title">FORECASTING</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Costings</div>
+      <div class="calc-row"><span class="label">Raw COO</span><span class="value" id="fc-raw-coo">$0/hr</span></div>
+      <div class="field-group" style="margin-top:12px">
+        <label class="field-label">Charge Out Rate ($/hr) ★</label>
+        <input type="number" class="field-input" id="fc-charge-rate" value="145" oninput="recalc()">
+      </div>
+      <div class="calc-row highlight"><span class="label">Profit Per Hour</span><span class="value" id="fc-profit-hr">$0/hr</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Labour</div>
+      <div class="calc-row"><span class="label">Total Billable Resources</span><span class="value" id="fc-billable">0</span></div>
+      <div class="field-group" style="margin-top:12px">
+        <label class="field-label">Efficiency (%) ★</label>
+        <input type="number" class="field-input" id="fc-efficiency" value="80" step="5" min="0" max="100" oninput="recalc()">
+      </div>
+      <div class="calc-row"><span class="label">Labour Billed</span><span class="value" id="fc-labour-billed">$0</span></div>
+      <div class="calc-row highlight"><span class="label">Labour Profit</span><span class="value" id="fc-labour-profit">$0</span></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Materials</div>
+      <div class="field-group">
+        <label class="field-label">Material Spend ($/mo) ★</label>
+        <input type="number" class="field-input" id="fc-mat-spend" value="15000" oninput="recalc()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Material Mark-Up (%) ★</label>
+        <input type="number" class="field-input" id="fc-mat-markup" value="35" step="5" oninput="recalc()">
+      </div>
+      <div class="calc-row"><span class="label">Material Billed</span><span class="value" id="fc-mat-billed">$0</span></div>
+      <div class="calc-row highlight"><span class="label">Material Profit</span><span class="value" id="fc-mat-profit">$0</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Contractors</div>
+      <div class="field-group">
+        <label class="field-label">Subcontractor Spend ($/mo) ★</label>
+        <input type="number" class="field-input" id="fc-sub-spend" value="0" oninput="recalc()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Subcontractor Mark-Up (%) ★</label>
+        <input type="number" class="field-input" id="fc-sub-markup" value="70" step="5" oninput="recalc()">
+      </div>
+      <div class="calc-row highlight"><span class="label">Subcontractor Profit</span><span class="value" id="fc-sub-profit">$0</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:var(--border-active)">
+    <div class="card-title" style="color:var(--orange)">Results</div>
+    <div class="grid-2">
+      <div>
+        <div class="calc-row total"><span class="label">Estimated Revenue / Month</span><span class="value" id="fc-revenue">$0</span></div>
+        <div class="calc-row total"><span class="label">Estimated Profit / Month</span><span class="value" id="fc-profit">$0</span></div>
+        <div class="calc-row total"><span class="label">Net Profit Margin</span><span class="value" id="fc-margin">0%</span></div>
+      </div>
+      <div>
+        <div class="calc-row"><span class="label">Target Billable Hours / Month</span><span class="value" id="fc-target-hrs">0</span></div>
+        <div class="calc-row total"><span class="label">Annual Profit + Wage</span><span class="value" id="fc-annual">$0</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- NEW CLIENT MODAL -->
+<div class="modal-overlay" id="newClientModal">
+  <div class="modal">
+    <h3>NEW CLIENT</h3>
+    <div class="field-group">
+      <label class="field-label">Client / Business Name</label>
+      <input type="text" class="field-input" id="newClientName" placeholder="e.g. Smith Plumbing">
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-primary" onclick="createClient()">Create</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================== DATA STORE =====================
+const STORAGE_KEY = 'vincere_forecasting_tool_v1';
+let allClients = {};
+let currentClientId = null;
+
+const TEMPLATE_OH_COUNT = 36;
+
+function defaultClientData() {
+  return {
+    name: '',
+    overheads: {
+      items: [
+        {name:'Accounting',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Advertising',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Asset Replacement',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Bad Debt',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Bank Fees',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Bonuses',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Cleaning/Rubbish Removal',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Donations',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Entertainment',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Filing Fees',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Fines',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Freight & Courier',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Insurance - Business General',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Insurance - Public Liability',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Insurance - Work Cover',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Interest Expense',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Motor Vehicle - Fuel',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Motor Vehicle - Insurance',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Motor Vehicle - Rego',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Motor Vehicle - Repairs',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Motor Vehicle - Tolls/Parking',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'PPE',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Printing & Stationery',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Rent & Utilities',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Subscriptions & Memberships',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Telephone & Internet',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Tools',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Training Fees',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Travel',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Uniforms',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Vehicle Finance',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Tax Debt (Personal)',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Tax Debt (Business)',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Asset Repayments',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Payroll Tax',yearly:'',quarterly:'',monthly:'',weekly:''},
+        {name:'Long Service Leave',yearly:'',quarterly:'',monthly:'',weekly:''},
+      ],
+      buffer: 10,
+      vehRepay: 950, vehInsure: 200, vehRego: 60, vehFuel: 400,
+      vehIns2: 60, vehUniform: 40, vehTolls: 0, vehTradies: 0
+    },
+    labour: {
+      superRate: 0.12,
+      owners: [
+        {role:'Owner 1',name:'Me',salary:135000,billable:40,nonBillable:20},
+      ],
+      staff: [
+        {name:'Tradie 1',rate:0,hrs:0},
+        {name:'Tradie 2',rate:0,hrs:0},
+        {name:'Tradie 3',rate:0,hrs:0},
+      ],
+      apprentices: [
+        {name:'Apprentice 1',rate:0,hrs:0,util:0},
+        {name:'Apprentice 2',rate:0,hrs:0,util:0},
+        {name:'Apprentice 3',rate:0,hrs:0,util:0},
+      ],
+      admin: [
+        {name:'Admin 1',rate:0,hrs:0},
+        {name:'VA',rate:0,hrs:0},
+        {name:'BDM',rate:0,hrs:0},
+      ],
+    },
+    costOfOps: {
+      year: 2026, totalDays: 365, weekends: 105, ph: 12, al: 20, sick: 10, rain: 4
+    },
+    forecasting: {
+      chargeRate: 145, efficiency: 0.8,
+      matSpend: 15000, matMarkup: 0.35,
+      subSpend: 0, subMarkup: 0.7
+    }
+  };
+}
+
+// ===================== PERSISTENCE =====================
+function saveAll() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allClients));
+    const ind = document.getElementById('saveIndicator');
+    ind.classList.add('show');
+    setTimeout(() => ind.classList.remove('show'), 1500);
+  } catch(e) {}
+}
+
+function loadAll() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) allClients = JSON.parse(raw);
+  } catch(e) { allClients = {}; }
+  // Clean up blank non-custom overhead lines from older saved data
+  Object.values(allClients).forEach(c => {
+    if (c.overheads && c.overheads.items) {
+      c.overheads.items = c.overheads.items.filter(item => item.custom || item.name.trim() !== '');
+    }
+    // Clean up blank labour rows beyond the first in each category
+    if (c.labour) {
+      ['staff', 'apprentices', 'admin'].forEach(type => {
+        if (c.labour[type]) {
+          const first = c.labour[type][0];
+          c.labour[type] = c.labour[type].filter((p, i) => i === 0 || p.name.trim() !== '' || p.rate > 0 || p.hrs > 0);
+        }
+      });
+      if (c.labour.owners) {
+        c.labour.owners = c.labour.owners.filter((o, i) => i === 0 || o.name.trim() !== '' || o.salary > 0);
+      }
+    }
+  });
+  refreshClientSelect();
+}
+
+function refreshClientSelect() {
+  const sel = document.getElementById('clientSelect');
+  sel.innerHTML = '<option value="">— Select Client —</option>';
+  Object.entries(allClients).forEach(([id, c]) => {
+    const opt = document.createElement('option');
+    opt.value = id; opt.textContent = c.name;
+    if (id === currentClientId) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+// ===================== CLIENT MANAGEMENT =====================
+function openNewClientModal() {
+  document.getElementById('newClientModal').classList.add('open');
+  document.getElementById('newClientName').value = '';
+  setTimeout(() => document.getElementById('newClientName').focus(), 50);
+}
+function closeModal() {
+  document.getElementById('newClientModal').classList.remove('open');
+}
+function createClient() {
+  const name = document.getElementById('newClientName').value.trim();
+  if (!name) return;
+  const id = 'client_' + Date.now();
+  const data = defaultClientData();
+  data.name = name;
+  allClients[id] = data;
+  saveAll();
+  refreshClientSelect();
+  closeModal();
+  loadClient(id);
+}
+function loadClient(id) {
+  currentClientId = id;
+  if (!id) {
+    document.getElementById('clientName').textContent = 'No client selected';
+    return;
+  }
+  document.getElementById('clientSelect').value = id;
+  const c = allClients[id];
+  document.getElementById('clientName').textContent = c.name;
+  populateAll(c);
+  recalc();
+}
+
+// ===================== POPULATE FORMS =====================
+function populateAll(c) {
+  populateOverheads(c);
+  populateLabour(c);
+  populateCostOfOps(c);
+  populateForecasting(c);
+}
+
+function populateOverheads(c) {
+  const oh = c.overheads;
+  document.getElementById('oh-buffer').value = oh.buffer ?? 10;
+  document.getElementById('veh-repay').value = oh.vehRepay ?? 950;
+  document.getElementById('veh-insure').value = oh.vehInsure ?? 200;
+  document.getElementById('veh-rego').value = oh.vehRego ?? 60;
+  document.getElementById('veh-fuel').value = oh.vehFuel ?? 400;
+  document.getElementById('veh-ins2').value = oh.vehIns2 ?? 60;
+  document.getElementById('veh-uniform').value = oh.vehUniform ?? 40;
+  document.getElementById('veh-tolls').value = oh.vehTolls ?? 0;
+  document.getElementById('veh-tradies').value = oh.vehTradies ?? 0;
+
+  const tbody = document.getElementById('overheads-tbody');
+  tbody.innerHTML = '';
+  oh.items.forEach((item, i) => {
+    const tr = document.createElement('tr');
+    const deleteBtn = item.custom
+      ? `<td><button onclick="deleteOverheadLine(${i})" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:15px;padding:2px 6px;border-radius:4px;transition:color 0.15s" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--text-muted)'">✕</button></td>`
+      : `<td></td>`;
+    tr.innerHTML = `
+      <td><input type="text" value="${item.name}" onblur="updateOHName(${i},this.value)"></td>
+      <td><input type="number" value="${item.yearly||''}" placeholder="0" oninput="updateOH(${i},'yearly',this.value)"></td>
+      <td><input type="number" value="${item.quarterly||''}" placeholder="0" oninput="updateOH(${i},'quarterly',this.value)"></td>
+      <td><input type="number" value="${item.monthly||''}" placeholder="0" oninput="updateOH(${i},'monthly',this.value)"></td>
+      <td><input type="number" value="${item.weekly||''}" placeholder="0" oninput="updateOH(${i},'weekly',this.value)"></td>
+      <td class="mono" id="oh-row-${i}" style="color:var(--orange)">$0</td>
+      ${deleteBtn}`;
+    tbody.appendChild(tr);
+  });
+}
+
+function addOverheadLine() {
+  if (!currentClientId) return;
+  allClients[currentClientId].overheads.items.push({name:'', yearly:'', quarterly:'', monthly:'', weekly:'', custom:true});
+  populateOverheads(allClients[currentClientId]);
+  recalc();
+  const rows = document.querySelectorAll('#overheads-tbody tr');
+  if (rows.length) rows[rows.length - 1].querySelector('input[type="text"]').focus();
+}
+
+function deleteOverheadLine(i) {
+  if (!currentClientId) return;
+  allClients[currentClientId].overheads.items.splice(i, 1);
+  populateOverheads(allClients[currentClientId]);
+  recalc();
+}
+
+function updateOHName(i, val) {
+  if (!currentClientId) return;
+  allClients[currentClientId].overheads.items[i].name = val;
+  debounceSave();
+}
+function updateOH(i, field, val) {
+  if (!currentClientId) return;
+  allClients[currentClientId].overheads.items[i][field] = val ? parseFloat(val) : '';
+  recalc();
+}
+
+function populateLabour(c) {
+  const lab = c.labour;
+  document.getElementById('super-rate').value = Math.round((lab.superRate ?? 0.12) * 1000) / 10;
+
+  // Owners
+  const ownersTbody = document.getElementById('owners-tbody');
+  ownersTbody.innerHTML = '';
+  lab.owners.forEach((o, i) => {
+    const super_ = (o.salary || 0) * (lab.superRate ?? 0.12);
+    const cpw = o.salary ? ((o.salary + super_) / 52) : 0;
+    const deleteBtn = i > 0 ? `<td><button onclick="deleteLabourLine('owners',${i})" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:15px;padding:2px 6px;border-radius:4px;transition:color 0.15s" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--text-muted)'">✕</button></td>` : '<td></td>';
+    ownersTbody.innerHTML += `<tr>
+      <td style="color:var(--text-dim)">${o.role}</td>
+      <td><input type="text" value="${o.name}" onblur="updateOwner(${i},'name',this.value)"></td>
+      <td><input type="number" value="${o.salary||''}" placeholder="0" onblur="updateOwner(${i},'salary',this.value)"></td>
+      <td class="mono" style="color:var(--text-dim)">$${fmt1dp(super_)}</td>
+      <td><input type="number" value="${o.billable||''}" placeholder="0" onblur="updateOwner(${i},'billable',this.value)"></td>
+      <td><input type="number" value="${o.nonBillable||''}" placeholder="0" onblur="updateOwner(${i},'nonBillable',this.value)"></td>
+      <td class="mono" style="color:var(--orange)">$${fmt(cpw)}</td>
+      ${deleteBtn}
+    </tr>`;
+  });
+
+  buildStaffTable('staff-tbody', lab.staff, 'staff', false);
+  buildStaffTable('apprentices-tbody', lab.apprentices, 'apprentices', true);
+  buildStaffTable('admin-tbody', lab.admin, 'admin', false);
+}
+
+function buildStaffTable(tbodyId, arr, type, isApprentice) {
+  const tbody = document.getElementById(tbodyId);
+  tbody.innerHTML = '';
+  arr.forEach((p, i) => {
+    const superRate = currentClientId ? (allClients[currentClientId].labour.superRate ?? 0.12) : 0.12;
+    const superVal = (p.rate || 0) * superRate;
+    const costPerHr = (p.rate || 0) + superVal;
+    const cpw = costPerHr * (p.hrs || 0);
+    const annual = cpw * 52;
+    const utilCol = isApprentice ? `<td><input type="number" value="${p.util ? Math.round(p.util*100) : ''}" placeholder="0" step="10" min="0" max="100" oninput="updateStaffUtil(${i},this.value)"></td>` : '';
+    const deleteBtn = i > 0 ? `<td><button onclick="deleteLabourLine('${type}',${i})" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:15px;padding:2px 6px;border-radius:4px;transition:color 0.15s" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--text-muted)'">✕</button></td>` : '<td></td>';
+    tbody.innerHTML += `<tr>
+      <td><input type="text" value="${p.name||''}" onblur="updateStaff('${type}',${i},'name',this.value)"></td>
+      <td><input type="number" value="${p.rate||''}" placeholder="0" step="0.1" onblur="updateStaff('${type}',${i},'rate',this.value)"></td>
+      <td class="mono" style="color:var(--text-dim)">$${fmt1dp(superVal)}</td>
+      <td class="mono" style="color:var(--text-dim)">$${fmt(costPerHr)}</td>
+      <td><input type="number" value="${p.hrs||''}" placeholder="0" onblur="updateStaff('${type}',${i},'hrs',this.value)"></td>
+      <td class="mono" style="color:var(--orange)">$${fmt(cpw)}</td>
+      <td class="mono">$${fmt(annual)}</td>
+      ${utilCol}
+      ${deleteBtn}
+    </tr>`;
+  });
+}
+
+function updateOwner(i, field, val) {
+  if (!currentClientId) return;
+  allClients[currentClientId].labour.owners[i][field] = field === 'name' ? val : (val ? parseFloat(val) : 0);
+  populateLabour(allClients[currentClientId]);
+  recalc();
+}
+function updateStaff(type, i, field, val) {
+  if (!currentClientId) return;
+  allClients[currentClientId].labour[type][i][field] = field === 'name' ? val : (val ? parseFloat(val) : 0);
+  buildStaffTable(type === 'staff' ? 'staff-tbody' : type === 'apprentices' ? 'apprentices-tbody' : 'admin-tbody',
+    allClients[currentClientId].labour[type], type, type === 'apprentices');
+  recalc();
+}
+
+function updateStaffUtil(i, val) {
+  if (!currentClientId) return;
+  allClients[currentClientId].labour.apprentices[i].util = val ? parseFloat(val) / 100 : 0;
+  buildStaffTable('apprentices-tbody', allClients[currentClientId].labour.apprentices, 'apprentices', true);
+  recalc();
+}
+
+function addLabourLine(type) {
+  if (!currentClientId) return;
+  const lab = allClients[currentClientId].labour;
+  if (type === 'owners') {
+    const n = lab.owners.length + 1;
+    lab.owners.push({role:`Owner ${n}`, name:'', salary:0, billable:0, nonBillable:0});
+    populateLabour(allClients[currentClientId]);
+  } else if (type === 'apprentices') {
+    lab.apprentices.push({name:'', rate:0, hrs:0, util:0});
+    buildStaffTable('apprentices-tbody', lab.apprentices, 'apprentices', true);
+  } else {
+    lab[type].push({name:'', rate:0, hrs:0});
+    buildStaffTable(type === 'staff' ? 'staff-tbody' : 'admin-tbody', lab[type], type, false);
+  }
+  recalc();
+}
+
+function deleteLabourLine(type, i) {
+  if (!currentClientId || i === 0) return;
+  const lab = allClients[currentClientId].labour;
+  lab[type].splice(i, 1);
+  if (type === 'owners') {
+    populateLabour(allClients[currentClientId]);
+  } else {
+    buildStaffTable(
+      type === 'staff' ? 'staff-tbody' : type === 'apprentices' ? 'apprentices-tbody' : 'admin-tbody',
+      lab[type], type, type === 'apprentices'
+    );
+  }
+  recalc();
+}
+
+function populateCostOfOps(c) {
+  const co = c.costOfOps;
+  document.getElementById('coo-year').value = co.year ?? 2026;
+  document.getElementById('coo-total-days').value = co.totalDays ?? 365;
+  document.getElementById('coo-weekends').value = co.weekends ?? 105;
+  document.getElementById('coo-ph').value = co.ph ?? 12;
+  document.getElementById('coo-al').value = co.al ?? 20;
+  document.getElementById('coo-sick').value = co.sick ?? 10;
+  document.getElementById('coo-rain').value = co.rain ?? 4;
+}
+
+function populateForecasting(c) {
+  const fc = c.forecasting;
+  document.getElementById('fc-charge-rate').value = fc.chargeRate ?? 145;
+  document.getElementById('fc-efficiency').value = Math.round((fc.efficiency ?? 0.8) * 100);
+  document.getElementById('fc-mat-spend').value = fc.matSpend ?? 15000;
+  document.getElementById('fc-mat-markup').value = Math.round((fc.matMarkup ?? 0.35) * 100);
+  document.getElementById('fc-sub-spend').value = fc.subSpend ?? 0;
+  document.getElementById('fc-sub-markup').value = Math.round((fc.subMarkup ?? 0.7) * 100);
+}
+
+// ===================== RECALCULATE =====================
+function recalc() {
+  if (!currentClientId) return;
+  const c = allClients[currentClientId];
+
+  // --- Save current inputs ---
+  c.overheads.buffer = parseFloat(document.getElementById('oh-buffer').value) || 0;
+  c.overheads.vehRepay = parseFloat(document.getElementById('veh-repay').value) || 0;
+  c.overheads.vehInsure = parseFloat(document.getElementById('veh-insure').value) || 0;
+  c.overheads.vehRego = parseFloat(document.getElementById('veh-rego').value) || 0;
+  c.overheads.vehFuel = parseFloat(document.getElementById('veh-fuel').value) || 0;
+  c.overheads.vehIns2 = parseFloat(document.getElementById('veh-ins2').value) || 0;
+  c.overheads.vehUniform = parseFloat(document.getElementById('veh-uniform').value) || 0;
+  c.overheads.vehTolls = parseFloat(document.getElementById('veh-tolls').value) || 0;
+  c.overheads.vehTradies = parseFloat(document.getElementById('veh-tradies').value) || 0;
+
+  c.labour.superRate = (parseFloat(document.getElementById('super-rate').value) || 12) / 100;
+
+  c.costOfOps.year = parseInt(document.getElementById('coo-year').value) || 2026;
+  c.costOfOps.totalDays = parseFloat(document.getElementById('coo-total-days').value) || 365;
+  c.costOfOps.weekends = parseFloat(document.getElementById('coo-weekends').value) || 105;
+  c.costOfOps.ph = parseFloat(document.getElementById('coo-ph').value) || 12;
+  c.costOfOps.al = parseFloat(document.getElementById('coo-al').value) || 20;
+  c.costOfOps.sick = parseFloat(document.getElementById('coo-sick').value) || 10;
+  c.costOfOps.rain = parseFloat(document.getElementById('coo-rain').value) || 4;
+
+  c.forecasting.chargeRate = parseFloat(document.getElementById('fc-charge-rate').value) || 0;
+  c.forecasting.efficiency = (parseFloat(document.getElementById('fc-efficiency').value) || 80) / 100;
+  c.forecasting.matSpend = parseFloat(document.getElementById('fc-mat-spend').value) || 0;
+  c.forecasting.matMarkup = (parseFloat(document.getElementById('fc-mat-markup').value) || 0) / 100;
+  c.forecasting.subSpend = parseFloat(document.getElementById('fc-sub-spend').value) || 0;
+  c.forecasting.subMarkup = (parseFloat(document.getElementById('fc-sub-markup').value) || 0) / 100;
+
+  // --- OVERHEADS ---
+  const oh = c.overheads;
+  let ohRaw = 0;
+  oh.items.forEach((item, i) => {
+    let monthly = 0;
+    if (item.monthly) monthly = parseFloat(item.monthly) || 0;
+    else if (item.yearly) monthly = (parseFloat(item.yearly) || 0) / 12;
+    else if (item.quarterly) monthly = (parseFloat(item.quarterly) || 0) / 3;
+    else if (item.weekly) monthly = (parseFloat(item.weekly) || 0) * 52 / 12;
+    ohRaw += monthly;
+    const el = document.getElementById(`oh-row-${i}`);
+    if (el) el.textContent = '$' + fmt(monthly);
+  });
+  const bufferPct = (oh.buffer || 0) / 100;
+  const ohTotal = ohRaw * (1 + bufferPct);
+  const vehPerTradie = (oh.vehRepay||0)+(oh.vehInsure||0)+(oh.vehRego||0)+(oh.vehFuel||0)+(oh.vehIns2||0)+(oh.vehUniform||0)+(oh.vehTolls||0);
+  const vehTotal = vehPerTradie * (oh.vehTradies||0);
+  setText('oh-total', '$' + fmt(ohTotal));
+  setText('veh-total', '$' + fmt(vehTotal));
+
+  // --- LABOUR ---
+  const lab = c.labour;
+  const superRate = lab.superRate;
+  let weeklyLabour = 0;
+  let billableResources = 0;
+  let nonBillableResources = 0;
+
+  lab.owners.forEach(o => {
+    if (o.salary) {
+      const s = parseFloat(o.salary) || 0;
+      const sup = s * superRate;
+      const cpw = (s + sup) / 52;
+      weeklyLabour += cpw;
+      const billHrs = parseFloat(o.billable) || 0;
+      const nonBillHrs = parseFloat(o.nonBillable) || 0;
+      if (billHrs > 0) billableResources += billHrs / 40;
+      if (nonBillHrs > 0) nonBillableResources += nonBillHrs / 40;
+    }
+  });
+
+  const calcStaffLabour = (arr, isApprentice) => {
+    arr.forEach(p => {
+      const rate = parseFloat(p.rate) || 0;
+      const hrs = parseFloat(p.hrs) || 0;
+      if (rate > 0 || hrs > 0) {
+        const sup = rate * superRate;
+        const cph = rate + sup;
+        const cpw = cph * hrs;
+        weeklyLabour += cpw;
+        const util = isApprentice ? (p.util != null ? parseFloat(p.util) : 0) : 1;
+        if (hrs > 0) billableResources += (hrs / 40) * util;
+      }
+    });
+  };
+  calcStaffLabour(lab.staff, false);
+  calcStaffLabour(lab.apprentices, true);
+  let adminMonthlyCost = 0;
+  lab.admin.forEach(p => {
+    const rate = parseFloat(p.rate) || 0;
+    const hrs = parseFloat(p.hrs) || 0;
+    if (rate > 0 || hrs > 0) {
+      const sup = rate * superRate;
+      const cph = rate + sup;
+      const cpw = cph * hrs;
+      weeklyLabour += cpw;
+      adminMonthlyCost += cpw * 52 / 12;
+      if (hrs > 0) nonBillableResources += hrs / 40;
+    }
+  });
+
+  const monthlyLabour = weeklyLabour * 52 / 12;
+  setText('lab-billable', fmt2(billableResources));
+  setText('lab-nonbillable', fmt2(nonBillableResources));
+  setText('lab-weekly', '$' + fmt(weeklyLabour));
+  setText('lab-monthly', '$' + fmt(monthlyLabour));
+
+  // --- COST OF OPS ---
+  const co = c.costOfOps;
+  const opex = ohTotal + vehTotal;
+  const totalCOO = monthlyLabour + opex;
+  const availDays = co.totalDays - co.weekends - co.ph - co.al - co.sick - co.rain;
+  const avgDaysPerMonth = availDays / 12;
+  const availHrsPerResource = avgDaysPerMonth * 8;
+  const dailyCOO = totalCOO / avgDaysPerMonth;
+  const dailyCOOPerRes = billableResources > 0 ? dailyCOO / billableResources : 0;
+  const cooHourRaw = availHrsPerResource > 0 ? dailyCOOPerRes / 8 : 0;
+  const ohPerRes = billableResources > 0 ? (opex + adminMonthlyCost) / billableResources : 0;
+  const ohPerResDay = avgDaysPerMonth > 0 ? ohPerRes / avgDaysPerMonth : 0;
+  const ohHrRaw = availHrsPerResource > 0 ? ohPerRes / availHrsPerResource : 0;
+  const ohBillHr = availHrsPerResource > 0 ? ohPerRes / (availHrsPerResource * (c.forecasting.efficiency||0.8)) : 0;
+
+  setText('coo-labour', '$' + fmt(monthlyLabour));
+  setText('coo-opex', '$' + fmt(opex));
+  setText('coo-total', '$' + fmt(totalCOO));
+  setText('coo-avail', availDays.toFixed(0));
+  setText('coo-avg-days', fmt2(avgDaysPerMonth));
+  setText('coo-daily', '$' + fmt(dailyCOO));
+  setText('coo-daily-res', '$' + fmt(dailyCOOPerRes));
+  setText('coo-hour-raw', '$' + fmt(cooHourRaw));
+  setText('coo-opex2', '$' + fmt(opex));
+  setText('coo-nonbill', '$' + fmt(adminMonthlyCost));
+  setText('coo-oh-res', '$' + fmt(ohPerRes));
+  setText('coo-oh-day', '$' + fmt(ohPerResDay));
+  setText('coo-oh-hr-raw', '$' + fmt(ohHrRaw));
+  setText('coo-oh-bill-hr', '$' + fmt(ohBillHr));
+  setText('coo-avail-hrs', fmt2(availHrsPerResource));
+
+  // --- FORECASTING ---
+  const fc = c.forecasting;
+  const chargeRate = fc.chargeRate || 0;
+  const efficiency = fc.efficiency || 0.8;
+  const profitPerHour = chargeRate - cooHourRaw;
+  const labourBilled = billableResources * availHrsPerResource * efficiency * chargeRate;
+  const labourProfit = labourBilled - totalCOO;
+  const matBilled = (fc.matSpend || 0) * (1 + (fc.matMarkup || 0));
+  const matProfit = (fc.matSpend || 0) * (fc.matMarkup || 0);
+  const subProfit = (fc.subSpend || 0) * (fc.subMarkup || 0);
+  const subBilled = (fc.subSpend || 0) * (1 + (fc.subMarkup || 0));
+  const totalRevenue = labourBilled + matBilled + subBilled;
+  const totalProfit = labourProfit + matProfit + subProfit;
+  const netMargin = totalRevenue > 0 ? totalProfit / totalRevenue : 0;
+  const ownerSalaries = lab.owners.reduce((s,o) => s + (parseFloat(o.salary)||0), 0);
+  const annualProfitWage = totalProfit * 12 + ownerSalaries;
+  const targetBillableHrs = billableResources * avgDaysPerMonth * 8 * efficiency;
+
+  setText('fc-raw-coo', '$' + fmt(cooHourRaw) + '/hr');
+
+  // Profit per hour — red if negative
+  const profitHrEl = document.getElementById('fc-profit-hr');
+  if (profitHrEl) {
+    profitHrEl.textContent = '$' + fmt(profitPerHour) + '/hr';
+    profitHrEl.style.color = profitPerHour < 0 ? 'var(--red)' : 'var(--green)';
+  }
+  const dashProfitHrEl = document.getElementById('dash-profit-hr');
+  if (dashProfitHrEl) {
+    dashProfitHrEl.textContent = '$' + fmt(profitPerHour) + '/hr';
+    dashProfitHrEl.style.color = profitPerHour < 0 ? 'var(--red)' : 'var(--green)';
+  }
+
+  setText('fc-billable', fmt2(billableResources));
+  setText('fc-labour-billed', '$' + fmt(labourBilled));
+
+  // Labour profit — red if negative
+  const labProfitEl = document.getElementById('fc-labour-profit');
+  if (labProfitEl) {
+    labProfitEl.textContent = '$' + fmt(labourProfit);
+    labProfitEl.style.color = labourProfit < 0 ? 'var(--red)' : 'var(--green)';
+  }
+
+  setText('fc-mat-billed', '$' + fmt(matBilled));
+  setText('fc-mat-profit', '$' + fmt(matProfit));
+  setText('fc-sub-profit', '$' + fmt(subProfit));
+  setText('fc-revenue', '$' + fmt(totalRevenue));
+  setText('fc-profit', '$' + fmt(totalProfit));
+
+  // Net margin traffic light — forecasting tab
+  const marginPct = netMargin * 100;
+  const marginColor = marginPct < 10 ? 'var(--red)' : marginPct < 20 ? 'var(--yellow)' : 'var(--green)';
+  const fcMarginEl = document.getElementById('fc-margin');
+  if (fcMarginEl) { fcMarginEl.textContent = marginPct.toFixed(1) + '%'; fcMarginEl.style.color = marginColor; }
+
+  setText('fc-target-hrs', fmt2(targetBillableHrs));
+  setText('fc-annual', '$' + fmt(annualProfitWage));
+
+  // --- DASHBOARD ---
+  setText('dash-revenue', '$' + fmt(totalRevenue));
+  setText('dash-profit', '$' + fmt(totalProfit));
+  // Dashboard margin stat card traffic light
+  const dashMarginEl = document.getElementById('dash-margin');
+  const dashMarginCard = dashMarginEl ? dashMarginEl.closest('.stat-card') : null;
+  if (dashMarginEl) { dashMarginEl.textContent = marginPct.toFixed(1) + '%'; dashMarginEl.style.color = marginColor; }
+  if (dashMarginCard) {
+    dashMarginCard.style.borderTopColor = marginColor;
+    dashMarginCard.style.borderTopWidth = '2px';
+    dashMarginCard.style.borderTopStyle = 'solid';
+  }
+  setText('dash-coo', '$' + fmt(cooHourRaw));
+  setText('dash-annual', '$' + fmt(annualProfitWage));
+  setText('dash-hours', fmt2(targetBillableHrs));
+  setText('dash-labour-billed', '$' + fmt(labourBilled));
+  setText('dash-mat-billed', '$' + fmt(matBilled));
+  setText('dash-cont-billed', '$' + fmt(subBilled));
+  setText('dash-total-rev', '$' + fmt(totalRevenue));
+  setText('dash-labour-cost', '$' + fmt(monthlyLabour));
+  setText('dash-overhead-cost', '$' + fmt(opex));
+  setText('dash-mat-cost', '$' + fmt(fc.matSpend || 0));
+  setText('dash-cont-cost', '$' + fmt(fc.subSpend || 0));
+  setText('dash-total-cost', '$' + fmt(monthlyLabour + opex + (fc.matSpend||0) + (fc.subSpend||0)));
+  setText('dash-charge-rate', '$' + fmt(chargeRate) + '/hr');
+  setText('dash-raw-coo', '$' + fmt(cooHourRaw) + '/hr');
+  setText('dash-profit-hr', '$' + fmt(profitPerHour) + '/hr');
+  setText('dash-billable-res', fmt2(billableResources));
+  setText('dash-efficiency', (efficiency * 100).toFixed(0) + '%');
+  setText('dash-avail-hrs', fmt2(availHrsPerResource));
+  setText('dash-rev-per-res', '$' + fmt(billableResources > 0 ? totalRevenue / billableResources : 0));
+  setText('dash-weekly-payroll', '$' + fmt(weeklyLabour));
+  setText('dash-oh-bill-hr', '$' + fmt(ohBillHr));
+
+  debounceSave();
+}
+
+// ===================== HELPERS =====================
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+function fmt(n) {
+  return isNaN(n) || !isFinite(n) ? '0' : Math.round(n).toLocaleString('en-AU');
+}
+function fmt1dp(n) {
+  return isNaN(n) || !isFinite(n) ? '0.0' : n.toLocaleString('en-AU', {minimumFractionDigits:1, maximumFractionDigits:1});
+}
+function fmt2(n) {
+  return isNaN(n) || !isFinite(n) ? '0' : parseFloat(n.toFixed(2)).toString();
+}
+
+let saveTimer = null;
+function debounceSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => saveAll(), 600);
+}
+
+// ===================== TABS =====================
+function showTab(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===================== EXPORT / IMPORT =====================
+function exportData() {
+  if (!currentClientId) { alert('Select a client first'); return; }
+  const data = JSON.stringify(allClients[currentClientId], null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = (allClients[currentClientId].name || 'client').replace(/\s+/g,'_') + '_forecasting.json';
+  a.click();
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.name) { alert('Invalid file'); return; }
+      const id = 'client_' + Date.now();
+      allClients[id] = data;
+      saveAll();
+      refreshClientSelect();
+      loadClient(id);
+    } catch { alert('Invalid JSON file'); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// ===================== INIT =====================
+loadAll();
+// Auto-select first client if exists
+const ids = Object.keys(allClients);
+if (ids.length > 0) loadClient(ids[0]);
+
+document.getElementById('newClientName').addEventListener('keydown', e => {
+  if (e.key === 'Enter') createClient();
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
