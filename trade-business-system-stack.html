@@ -105,11 +105,12 @@
     const selectStyle = { ...inputStyle, cursor: "pointer", appearance: "none", WebkitAppearance: "none" };
     const printValueStyle = { fontSize: "13px", color: "#ccc", fontFamily: "Barlow, sans-serif", padding: "7px 0", borderBottom: "1px solid #222" };
 
-    function PillarProgress({ systems, systemData }) {
-      const active = systems.filter(s => systemData[s.id]?.status === "Active").length;
-      const inProgress = systems.filter(s => systemData[s.id]?.status === "In Progress").length;
-      const total = systems.length;
-      const pct = Math.round(((active + inProgress * 0.5) / total) * 100);
+    function PillarProgress({ systems, customSystems, systemData }) {
+      const allSystems = [...systems, ...(customSystems || [])];
+      const active = allSystems.filter(s => systemData[s.id]?.status === "Active").length;
+      const inProgress = allSystems.filter(s => systemData[s.id]?.status === "In Progress").length;
+      const total = allSystems.length;
+      const pct = total === 0 ? 0 : Math.round(((active + inProgress * 0.5) / total) * 100);
       const r = 22, circ = 2 * Math.PI * r, dash = (pct / 100) * circ;
       return (
         <svg width="56" height="56" viewBox="0 0 56 56">
@@ -122,9 +123,11 @@
       );
     }
 
-    function SystemCard({ system, data, onUpdate, isPrinting }) {
-      const [expanded, setExpanded] = useState(false);
-      const d = data || { status: "Not Started", owner: "", tools: "", notes: "", priority: "Medium", steps: [...system.defaultChecklist] };
+    function SystemCard({ system, data, onUpdate, isPrinting, isCustom, onDelete, onRename }) {
+      const [expanded, setExpanded] = useState(isCustom);
+      const [editingName, setEditingName] = useState(false);
+      const [editingDesc, setEditingDesc] = useState(false);
+      const d = data || { status: "Not Started", owner: "", tools: "", notes: "", priority: "Medium", steps: [...(system.defaultChecklist || ["Add your first step"])] };
       const update = (field, val) => onUpdate(system.id, { ...d, [field]: val });
       const updateStep = (i, val) => { const steps = [...d.steps]; steps[i] = val; update("steps", steps); };
       const addStep = () => update("steps", [...d.steps, ""]);
@@ -132,23 +135,50 @@
       const sc = STATUS_COLORS[d.status];
 
       return (
-        <div style={{ background: "#111", border: `1px solid ${expanded ? "#E85C2B" : "#222"}`, borderRadius: "6px", marginBottom: "8px", overflow: "hidden", transition: "border-color 0.2s", pageBreakInside: "avoid" }}>
+        <div style={{ background: "#111", border: `1px solid ${expanded ? (isCustom ? "#5B8AE8" : "#E85C2B") : (isCustom ? "#1e2a3a" : "#222")}`, borderRadius: "6px", marginBottom: "8px", overflow: "hidden", transition: "border-color 0.2s", pageBreakInside: "avoid" }}>
           <div onClick={() => !isPrinting && setExpanded(!expanded)} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "14px 16px", cursor: isPrinting ? "default" : "pointer", userSelect: "none" }}>
-            <span style={{ fontSize: "11px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "700", color: "#444", minWidth: "24px" }}>{String(system.id).padStart(2, "0")}</span>
-            <span style={{ flex: 1, fontSize: "14px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "600", color: "#fff", letterSpacing: "0.3px" }}>{system.name}</span>
+            <span style={{ fontSize: "11px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "700", color: isCustom ? "#3a6aaa" : "#444", minWidth: "24px" }}>
+              {isCustom ? "★" : String(system.id).padStart(2, "0")}
+            </span>
+            <span style={{ flex: 1, fontSize: "14px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "600", color: "#fff", letterSpacing: "0.3px" }}>
+              {system.name}
+              {isCustom && <span style={{ fontSize: "10px", color: "#3a6aaa", marginLeft: "8px", fontWeight: "700", letterSpacing: "1px" }}>CUSTOM</span>}
+            </span>
             <span style={{ fontSize: "11px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "700", color: PRIORITY_COLORS[d.priority], textTransform: "uppercase", letterSpacing: "1px", display: isPrinting ? "none" : "block" }}>{d.priority}</span>
             <span style={{ fontSize: "11px", fontFamily: "Barlow, sans-serif", fontWeight: "600", color: sc.text, background: sc.bg, border: `1px solid ${sc.border}`, padding: "3px 10px", borderRadius: "20px", whiteSpace: "nowrap" }}>{d.status}</span>
+            {isCustom && !isPrinting && (
+              <button onClick={e => { e.stopPropagation(); if (window.confirm("Delete this custom system?")) onDelete(system.id); }} style={{ background: "none", border: "none", color: "#c0392b", cursor: "pointer", fontSize: "15px", padding: "0 4px", lineHeight: 1, opacity: 0.6 }} title="Delete system">✕</button>
+            )}
             {!isPrinting && <span style={{ color: "#444", fontSize: "16px", transform: expanded ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>▾</span>}
           </div>
+
           {(expanded || isPrinting) && (
             <div style={{ padding: "0 16px 16px", borderTop: "1px solid #1e1e1e" }}>
-              <p style={{ fontSize: "12px", color: "#666", margin: "12px 0 16px", fontFamily: "Barlow, sans-serif" }}>{system.description}</p>
+
+              {/* Editable name & description for custom systems */}
+              {isCustom && !isPrinting && (
+                <div style={{ marginBottom: "14px", marginTop: "12px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+                  <div>
+                    <label style={labelStyle}>SYSTEM NAME</label>
+                    <input value={system.name} onChange={e => onRename(system.id, "name", e.target.value)} placeholder="System name..." style={inputStyle} onClick={e => e.stopPropagation()} />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>DESCRIPTION</label>
+                    <input value={system.description || ""} onChange={e => onRename(system.id, "description", e.target.value)} placeholder="What does this system do?" style={inputStyle} onClick={e => e.stopPropagation()} />
+                  </div>
+                </div>
+              )}
+
+              {!isCustom && <p style={{ fontSize: "12px", color: "#666", margin: "12px 0 16px", fontFamily: "Barlow, sans-serif" }}>{system.description}</p>}
+              {isCustom && isPrinting && system.description && <p style={{ fontSize: "12px", color: "#666", margin: "12px 0 16px", fontFamily: "Barlow, sans-serif" }}>{system.description}</p>}
+
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "16px" }}>
                 <div><label style={labelStyle}>STATUS</label>{isPrinting ? <div style={printValueStyle}>{d.status}</div> : <select value={d.status} onChange={e => update("status", e.target.value)} style={selectStyle}>{STATUS_OPTIONS.map(s => <option key={s}>{s}</option>)}</select>}</div>
                 <div><label style={labelStyle}>PRIORITY</label>{isPrinting ? <div style={printValueStyle}>{d.priority}</div> : <select value={d.priority} onChange={e => update("priority", e.target.value)} style={selectStyle}>{PRIORITY_OPTIONS.map(p => <option key={p}>{p}</option>)}</select>}</div>
                 <div><label style={labelStyle}>SYSTEM OWNER</label>{isPrinting ? <div style={printValueStyle}>{d.owner || "—"}</div> : <input value={d.owner} onChange={e => update("owner", e.target.value)} placeholder="Who is responsible?" style={inputStyle} />}</div>
-                <div><label style={labelStyle}>TOOLS / SOFTWARE</label>{isPrinting ? <div style={printValueStyle}>{d.tools || "—"}</div> : <input value={d.tools} onChange={e => update("tools", e.target.value)} placeholder={system.automationHints} style={inputStyle} />}</div>
+                <div><label style={labelStyle}>TOOLS / SOFTWARE</label>{isPrinting ? <div style={printValueStyle}>{d.tools || "—"}</div> : <input value={d.tools} onChange={e => update("tools", e.target.value)} placeholder={system.automationHints || "Tools or software used..."} style={inputStyle} />}</div>
               </div>
+
               <div style={{ marginBottom: "14px" }}>
                 <label style={labelStyle}>SOP STEPS</label>
                 {d.steps.map((step, i) => (
@@ -160,6 +190,7 @@
                 ))}
                 {!isPrinting && <button onClick={addStep} style={{ fontSize: "11px", color: "#E85C2B", background: "none", border: "1px solid #E85C2B33", borderRadius: "4px", padding: "4px 10px", cursor: "pointer", marginTop: "4px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "600", letterSpacing: "0.5px" }}>+ ADD STEP</button>}
               </div>
+
               <div>
                 <label style={labelStyle}>NOTES</label>
                 {isPrinting ? <div style={{ ...printValueStyle, minHeight: "30px" }}>{d.notes || "—"}</div> : <textarea value={d.notes} onChange={e => update("notes", e.target.value)} placeholder="Additional notes, context or next actions..." rows={2} style={{ ...inputStyle, resize: "vertical", minHeight: "56px" }} />}
@@ -175,12 +206,35 @@
       const [activePillar, setActivePillar] = useState(null);
       const [businessName, setBusinessName] = useState("");
       const [isPrinting, setIsPrinting] = useState(false);
+      // customSystems: { [pillarId]: [{id, name, description, defaultChecklist, automationHints}] }
+      const [customSystems, setCustomSystems] = useState({});
 
       const updateSystem = (id, data) => setSystemData(prev => ({ ...prev, [id]: data }));
-      const allSystems = PILLARS.flatMap(p => p.systems);
+
+      const addCustomSystem = (pillarId) => {
+        const newId = `custom_${pillarId}_${Date.now()}`;
+        const newSystem = { id: newId, name: "New Custom System", description: "", defaultChecklist: ["Add your first step"], automationHints: "" };
+        setCustomSystems(prev => ({ ...prev, [pillarId]: [...(prev[pillarId] || []), newSystem] }));
+      };
+
+      const deleteCustomSystem = (pillarId, systemId) => {
+        setCustomSystems(prev => ({ ...prev, [pillarId]: (prev[pillarId] || []).filter(s => s.id !== systemId) }));
+        setSystemData(prev => { const n = { ...prev }; delete n[systemId]; return n; });
+      };
+
+      const renameCustomSystem = (pillarId, systemId, field, value) => {
+        setCustomSystems(prev => ({
+          ...prev,
+          [pillarId]: (prev[pillarId] || []).map(s => s.id === systemId ? { ...s, [field]: value } : s)
+        }));
+      };
+
+      const allSystems = PILLARS.flatMap(p => [...p.systems, ...(customSystems[p.id] || [])]);
       const activeCount = allSystems.filter(s => systemData[s.id]?.status === "Active").length;
       const inProgressCount = allSystems.filter(s => systemData[s.id]?.status === "In Progress").length;
-      const overallPct = Math.round(((activeCount + inProgressCount * 0.5) / 30) * 100);
+      const totalCount = allSystems.length;
+      const overallPct = Math.round(((activeCount + inProgressCount * 0.5) / totalCount) * 100);
+
       const handlePrint = () => { setIsPrinting(true); setTimeout(() => { window.print(); setIsPrinting(false); }, 300); };
       const displayPillars = activePillar ? PILLARS.filter(p => p.id === activePillar) : PILLARS;
 
@@ -205,7 +259,7 @@
               <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
                 <div>
                   <h1 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "800", color: "#fff", lineHeight: 1, letterSpacing: "-0.5px" }}>BASE BUILD<br /><span style={{ color: "#E85C2B" }}>SYSTEM STACK</span></h1>
-                  <p style={{ fontSize: "13px", color: "#555", marginTop: "8px", fontFamily: "Barlow, sans-serif" }}>30 core systems across 6 pillars. Build, document and activate your business operating system.</p>
+                  <p style={{ fontSize: "13px", color: "#555", marginTop: "8px", fontFamily: "Barlow, sans-serif" }}>{totalCount} systems across 6 pillars. Build, document and activate your business operating system.</p>
                 </div>
                 <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
                   <div style={{ textAlign: "center" }}><div style={{ fontSize: "32px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "800", color: "#4caf50", lineHeight: 1 }}>{activeCount}</div><div style={{ fontSize: "10px", color: "#555", fontWeight: "700", letterSpacing: "1px", textTransform: "uppercase" }}>Active</div></div>
@@ -225,22 +279,62 @@
               ))}
             </div>
 
-            {displayPillars.map(pillar => (
-              <div key={pillar.id} style={{ marginBottom: "40px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "16px", paddingBottom: "14px", borderBottom: "1px solid #1a1a1a" }}>
-                  <PillarProgress systems={pillar.systems} systemData={systemData} />
-                  <div>
-                    <div style={{ fontSize: "11px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "700", color: "#E85C2B", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "2px" }}>Pillar {pillar.number}</div>
-                    <h2 style={{ fontSize: "22px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "800", color: "#fff", letterSpacing: "0.3px" }}>{pillar.label.toUpperCase()}</h2>
+            {displayPillars.map(pillar => {
+              const custom = customSystems[pillar.id] || [];
+              const allPillarSystems = [...pillar.systems, ...custom];
+              return (
+                <div key={pillar.id} style={{ marginBottom: "40px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "16px", paddingBottom: "14px", borderBottom: "1px solid #1a1a1a" }}>
+                    <PillarProgress systems={pillar.systems} customSystems={custom} systemData={systemData} />
+                    <div>
+                      <div style={{ fontSize: "11px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "700", color: "#E85C2B", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "2px" }}>Pillar {pillar.number}</div>
+                      <h2 style={{ fontSize: "22px", fontFamily: "Barlow Condensed, sans-serif", fontWeight: "800", color: "#fff", letterSpacing: "0.3px" }}>{pillar.label.toUpperCase()}</h2>
+                    </div>
+                    <div style={{ flex: 1 }} />
+                    <div style={{ textAlign: "right", display: "flex", flexDirection: "column", gap: "4px", alignItems: "flex-end" }}>
+                      <span style={{ fontSize: "12px", color: "#555", fontFamily: "Barlow Condensed, sans-serif" }}>
+                        {allPillarSystems.filter(s => systemData[s.id]?.status === "Active").length}/{allPillarSystems.length} Active
+                      </span>
+                      {custom.length > 0 && <span style={{ fontSize: "10px", color: "#3a6aaa", fontFamily: "Barlow Condensed, sans-serif", letterSpacing: "1px" }}>{custom.length} CUSTOM</span>}
+                    </div>
                   </div>
-                  <div style={{ flex: 1 }} />
-                  <div style={{ textAlign: "right" }}><span style={{ fontSize: "12px", color: "#555", fontFamily: "Barlow Condensed, sans-serif" }}>{pillar.systems.filter(s => systemData[s.id]?.status === "Active").length}/{pillar.systems.length} Active</span></div>
+
+                  {/* Default systems */}
+                  {pillar.systems.map(system => (
+                    <SystemCard key={system.id} system={system} data={systemData[system.id]} onUpdate={updateSystem} isPrinting={isPrinting} isCustom={false} />
+                  ))}
+
+                  {/* Custom systems */}
+                  {custom.map(system => (
+                    <SystemCard
+                      key={system.id}
+                      system={system}
+                      data={systemData[system.id]}
+                      onUpdate={updateSystem}
+                      isPrinting={isPrinting}
+                      isCustom={true}
+                      onDelete={(id) => deleteCustomSystem(pillar.id, id)}
+                      onRename={(id, field, val) => renameCustomSystem(pillar.id, id, field, val)}
+                    />
+                  ))}
+
+                  {/* Add custom system button */}
+                  {!isPrinting && (
+                    <button onClick={() => addCustomSystem(pillar.id)} style={{
+                      width: "100%", padding: "10px", marginTop: "4px",
+                      background: "transparent", border: "1px dashed #1e2a3a",
+                      borderRadius: "6px", color: "#3a6aaa", cursor: "pointer",
+                      fontSize: "11px", fontFamily: "Barlow Condensed, sans-serif",
+                      fontWeight: "700", letterSpacing: "1.5px", textTransform: "uppercase",
+                      transition: "all 0.15s"
+                    }}
+                      onMouseEnter={e => { e.target.style.borderColor = "#5B8AE8"; e.target.style.color = "#5B8AE8"; e.target.style.background = "#0a1525"; }}
+                      onMouseLeave={e => { e.target.style.borderColor = "#1e2a3a"; e.target.style.color = "#3a6aaa"; e.target.style.background = "transparent"; }}
+                    >+ Add Custom System to {pillar.label}</button>
+                  )}
                 </div>
-                {pillar.systems.map(system => (
-                  <SystemCard key={system.id} system={system} data={systemData[system.id]} onUpdate={updateSystem} isPrinting={isPrinting} />
-                ))}
-              </div>
-            ))}
+              );
+            })}
 
             <div style={{ borderTop: "1px solid #1a1a1a", paddingTop: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span style={{ fontSize: "11px", color: "#333", fontFamily: "Barlow Condensed, sans-serif", letterSpacing: "1px" }}>VINCERE COACHING & CONSULTING — TRADE BUSINESS SYSTEM STACK</span>
