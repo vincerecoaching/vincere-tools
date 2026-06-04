@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Efficiency Calculator | Vincere Coaching</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+ :root {
+ --orange: #E85C2B;
+ --orange-light: #FF7A4D;
+ --black: #0A0A0A;
+ --bg: #111111;
+ --surface: #1A1A1A;
+ --surface2: #222222;
+ --border: #2E2E2E;
+ --border-light: #3A3A3A;
+ --text: #F0F0F0;
+ --text-muted: #888888;
+ --text-dim: #444444;
+ --green: #22C55E;
+ --yellow-ui: #F59E0B;
+ --red: #EF4444;
+ --input-bg: #2A2200;
+ --input-border: #C88000;
+ --input-text: #FFD166;
+ --radius: 8px;
+ --radius-lg: 12px;
+ }
+ * { box-sizing: border-box; margin: 0; padding: 0; }
+ body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; font-size: 14px; min-height: 100vh; }
+
+ nav { position: sticky; top: 0; z-index: 100; background: var(--black); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; height: 56px; }
+ .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; }
+ .nav-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); border: 1px solid var(--border-light); padding: 4px 10px; border-radius: 4px; }
+ .nav-right { display: flex; align-items: center; gap: 10px; }
+
+ .btn-primary { background: var(--orange); color: #fff; border: none; padding: 8px 18px; border-radius: var(--radius); font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: background 0.15s; }
+ .btn-primary:hover { background: var(--orange-light); }
+ .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border-light); padding: 8px 18px; border-radius: var(--radius); font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
+ .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+ .btn-sm { padding: 6px 14px; font-size: 12px; }
+ .btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); padding: 5px 12px; border-radius: var(--radius); font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
+ .btn-danger:hover { background: var(--red); color: #fff; }
+
+ .page { max-width: 1040px; margin: 0 auto; padding: 36px 24px 80px; }
+
+ .page-header { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+ .page-title { font-family: 'Barlow Condensed', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; line-height: 1; }
+ .page-title span { color: var(--orange); }
+ .page-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 7px; line-height: 1.5; }
+ .biz-field { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+ .biz-field label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+ .biz-field input { background: var(--surface2); border: 1px solid var(--border-light); color: var(--text); font-family: 'Barlow', sans-serif; font-size: 14px; padding: 8px 12px; border-radius: var(--radius); width: 220px; }
+ .biz-field input:focus { outline: none; border-color: var(--orange); }
+
+ .tabs { display: flex; gap: 4px; margin-bottom: 28px; border-bottom: 1px solid var(--border); }
+ .tab { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 10px 20px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; }
+ .tab:hover { color: var(--text); }
+ .tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+ .month-strip { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px 20px; }
+ .month-strip-left { display: flex; align-items: center; gap: 16px; }
+ .month-label-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); }
+ .month-input { background: var(--input-bg); border: 1px solid var(--input-border); color: var(--input-text); font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; padding: 7px 12px; border-radius: var(--radius); letter-spacing: 1px; }
+ .month-input:focus { outline: none; border-color: #FFB800; }
+ .month-input::-webkit-calendar-picker-indicator { filter: invert(0.7) sepia(1) saturate(3) hue-rotate(5deg); }
+
+ .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+
+ .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+ .card-header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+ .card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); }
+ .card-body { padding: 0 20px; }
+
+ .input-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--border); gap: 12px; }
+ .input-row:last-child { border-bottom: none; }
+ .input-label-wrap { flex: 1; min-width: 0; }
+ .input-label { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; }
+ .input-hint { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+
+ .input-combo { display: flex; align-items: stretch; width: 160px; flex-shrink: 0; }
+ .input-adorn {
+ background: #1E1600;
+ border: 1px solid var(--input-border);
+ color: var(--input-text);
+ font-family: 'Barlow Condensed', sans-serif;
+ font-size: 12px; font-weight: 700;
+ padding: 0 9px;
+ display: flex; align-items: center; justify-content: center;
+ white-space: nowrap; flex-shrink: 0;
+ opacity: 0.85;
+ line-height: 1;
+ }
+ .input-adorn.left { border-right: none; border-radius: var(--radius) 0 0 var(--radius); }
+ .input-adorn.right { border-left: none; border-radius: 0 var(--radius) var(--radius) 0; }
+
+ input.yi {
+ background: var(--input-bg);
+ border: 1px solid var(--input-border);
+ color: var(--input-text);
+ font-family: 'Barlow Condensed', sans-serif;
+ font-size: 15px; font-weight: 700;
+ padding: 8px 10px;
+ flex: 1; min-width: 0;
+ text-align: right;
+ transition: border-color 0.15s;
+ }
+ input.yi:focus { outline: none; border-color: #FFB800; box-shadow: 0 0 0 2px rgba(255,184,0,0.12); }
+ input.yi.alone { border-radius: var(--radius); }
+ input.yi.left-adorn { border-radius: 0 var(--radius) var(--radius) 0; }
+ input.yi.right-adorn { border-radius: var(--radius) 0 0 var(--radius); }
+ input.yi.both-adorn { border-radius: 0; }
+
+ .calc-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--border); gap: 12px; }
+ .calc-row:last-child { border-bottom: none; }
+ .calc-label { font-size: 13px; color: var(--text-muted); flex: 1; }
+ .calc-formula { font-size: 10px; color: var(--text-dim); margin-top: 2px; font-style: italic; }
+ .calc-value { font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; color: var(--text); text-align: right; min-width: 150px; white-space: nowrap; }
+
+ .eff-card { margin-bottom: 20px; }
+ .eff-body { padding: 26px 24px 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+ .eff-main { display: flex; flex-direction: column; gap: 4px; }
+ .eff-sublabel { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); }
+ .eff-number { font-family: 'Barlow Condensed', sans-serif; font-size: 76px; font-weight: 900; line-height: 1; letter-spacing: -2px; color: var(--text-muted); }
+ .eff-number.green { color: var(--green); }
+ .eff-number.yellow { color: var(--yellow-ui); }
+ .eff-number.red { color: var(--red); }
+ .eff-pill { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 7px 18px; border-radius: 20px; margin-top: 6px; display: inline-block; }
+ .eff-pill.green { background: rgba(34,197,94,0.15); color: var(--green); }
+ .eff-pill.yellow { background: rgba(245,158,11,0.15); color: var(--yellow-ui); }
+ .eff-pill.red { background: rgba(239,68,68,0.15); color: var(--red); }
+ .eff-pill.neutral{ background: rgba(255,255,255,0.07); color: var(--text-muted); }
+ .eff-bar-wrap { padding: 0 24px 22px; }
+ .eff-bar-track { background: var(--surface2); border-radius: 4px; height: 8px; position: relative; overflow: visible; }
+ .eff-bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; max-width: 100%; }
+ .eff-bar-fill.green { background: var(--green); }
+ .eff-bar-fill.yellow { background: var(--yellow-ui); }
+ .eff-bar-fill.red { background: var(--red); }
+ .eff-bar-fill.neutral{ background: var(--border-light); }
+
+ .history-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px; }
+ .history-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+ .history-title { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+ .htable { width: 100%; border-collapse: collapse; font-size: 13px; }
+ .htable th { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--border); background: var(--surface2); white-space: nowrap; }
+ .htable th:first-child { text-align: left; }
+ .htable td { padding: 11px 14px; border-bottom: 1px solid var(--border); text-align: right; color: var(--text); font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; white-space: nowrap; }
+ .htable td:first-child { text-align: left; font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 13px; }
+ .htable tr:last-child td { border-bottom: none; }
+ .htable tr:hover td { background: var(--surface2); }
+ .eff-cell { font-weight: 800; font-size: 15px; }
+ .eff-cell.green { color: var(--green); }
+ .eff-cell.yellow { color: var(--yellow-ui); }
+ .eff-cell.red { color: var(--red); }
+
+ .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px 24px; margin-bottom: 20px; }
+ .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+ .chart-title { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); }
+ canvas { width: 100% !important; display: block; }
+
+ .empty { text-align: center; padding: 56px 20px; color: var(--text-muted); }
+ .empty-icon { font-size: 36px; margin-bottom: 10px; opacity: 0.35; }
+ .empty h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 5px; }
+ .empty p { font-size: 12px; }
+
+ @media (max-width: 720px) { .grid-2col { grid-template-columns: 1fr; } .eff-body { flex-direction: column; align-items: flex-start; } }
+ @media print { nav { display: none !important; } body { background: #fff; color: #000; } }
+</style>
+</head>
+<body>
+
+<nav>
+ <div class="nav-logo">VINCERE COACHING</div>
+ <div class="nav-tag">Efficiency Calculator</div>
+ <div class="nav-right">
+ <button class="btn-ghost btn-sm" onclick="exportJSON()">Export</button>
+ <button class="btn-ghost btn-sm" onclick="document.getElementById('importFile').click()">Import</button>
+ <button class="btn-ghost btn-sm" onclick="clearInputs()">Clear</button>
+ </div>
+</nav>
+
+<div class="page">
+
+ <div class="page-header">
+ <div>
+ <div class="page-title">Efficiency <span>Calculator</span></div>
+ <div class="page-subtitle">Enter monthly actuals below. Calculations update live. Save each month to track trends.</div>
+ </div>
+ <div class="biz-field">
+ <label>Business Name</label>
+ <input type="text" id="businessName" placeholder="Your Business" onblur="persistBiz()">
+ </div>
+ </div>
+
+ <div class="tabs">
+ <div class="tab active" id="tbtn-calc" onclick="switchTab('calc')">Calculator</div>
+ <div class="tab" id="tbtn-trends" onclick="switchTab('trends')">Trends &amp; History</div>
+ </div>
+
+ <div id="tab-calc">
+
+ <div class="month-strip">
+ <div class="month-strip-left">
+ <span class="month-label-tag">Month</span>
+ <input type="month" class="month-input" id="fMonth" onchange="calc()">
+ </div>
+ <div style="display:flex;align-items:center;gap:14px;">
+ <span style="font-size:11px;color:var(--text-muted);letter-spacing:1px;">YELLOW FIELDS = YOUR INPUTS</span>
+ <button class="btn-primary btn-sm" onclick="saveMonth()">Save Month</button>
+ </div>
+ </div>
+
+ <div class="grid-2col">
+
+ <div class="card">
+ <div class="card-header"><span class="card-title">Monthly Inputs</span></div>
+ <div class="card-body">
+
+ <div class="input-row">
+ <div class="input-label-wrap"><div class="input-label">Revenue</div></div>
+ <div class="input-combo">
+ <span class="input-adorn left">$</span>
+ <input type="number" class="yi left-adorn" id="iRevenue" placeholder="0" min="0" oninput="calc()">
+ </div>
+ </div>
+
+ <div class="input-row">
+ <div class="input-label-wrap"><div class="input-label">Material Spend</div></div>
+ <div class="input-combo">
+ <span class="input-adorn left">$</span>
+ <input type="number" class="yi left-adorn" id="iMaterialSpend" placeholder="0" min="0" oninput="calc()">
+ </div>
+ </div>
+
+ <div class="input-row">
+ <div class="input-label-wrap">
+ <div class="input-label">Material Mark Up</div>
+ <div class="input-hint">Applied to material spend</div>
+ </div>
+ <div class="input-combo">
+ <span class="input-adorn left">%</span>
+ <input type="number" class="yi left-adorn" id="iMarkup" placeholder="0" min="0" step="0.1" oninput="calc()">
+ </div>
+ </div>
+
+ <div class="input-row">
+ <div class="input-label-wrap">
+ <div class="input-label">Billable Resources</div>
+ <div class="input-hint">No. of billable people</div>
+ </div>
+ <div class="input-combo">
+ <input type="number" class="yi alone" id="iBillableRes" placeholder="0" min="0" step="0.5" oninput="calc()">
+ </div>
+ </div>
+
+ <div class="input-row">
+ <div class="input-label-wrap"><div class="input-label">Work Days in Month</div></div>
+ <div class="input-combo">
+ <input type="number" class="yi alone" id="iWorkDays" placeholder="0" min="1" max="31" oninput="calc()">
+ </div>
+ </div>
+
+ <div class="input-row">
+ <div class="input-label-wrap">
+ <div class="input-label">Work Hours per Day</div>
+ <div class="input-hint">e.g. 8 or 10 hr days</div>
+ </div>
+ <div class="input-combo">
+ <input type="number" class="yi right-adorn" id="iHoursPerDay" placeholder="8" min="1" max="24" step="0.5" oninput="calc()">
+ <span class="input-adorn right">hrs</span>
+ </div>
+ </div>
+
+ <div class="input-row">
+ <div class="input-label-wrap">
+ <div class="input-label">Charge-Out Rate</div>
+ <div class="input-hint">Target $/hr per resource</div>
+ </div>
+ <div class="input-combo">
+ <span class="input-adorn left">$</span>
+ <input type="number" class="yi both-adorn" id="iChargeOut" placeholder="0" min="0" step="0.01" oninput="calc()">
+ <span class="input-adorn right">/hr</span>
+ </div>
+ </div>
+
+ </div>
+ </div>
+
+ <div class="card">
+ <div class="card-header"><span class="card-title">Calculation Chain</span></div>
+ <div class="card-body">
+
+ <div class="calc-row">
+ <div class="calc-label">
+ Labour Billed
+ <div class="calc-formula">Revenue &minus; (Material Spend &times; (1 + Markup%))</div>
+ </div>
+ <div class="calc-value" id="rLabourBilled">&mdash;</div>
+ </div>
+
+ <div class="calc-row">
+ <div class="calc-label">
+ Labour Billed per Resource
+ <div class="calc-formula">Labour Billed &divide; Billable Resources</div>
+ </div>
+ <div class="calc-value" id="rPerResource">&mdash;</div>
+ </div>
+
+ <div class="calc-row">
+ <div class="calc-label">
+ Labour Billed per Day
+ <div class="calc-formula">Per Resource &divide; Work Days</div>
+ </div>
+ <div class="calc-value" id="rPerDay">&mdash;</div>
+ </div>
+
+ <div class="calc-row">
+ <div class="calc-label">
+ Labour Billed per Hour
+ <div class="calc-formula">Per Day &divide; Hours per Day</div>
+ </div>
+ <div class="calc-value" id="rPerHour">&mdash;</div>
+ </div>
+
+ <div class="calc-row">
+ <div class="calc-label">
+ Max Capacity Hours
+ <div class="calc-formula">Resources &times; Work Days &times; Hours per Day</div>
+ </div>
+ <div class="calc-value" id="rMaxCapacity">&mdash;</div>
+ </div>
+
+ <div class="calc-row">
+ <div class="calc-label">
+ Hours Billed (implied)
+ <div class="calc-formula">Labour Billed &divide; Charge-Out Rate</div>
+ </div>
+ <div class="calc-value" id="rHoursBilled">&mdash;</div>
+ </div>
+
+ </div>
+ </div>
+ </div>
+
+ <div class="card eff-card">
+ <div class="eff-body">
+ <div class="eff-main">
+ <div class="eff-sublabel">Overall Efficiency</div>
+ <div class="eff-number" id="effNumber">&mdash;</div>
+ <div class="eff-sublabel" style="margin-top:4px;">Labour Billed per Hour &divide; Charge-Out Rate</div>
+ <div class="eff-pill neutral" id="effPill">Enter data to calculate</div>
+ </div>
+ <div style="text-align:right;">
+ <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">Remaining Capacity</div>
+ <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--text-muted);margin-bottom:2px;">Hours</div>
+ <div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;color:var(--orange);line-height:1;margin-bottom:10px;" id="effCapHours">&mdash;</div>
+ <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--text-muted);margin-bottom:2px;">Revenue Gap</div>
+ <div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;color:var(--orange);line-height:1;" id="effCapRev">&mdash;</div>
+ </div>
+ </div>
+ <div class="eff-bar-wrap">
+ <div class="eff-bar-track">
+ <div class="eff-bar-fill neutral" id="effBar" style="width:0%"></div>
+ </div>
+ <div style="display:flex;justify-content:space-between;margin-top:6px;">
+ <span style="font-size:10px;color:var(--text-dim);">0%</span>
+ <span style="font-size:10px;color:var(--text-dim);">50%</span>
+ <span style="font-size:10px;color:var(--text-dim);">100%</span>
+ </div>
+ </div>
+ </div>
+
+ </div>
+
+ <div id="tab-trends" style="display:none">
+
+ <div class="history-card">
+ <div class="history-header">
+ <div class="history-title">Monthly History</div>
+ <div style="display:flex;gap:8px;align-items:center;">
+ <span style="font-size:11px;color:var(--text-muted);">Save months from the Calculator tab</span>
+ </div>
+ </div>
+ <div id="historyContent"></div>
+ </div>
+
+ <div class="chart-card">
+ <div class="chart-header">
+ <div class="chart-title">Efficiency % &mdash; Month on Month</div>
+ </div>
+ <canvas id="chartEff" height="220"></canvas>
+ </div>
+
+ <div class="grid-2col">
+ <div class="chart-card">
+ <div class="chart-header"><div class="chart-title">Revenue</div></div>
+ <canvas id="chartRev" height="200"></canvas>
+ </div>
+ <div class="chart-card">
+ <div class="chart-header"><div class="chart-title">Labour Billed per Hour</div></div>
+ <canvas id="chartLBPH" height="200"></canvas>
+ </div>
+ </div>
+
+ <div class="grid-2col">
+ <div class="chart-card">
+ <div class="chart-header"><div class="chart-title">Hours Billed vs Max Capacity</div></div>
+ <canvas id="chartHours" height="200"></canvas>
+ </div>
+ <div class="chart-card">
+ <div class="chart-header"><div class="chart-title">Revenue Gap (Remaining Capacity)</div></div>
+ <canvas id="chartGap" height="200"></canvas>
+ </div>
+ </div>
+
+ </div>
+
+</div>
+
+<input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+var records = [];
+var charts = {};
+var ML = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function gv(id) { var v = document.getElementById(id).value; return v === '' ? null : parseFloat(v); }
+
+function fmt$(n, dec) {
+ if (n === null || n === undefined || isNaN(n)) return '\u2014';
+ dec = dec !== undefined ? dec : 2;
+ return '$' + n.toLocaleString('en-AU', {minimumFractionDigits:dec, maximumFractionDigits:dec});
+}
+function fmtR$(n) {
+ if (n === null || n === undefined || isNaN(n)) return '\u2014';
+ return '$' + Math.round(n).toLocaleString('en-AU');
+}
+function fmtPct(n) {
+ if (n === null || n === undefined || isNaN(n)) return '\u2014';
+ return n.toFixed(1) + '%';
+}
+function fmtHrs(n) {
+ if (n === null || n === undefined || isNaN(n)) return '\u2014';
+ return n.toLocaleString('en-AU', {minimumFractionDigits:1, maximumFractionDigits:1}) + ' hrs';
+}
+function monthLabel(ym) {
+ if (!ym) return '';
+ var p = ym.split('-');
+ return ML[parseInt(p[1])-1] + ' ' + p[0];
+}
+function effColor(e) {
+ if (e === null) return 'neutral';
+ if (e >= 80) return 'green';
+ if (e >= 60) return 'yellow';
+ return 'red';
+}
+function sorted() { return records.slice().sort(function(a,b){ return a.month.localeCompare(b.month); }); }
+
+function switchTab(tab) {
+ ['calc','trends'].forEach(function(t) {
+ document.getElementById('tab-'+t).style.display = 'none';
+ document.getElementById('tbtn-'+t).classList.remove('active');
+ });
+ document.getElementById('tab-'+tab).style.display = '';
+ document.getElementById('tbtn-'+tab).classList.add('active');
+ if (tab === 'trends') {
+ renderHistory();
+ setTimeout(function(){ renderCharts(); }, 50);
+ }
+}
+
+function calc() {
+ var revenue = gv('iRevenue');
+ var matSpend = gv('iMaterialSpend');
+ var markup = gv('iMarkup');
+ var resources = gv('iBillableRes');
+ var workDays = gv('iWorkDays');
+ var hrsPerDay = gv('iHoursPerDay');
+ var corRate = gv('iChargeOut');
+
+ var labourBilled = null;
+ if (revenue !== null) {
+ if (matSpend !== null && markup !== null) {
+ labourBilled = revenue - (matSpend * (1 + markup / 100));
+ } else if (matSpend === null && markup === null) {
+ labourBilled = revenue;
+ }
+ }
+
+ var perResource = (labourBilled !== null && resources !== null && resources > 0) ? labourBilled / resources : null;
+ var perDay = (perResource !== null && workDays !== null && workDays > 0) ? perResource / workDays : null;
+ var perHour = (perDay !== null && hrsPerDay !== null && hrsPerDay > 0) ? perDay / hrsPerDay : null;
+ var maxCapHours = (resources !== null && workDays !== null && hrsPerDay !== null) ? resources * workDays * hrsPerDay : null;
+ var hoursBilled = (labourBilled !== null && corRate !== null && corRate > 0) ? labourBilled / corRate : null;
+ var efficiency = (perHour !== null && corRate !== null && corRate > 0) ? (perHour / corRate) * 100 : null;
+ var capHours = (maxCapHours !== null && hoursBilled !== null) ? maxCapHours - hoursBilled : null;
+ var capRevenue = (capHours !== null && corRate !== null) ? Math.max(capHours, 0) * corRate : null;
+
+ function set(id, val) { document.getElementById(id).innerHTML = val; }
+ set('rLabourBilled', labourBilled !== null ? fmt$(labourBilled, 2) : '&mdash;');
+ set('rPerResource', perResource !== null ? fmt$(perResource, 2) : '&mdash;');
+ set('rPerDay', perDay !== null ? fmt$(perDay, 2) : '&mdash;');
+ set('rPerHour', perHour !== null ? fmt$(perHour, 2) : '&mdash;');
+ set('rMaxCapacity', maxCapHours !== null ? fmtHrs(maxCapHours) : '&mdash;');
+ set('rHoursBilled', hoursBilled !== null ? fmtHrs(hoursBilled) : '&mdash;');
+
+ var tl = effColor(efficiency);
+ var effEl = document.getElementById('effNumber');
+ effEl.className = 'eff-number' + (efficiency !== null ? ' ' + tl : '');
+ effEl.innerHTML = efficiency !== null ? fmtPct(efficiency) : '&mdash;';
+
+ var pill = document.getElementById('effPill');
+ pill.className = 'eff-pill ' + (efficiency !== null ? tl : 'neutral');
+ pill.textContent = efficiency === null ? 'Enter data to calculate'
+ : tl === 'green' ? 'Strong Efficiency'
+ : tl === 'yellow' ? 'Moderate — Room to Improve'
+ : 'Low Efficiency';
+
+ var bar = document.getElementById('effBar');
+ bar.className = 'eff-bar-fill ' + (efficiency !== null ? tl : 'neutral');
+ bar.style.width = efficiency !== null ? Math.min(Math.max(efficiency, 0), 100) + '%' : '0%';
+
+ set('effCapHours', capHours !== null ? fmtHrs(Math.max(capHours, 0)) : '&mdash;');
+ set('effCapRev', capRevenue !== null ? fmtR$(capRevenue) : '&mdash;');
+
+ saveCalcState({
+ revenue: revenue, matSpend: matSpend, markup: markup, resources: resources,
+ workDays: workDays, hrsPerDay: hrsPerDay, corRate: corRate,
+ labourBilled: labourBilled, perResource: perResource, perDay: perDay,
+ perHour: perHour, maxCapHours: maxCapHours, hoursBilled: hoursBilled,
+ efficiency: efficiency, capHours: capHours, capRevenue: capRevenue
+ });
+}
+
+function saveMonth() {
+ var month = document.getElementById('fMonth').value;
+ if (!month) { alert('Select a month first.'); return; }
+
+ var revenue = gv('iRevenue');
+ var matSpend = gv('iMaterialSpend');
+ var markup = gv('iMarkup');
+ var resources = gv('iBillableRes');
+ var workDays = gv('iWorkDays');
+ var hrsPerDay = gv('iHoursPerDay');
+ var corRate = gv('iChargeOut');
+
+ if (revenue === null) { alert('Enter at least a Revenue figure before saving.'); return; }
+
+ var labourBilled = null;
+ if (matSpend !== null && markup !== null) {
+ labourBilled = revenue - (matSpend * (1 + markup / 100));
+ } else {
+ labourBilled = revenue;
+ }
+ var perResource = (labourBilled !== null && resources && resources > 0) ? labourBilled / resources : null;
+ var perDay = (perResource !== null && workDays && workDays > 0) ? perResource / workDays : null;
+ var perHour = (perDay !== null && hrsPerDay && hrsPerDay > 0) ? perDay / hrsPerDay : null;
+ var maxCapHours = (resources && workDays && hrsPerDay) ? resources * workDays * hrsPerDay : null;
+ var hoursBilled = (labourBilled !== null && corRate && corRate > 0) ? labourBilled / corRate : null;
+ var efficiency = (perHour !== null && corRate && corRate > 0) ? (perHour / corRate) * 100 : null;
+ var capHours = (maxCapHours !== null && hoursBilled !== null) ? maxCapHours - hoursBilled : null;
+ var capRevenue = (capHours !== null && corRate) ? Math.max(capHours, 0) * corRate : null;
+
+ var existing = records.findIndex(function(r){ return r.month === month; });
+ var entry = {
+ month: month, revenue: revenue, matSpend: matSpend, markup: markup,
+ resources: resources, workDays: workDays, hrsPerDay: hrsPerDay, corRate: corRate,
+ labourBilled: labourBilled, perResource: perResource, perDay: perDay,
+ perHour: perHour, maxCapHours: maxCapHours, hoursBilled: hoursBilled,
+ efficiency: efficiency, capHours: capHours, capRevenue: capRevenue
+ };
+
+ if (existing >= 0) {
+ if (!confirm('A record for ' + monthLabel(month) + ' already exists. Overwrite?')) return;
+ records[existing] = entry;
+ } else {
+ records.push(entry);
+ }
+
+ saveAll();
+ switchTab('trends');
+ renderHistory();
+ setTimeout(function(){ renderCharts(); }, 60);
+}
+
+function deleteRecord(month) {
+ if (!confirm('Delete record for ' + monthLabel(month) + '?')) return;
+ records = records.filter(function(r){ return r.month !== month; });
+ saveAll();
+ renderHistory();
+ renderCharts();
+}
+
+function renderHistory() {
+ var s = sorted();
+ var el = document.getElementById('historyContent');
+ if (!s.length) {
+ el.innerHTML = '<div class="empty"><div class="empty-icon">&#128202;</div><h3>No Records Yet</h3><p>Fill in the Calculator and hit Save Month.</p></div>';
+ return;
+ }
+ var rev = s.slice().reverse();
+ var html = '<table class="htable"><thead><tr>' +
+ '<th>Month</th><th>Revenue</th><th>Labour Billed</th>' +
+ '<th>Hours Billed</th><th>Max Cap Hrs</th>' +
+ '<th>$/hr Billed</th><th>Charge-Out</th>' +
+ '<th>Efficiency</th><th>Cap Hours</th><th>Rev Gap</th><th></th>' +
+ '</tr></thead><tbody>';
+ rev.forEach(function(r) {
+ var tl = effColor(r.efficiency);
+ html += '<tr>' +
+ '<td><strong>' + monthLabel(r.month) + '</strong></td>' +
+ '<td>' + (r.revenue !== null ? fmtR$(r.revenue) : '&mdash;') + '</td>' +
+ '<td>' + (r.labourBilled !== null ? fmtR$(r.labourBilled) : '&mdash;') + '</td>' +
+ '<td>' + (r.hoursBilled !== null ? fmtHrs(r.hoursBilled) : '&mdash;') + '</td>' +
+ '<td>' + (r.maxCapHours !== null ? fmtHrs(r.maxCapHours) : '&mdash;') + '</td>' +
+ '<td>' + (r.perHour !== null ? fmt$(r.perHour, 2) : '&mdash;') + '</td>' +
+ '<td>' + (r.corRate !== null ? '$' + r.corRate.toFixed(2) : '&mdash;') + '</td>' +
+ '<td class="eff-cell ' + tl + '">' + (r.efficiency !== null ? fmtPct(r.efficiency) : '&mdash;') + '</td>' +
+ '<td>' + (r.capHours !== null ? fmtHrs(Math.max(r.capHours,0)) : '&mdash;') + '</td>' +
+ '<td>' + (r.capRevenue !== null ? fmtR$(r.capRevenue) : '&mdash;') + '</td>' +
+ '<td><button class="btn-danger" onclick="deleteRecord(\'' + r.month + '\')">Del</button></td>' +
+ '</tr>';
+ });
+ html += '</tbody></table>';
+ el.innerHTML = html;
+}
+
+function mkChart(id, type, labels, datasets, opts) {
+ if (charts[id]) { charts[id].destroy(); }
+ var ctx = document.getElementById(id).getContext('2d');
+ charts[id] = new Chart(ctx, {
+ type: type,
+ data: { labels: labels, datasets: datasets },
+ options: Object.assign({
+ responsive: true,
+ maintainAspectRatio: true,
+ plugins: { legend: { display: datasets.length > 1, labels: { color: '#888', font: { family: 'Barlow', size: 11 } } } },
+ scales: {
+ x: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 } } },
+ y: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 } } }
+ }
+ }, opts || {})
+ });
+}
+
+function renderCharts() {
+ var s = sorted();
+ if (!s.length) return;
+ var labels = s.map(function(r){ return monthLabel(r.month); });
+ var orange = '#E85C2B';
+ var orangeFade = 'rgba(232,92,43,0.15)';
+ var grey = '#3A3A3A';
+ var greyFade = 'rgba(58,58,58,0.3)';
+
+ var effData = s.map(function(r){ return r.efficiency; });
+ var effColors = effData.map(function(e){
+ if (e === null) return grey;
+ return e >= 80 ? '#22C55E' : e >= 60 ? '#F59E0B' : '#EF4444';
+ });
+
+ mkChart('chartEff', 'line', labels, [{
+ label: 'Efficiency %', data: effData,
+ borderColor: orange, backgroundColor: orangeFade,
+ borderWidth: 2.5, pointBackgroundColor: effColors, pointRadius: 6, pointHoverRadius: 8,
+ tension: 0.35, fill: true, spanGaps: true
+ }], {
+ scales: {
+ x: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 } } },
+ y: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 }, callback: function(v){ return v + '%'; } }, min: 0 }
+ }
+ });
+
+ mkChart('chartRev', 'bar', labels, [{
+ label: 'Revenue', data: s.map(function(r){ return r.revenue; }),
+ backgroundColor: orangeFade, borderColor: orange, borderWidth: 2, borderRadius: 4
+ }], {
+ scales: {
+ x: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 } } },
+ y: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 }, callback: function(v){ return '$' + v.toLocaleString('en-AU'); } } }
+ }
+ });
+
+ mkChart('chartLBPH', 'line', labels, [
+ { label: 'Labour Billed/hr', data: s.map(function(r){ return r.perHour; }), borderColor: orange, backgroundColor: orangeFade, borderWidth: 2.5, pointRadius: 4, tension: 0.35, fill: true, spanGaps: true },
+ { label: 'Charge-Out Rate', data: s.map(function(r){ return r.corRate; }), borderColor: '#3A3A3A', backgroundColor: 'transparent', borderWidth: 2, borderDash: [5,4], pointRadius: 3, tension: 0.35, fill: false, spanGaps: true }
+ ], {
+ scales: {
+ x: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 } } },
+ y: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 }, callback: function(v){ return '$' + v; } } }
+ },
+ plugins: { legend: { display: true, labels: { color: '#888', font: { family: 'Barlow', size: 11 }, boxWidth: 12 } } }
+ });
+
+ mkChart('chartHours', 'bar', labels, [
+ { label: 'Max Capacity', data: s.map(function(r){ return r.maxCapHours; }), backgroundColor: greyFade, borderColor: grey, borderWidth: 1, borderRadius: 4 },
+ { label: 'Hours Billed', data: s.map(function(r){ return r.hoursBilled; }), backgroundColor: orangeFade, borderColor: orange, borderWidth: 2, borderRadius: 4 }
+ ], {
+ scales: {
+ x: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 } } },
+ y: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 }, callback: function(v){ return v + ' hrs'; } } }
+ },
+ plugins: { legend: { display: true, labels: { color: '#888', font: { family: 'Barlow', size: 11 }, boxWidth: 12 } } }
+ });
+
+ mkChart('chartGap', 'bar', labels, [{
+ label: 'Revenue Gap', data: s.map(function(r){ return r.capRevenue !== null ? Math.max(r.capRevenue, 0) : null; }),
+ backgroundColor: 'rgba(239,68,68,0.2)', borderColor: '#EF4444', borderWidth: 2, borderRadius: 4, spanGaps: true
+ }], {
+ scales: {
+ x: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 } } },
+ y: { grid: { color: '#2E2E2E' }, ticks: { color: '#888', font: { family: 'Barlow', size: 11 }, callback: function(v){ return '$' + v.toLocaleString('en-AU'); } } }
+ }
+ });
+}
+
+function saveAll() {
+ localStorage.setItem('vincere_eff_history', JSON.stringify(records));
+}
+function saveCalcState(state) {
+ var inputs = {
+ biz: document.getElementById('businessName').value,
+ month: document.getElementById('fMonth').value,
+ revenue: document.getElementById('iRevenue').value,
+ matSpend: document.getElementById('iMaterialSpend').value,
+ markup: document.getElementById('iMarkup').value,
+ resources: document.getElementById('iBillableRes').value,
+ workDays: document.getElementById('iWorkDays').value,
+ hrsPerDay: document.getElementById('iHoursPerDay').value,
+ chargeOut: document.getElementById('iChargeOut').value
+ };
+ localStorage.setItem('vincere_eff_inputs', JSON.stringify(inputs));
+}
+function persistBiz() {
+ var inputs = JSON.parse(localStorage.getItem('vincere_eff_inputs') || '{}');
+ inputs.biz = document.getElementById('businessName').value;
+ localStorage.setItem('vincere_eff_inputs', JSON.stringify(inputs));
+}
+function loadAll() {
+ var h = localStorage.getItem('vincere_eff_history');
+ if (h) { try { records = JSON.parse(h); } catch(e) { records = []; } }
+ var inp = localStorage.getItem('vincere_eff_inputs');
+ if (inp) {
+ try {
+ var s = JSON.parse(inp);
+ if (s.biz) document.getElementById('businessName').value = s.biz;
+ if (s.month) document.getElementById('fMonth').value = s.month;
+ if (s.revenue) document.getElementById('iRevenue').value = s.revenue;
+ if (s.matSpend) document.getElementById('iMaterialSpend').value = s.matSpend;
+ if (s.markup) document.getElementById('iMarkup').value = s.markup;
+ if (s.resources) document.getElementById('iBillableRes').value = s.resources;
+ if (s.workDays) document.getElementById('iWorkDays').value = s.workDays;
+ if (s.hrsPerDay) document.getElementById('iHoursPerDay').value = s.hrsPerDay;
+ if (s.chargeOut) document.getElementById('iChargeOut').value = s.chargeOut;
+ } catch(e) {}
+ }
+}
+
+function clearInputs() {
+ if (!confirm('Clear all inputs?')) return;
+ ['iRevenue','iMaterialSpend','iMarkup','iBillableRes','iWorkDays','iHoursPerDay','iChargeOut'].forEach(function(id){
+ document.getElementById(id).value = '';
+ });
+ calc();
+}
+
+function exportJSON() {
+ var data = { tool: 'Vincere Efficiency Calculator', exported: new Date().toISOString(), business: document.getElementById('businessName').value, history: records };
+ var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+ var a = document.createElement('a');
+ a.href = URL.createObjectURL(blob);
+ a.download = 'vincere_efficiency_' + new Date().toISOString().slice(0,10) + '.json';
+ a.click();
+}
+function handleImport(e) {
+ var file = e.target.files[0];
+ if (!file) return;
+ var reader = new FileReader();
+ reader.onload = function(ev) {
+ try {
+ var data = JSON.parse(ev.target.result);
+ if (data.history && Array.isArray(data.history)) {
+ if (!confirm('Replace all saved records with imported data?')) return;
+ records = data.history;
+ if (data.business) document.getElementById('businessName').value = data.business;
+ saveAll();
+ renderHistory();
+ renderCharts();
+ } else { alert('Invalid file.'); }
+ } catch(err) { alert('Could not read file.'); }
+ };
+ reader.readAsText(file);
+ e.target.value = '';
+}
+
+(function(){
+ var now = new Date();
+ document.getElementById('fMonth').value = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+ loadAll();
+ calc();
+})();
+</script>
+</body>
+</html>
