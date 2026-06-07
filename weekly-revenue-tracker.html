@@ -6,661 +6,679 @@
 <title>Weekly Revenue Tracker | Vincere Coaching</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
- :root {
- --orange: #E85C2B;
- --orange-light: #FF7A4D;
- --orange-dim: rgba(232,92,43,0.15);
- --black: #0A0A0A;
- --surface: #141414;
- --surface2: #1E1E1E;
- --surface3: #282828;
- --border: rgba(255,255,255,0.08);
- --text: #F0F0F0;
- --text-muted: #888;
- --green: #2ECC71;
- --green-dim: rgba(46,204,113,0.15);
- --yellow: #F39C12;
- --yellow-dim: rgba(243,156,18,0.15);
- --red: #E74C3C;
- --red-dim: rgba(231,76,60,0.15);
- }
+  :root {
+    --orange: #E85C2B;
+    --orange-light: #FF7A4D;
+    --orange-dim: rgba(232,92,43,0.15);
+    --black: #0A0A0A;
+    --surface: #141414;
+    --surface2: #1E1E1E;
+    --surface3: #282828;
+    --border: rgba(255,255,255,0.08);
+    --text: #F0F0F0;
+    --text-muted: #888;
+    --green: #2ECC71;
+    --green-dim: rgba(46,204,113,0.15);
+    --yellow: #F39C12;
+    --yellow-dim: rgba(243,156,18,0.15);
+    --red: #E74C3C;
+    --red-dim: rgba(231,76,60,0.15);
+  }
 
- * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
- body {
- background: var(--black);
- color: var(--text);
- font-family: 'Barlow', sans-serif;
- min-height: 100vh;
- }
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+  }
 
- nav {
- position: sticky;
- top: 0;
- z-index: 100;
- background: rgba(10,10,10,0.95);
- backdrop-filter: blur(12px);
- border-bottom: 1px solid var(--border);
- padding: 0 24px;
- height: 60px;
- display: flex;
- align-items: center;
- justify-content: space-between;
- }
- .nav-brand {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 900;
- font-size: 22px;
- color: var(--orange);
- letter-spacing: 1px;
- }
- .nav-tag {
- font-family: 'Barlow Condensed', sans-serif;
- font-size: 11px;
- font-weight: 700;
- letter-spacing: 2px;
- text-transform: uppercase;
- color: var(--text-muted);
- border: 1px solid var(--border);
- padding: 3px 10px;
- border-radius: 3px;
- }
- .nav-right {
- display: flex;
- align-items: center;
- gap: 12px;
- }
- .btn-primary {
- background: var(--orange);
- color: #fff;
- border: none;
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 700;
- font-size: 13px;
- letter-spacing: 1px;
- text-transform: uppercase;
- padding: 8px 18px;
- border-radius: 4px;
- cursor: pointer;
- transition: background 0.2s;
- }
- .btn-primary:hover { background: var(--orange-light); }
- .btn-ghost {
- background: transparent;
- color: var(--text-muted);
- border: 1px solid var(--border);
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 600;
- font-size: 13px;
- letter-spacing: 1px;
- text-transform: uppercase;
- padding: 7px 16px;
- border-radius: 4px;
- cursor: pointer;
- transition: all 0.2s;
- }
- .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    color: var(--orange);
+    letter-spacing: 1px;
+  }
+  .nav-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 3px;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--orange-light); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
 
- .page { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+  /* LAYOUT */
+  .page { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
 
- .month-nav {
- display: flex;
- align-items: center;
- gap: 16px;
- margin-bottom: 28px;
- }
- .month-nav h1 {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 900;
- font-size: 36px;
- letter-spacing: 1px;
- flex: 1;
- }
- .month-btn {
- background: var(--surface2);
- border: 1px solid var(--border);
- color: var(--text);
- width: 36px; height: 36px;
- border-radius: 4px;
- cursor: pointer;
- font-size: 18px;
- display: flex; align-items: center; justify-content: center;
- transition: all 0.2s;
- }
- .month-btn:hover { border-color: var(--orange); color: var(--orange); }
+  /* MONTH HEADER */
+  .month-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .month-nav h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    letter-spacing: 1px;
+    flex: 1;
+  }
+  .month-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 36px; height: 36px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .month-btn:hover { border-color: var(--orange); color: var(--orange); }
 
- .targets-card {
- background: var(--surface);
- border: 1px solid var(--border);
- border-radius: 8px;
- padding: 24px;
- margin-bottom: 24px;
- }
- .card-title {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 800;
- font-size: 13px;
- letter-spacing: 2px;
- text-transform: uppercase;
- color: var(--text-muted);
- margin-bottom: 20px;
- display: flex;
- align-items: center;
- gap: 8px;
- }
- .card-title::after {
- content: '';
- flex: 1;
- height: 1px;
- background: var(--border);
- }
+  /* TARGETS CARD */
+  .targets-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
 
- .targets-grid {
- display: grid;
- grid-template-columns: repeat(3, 1fr);
- gap: 16px;
- }
- .target-item {
- background: var(--surface2);
- border-radius: 6px;
- padding: 16px;
- border: 1px solid var(--border);
- position: relative;
- overflow: hidden;
- }
- .target-item::before {
- content: '';
- position: absolute;
- left: 0; top: 0; bottom: 0;
- width: 3px;
- }
- .target-item.red-target::before { background: var(--red); }
- .target-item.yellow-target::before { background: var(--yellow); }
- .target-item.green-target::before { background: var(--green); }
+  .targets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .target-item {
+    background: var(--surface2);
+    border-radius: 6px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .target-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .target-item.red-target::before { background: var(--red); }
+  .target-item.yellow-target::before { background: var(--yellow); }
+  .target-item.green-target::before { background: var(--green); }
 
- .target-label {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 700;
- font-size: 11px;
- letter-spacing: 2px;
- text-transform: uppercase;
- margin-bottom: 8px;
- }
- .target-label.red-label { color: var(--red); }
- .target-label.yellow-label { color: var(--yellow); }
- .target-label.green-label { color: var(--green); }
+  .target-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .target-label.red-label { color: var(--red); }
+  .target-label.yellow-label { color: var(--yellow); }
+  .target-label.green-label { color: var(--green); }
 
- .target-desc {
- font-size: 11px;
- color: var(--text-muted);
- margin-bottom: 10px;
- line-height: 1.4;
- }
+  .target-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
 
- .target-input {
- width: 100%;
- background: var(--surface3);
- border: 1px solid var(--border);
- border-radius: 4px;
- color: var(--text);
- font-family: 'Barlow', sans-serif;
- font-size: 18px;
- font-weight: 700;
- padding: 8px 12px;
- outline: none;
- transition: border-color 0.2s;
- }
- .target-input:focus { border-color: var(--orange); }
+  .target-input {
+    width: 100%;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .target-input:focus { border-color: var(--orange); }
 
- .weeks-header {
- display: flex;
- align-items: center;
- justify-content: space-between;
- margin-bottom: 16px;
- }
- .weeks-title {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 800;
- font-size: 20px;
- letter-spacing: 1px;
- }
- .add-week-btn {
- display: flex;
- align-items: center;
- gap: 6px;
- background: var(--orange-dim);
- border: 1px solid var(--orange);
- color: var(--orange);
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 700;
- font-size: 13px;
- letter-spacing: 1px;
- text-transform: uppercase;
- padding: 7px 14px;
- border-radius: 4px;
- cursor: pointer;
- transition: all 0.2s;
- }
- .add-week-btn:hover { background: var(--orange); color: #fff; }
+  /* WEEKS SECTION */
+  .weeks-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .weeks-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+  .add-week-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange-dim);
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .add-week-btn:hover { background: var(--orange); color: #fff; }
 
- .weeks-list { display: flex; flex-direction: column; gap: 10px; }
+  /* WEEK CARDS */
+  .weeks-list { display: flex; flex-direction: column; gap: 10px; }
 
- .week-card {
- background: var(--surface);
- border: 1px solid var(--border);
- border-radius: 8px;
- display: flex;
- align-items: center;
- gap: 0;
- overflow: hidden;
- transition: border-color 0.2s;
- }
- .week-card:hover { border-color: rgba(255,255,255,0.15); }
+  .week-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .week-card:hover { border-color: rgba(255,255,255,0.15); }
 
- .week-status-bar {
- width: 5px;
- align-self: stretch;
- flex-shrink: 0;
- transition: background 0.3s;
- }
- .week-status-bar.status-green { background: var(--green); }
- .week-status-bar.status-yellow { background: var(--yellow); }
- .week-status-bar.status-red { background: var(--red); }
- .week-status-bar.status-none { background: var(--border); }
+  .week-status-bar {
+    width: 5px;
+    align-self: stretch;
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .week-status-bar.status-green { background: var(--green); }
+  .week-status-bar.status-yellow { background: var(--yellow); }
+  .week-status-bar.status-red { background: var(--red); }
+  .week-status-bar.status-none { background: var(--border); }
 
- .week-inner { display: flex; align-items: center; gap: 16px; padding: 14px 18px; width: 100%; }
+  .week-inner { display: flex; align-items: center; gap: 16px; padding: 14px 18px; width: 100%; }
 
- .week-number {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 900;
- font-size: 28px;
- color: var(--text-muted);
- width: 44px;
- flex-shrink: 0;
- }
+  .week-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--text-muted);
+    width: 44px;
+    flex-shrink: 0;
+  }
 
- .week-label {
- flex: 1;
- min-width: 120px;
- }
- .week-label-main {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 700;
- font-size: 15px;
- letter-spacing: 0.5px;
- }
- .week-label-dates {
- font-size: 12px;
- color: var(--text-muted);
- margin-top: 2px;
- }
+  .week-label {
+    flex: 1;
+    min-width: 120px;
+  }
+  .week-label-main {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+  }
+  .week-label-dates {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
 
- .week-revenue-wrap {
- display: flex;
- align-items: center;
- gap: 8px;
- flex-shrink: 0;
- }
- .dollar-sign {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 700;
- font-size: 20px;
- color: var(--text-muted);
- }
- .week-revenue-input {
- width: 140px;
- background: var(--surface2);
- border: 1px solid var(--border);
- border-radius: 4px;
- color: var(--text);
- font-family: 'Barlow', sans-serif;
- font-size: 20px;
- font-weight: 700;
- padding: 7px 12px;
- outline: none;
- text-align: right;
- transition: border-color 0.2s;
- }
- .week-revenue-input:focus { border-color: var(--orange); }
- .week-revenue-input::placeholder { color: var(--text-muted); font-weight: 400; font-size: 15px; }
+  .week-revenue-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .dollar-sign {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--text-muted);
+  }
+  .week-revenue-input {
+    width: 140px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 7px 12px;
+    outline: none;
+    text-align: right;
+    transition: border-color 0.2s;
+  }
+  .week-revenue-input:focus { border-color: var(--orange); }
+  .week-revenue-input::placeholder { color: var(--text-muted); font-weight: 400; font-size: 15px; }
 
- .week-badge {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 800;
- font-size: 12px;
- letter-spacing: 1.5px;
- text-transform: uppercase;
- padding: 4px 10px;
- border-radius: 3px;
- width: 80px;
- text-align: center;
- flex-shrink: 0;
- }
- .week-badge.badge-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
- .week-badge.badge-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(243,156,18,0.3); }
- .week-badge.badge-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(231,76,60,0.3); }
- .week-badge.badge-none { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
+  .week-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    width: 80px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .week-badge.badge-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
+  .week-badge.badge-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(243,156,18,0.3); }
+  .week-badge.badge-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(231,76,60,0.3); }
+  .week-badge.badge-none { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
 
- .week-variance {
- font-family: 'Barlow', sans-serif;
- font-size: 13px;
- font-weight: 600;
- width: 100px;
- text-align: right;
- flex-shrink: 0;
- color: var(--text-muted);
- }
- .week-variance.var-green { color: var(--green); }
- .week-variance.var-red { color: var(--red); }
+  .week-variance {
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    width: 100px;
+    text-align: right;
+    flex-shrink: 0;
+    color: var(--text-muted);
+  }
+  .week-variance.var-green { color: var(--green); }
+  .week-variance.var-red { color: var(--red); }
 
- .week-delete {
- background: none;
- border: none;
- color: var(--text-muted);
- cursor: pointer;
- font-size: 16px;
- padding: 4px 8px;
- border-radius: 3px;
- transition: color 0.2s;
- flex-shrink: 0;
- }
- .week-delete:hover { color: var(--red); }
+  .week-delete {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+  .week-delete:hover { color: var(--red); }
 
- .summary-card {
- background: var(--surface);
- border: 1px solid var(--border);
- border-radius: 8px;
- padding: 24px;
- margin-top: 24px;
- }
- .summary-grid {
- display: grid;
- grid-template-columns: repeat(4, 1fr);
- gap: 16px;
- margin-top: 16px;
- }
- .summary-stat {
- background: var(--surface2);
- border-radius: 6px;
- padding: 16px;
- text-align: center;
- }
- .summary-stat-value {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 900;
- font-size: 30px;
- line-height: 1;
- margin-bottom: 4px;
- }
- .summary-stat-label {
- font-size: 12px;
- color: var(--text-muted);
- font-weight: 500;
- }
+  /* MONTH SUMMARY */
+  .summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-top: 24px;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .summary-stat {
+    background: var(--surface2);
+    border-radius: 6px;
+    padding: 16px;
+    text-align: center;
+  }
+  .summary-stat-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .summary-stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
 
- .history-section { margin-top: 40px; }
- .history-title {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 900;
- font-size: 24px;
- margin-bottom: 20px;
- letter-spacing: 0.5px;
- }
+  /* HISTORY SECTION */
+  .history-section { margin-top: 40px; }
+  .history-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
 
- .history-months { display: flex; flex-direction: column; gap: 12px; }
+  .history-months { display: flex; flex-direction: column; gap: 12px; }
 
- .history-month-card {
- background: var(--surface);
- border: 1px solid var(--border);
- border-radius: 8px;
- padding: 16px 20px;
- }
- .hm-header {
- display: flex;
- align-items: center;
- justify-content: space-between;
- margin-bottom: 14px;
- }
- .hm-name {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 800;
- font-size: 18px;
- letter-spacing: 0.5px;
- }
- .hm-total {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 700;
- font-size: 16px;
- color: var(--text-muted);
- }
+  .history-month-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .hm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .hm-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+  }
+  .hm-total {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-muted);
+  }
 
- .hm-weeks {
- display: flex;
- gap: 6px;
- flex-wrap: wrap;
- margin-bottom: 14px;
- }
- .hm-week-dot {
- width: 28px; height: 28px;
- border-radius: 4px;
- display: flex; align-items: center; justify-content: center;
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 800;
- font-size: 12px;
- cursor: default;
- position: relative;
- }
- .hm-week-dot.dot-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
- .hm-week-dot.dot-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(243,156,18,0.3); }
- .hm-week-dot.dot-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(231,76,60,0.3); }
- .hm-week-dot.dot-none { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
+  .hm-weeks {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .hm-week-dot {
+    width: 28px; height: 28px;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    cursor: default;
+    position: relative;
+  }
+  .hm-week-dot.dot-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
+  .hm-week-dot.dot-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(243,156,18,0.3); }
+  .hm-week-dot.dot-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(231,76,60,0.3); }
+  .hm-week-dot.dot-none { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
 
- .hm-bars {
- display: flex;
- gap: 4px;
- height: 8px;
- border-radius: 4px;
- overflow: hidden;
- }
- .hm-bar {
- border-radius: 2px;
- flex-shrink: 0;
- transition: width 0.4s;
- }
- .hm-bar.bar-green { background: var(--green); }
- .hm-bar.bar-yellow { background: var(--yellow); }
- .hm-bar.bar-red { background: var(--red); }
- .hm-bar.bar-none { background: var(--surface3); }
+  .hm-bars {
+    display: flex;
+    gap: 4px;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .hm-bar {
+    border-radius: 2px;
+    flex-shrink: 0;
+    transition: width 0.4s;
+  }
+  .hm-bar.bar-green { background: var(--green); }
+  .hm-bar.bar-yellow { background: var(--yellow); }
+  .hm-bar.bar-red { background: var(--red); }
+  .hm-bar.bar-none { background: var(--surface3); }
 
- .hm-tally {
- display: flex;
- gap: 16px;
- margin-top: 10px;
- }
- .hm-tally-item {
- display: flex;
- align-items: center;
- gap: 6px;
- font-size: 12px;
- color: var(--text-muted);
- font-weight: 600;
- }
- .tally-dot {
- width: 8px; height: 8px; border-radius: 2px;
- }
- .tally-dot.tg { background: var(--green); }
- .tally-dot.ty { background: var(--yellow); }
- .tally-dot.tr { background: var(--red); }
+  .hm-tally {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+  }
+  .hm-tally-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .tally-dot {
+    width: 8px; height: 8px; border-radius: 2px;
+  }
+  .tally-dot.tg { background: var(--green); }
+  .tally-dot.ty { background: var(--yellow); }
+  .tally-dot.tr { background: var(--red); }
 
- .freq-card {
- background: var(--surface);
- border: 1px solid var(--border);
- border-radius: 8px;
- padding: 24px;
- margin-top: 16px;
- }
- .freq-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 16px; }
- .freq-item {
- border-radius: 6px;
- padding: 20px;
- text-align: center;
- }
- .freq-item.fi-green { background: var(--green-dim); border: 1px solid rgba(46,204,113,0.2); }
- .freq-item.fi-yellow { background: var(--yellow-dim); border: 1px solid rgba(243,156,18,0.2); }
- .freq-item.fi-red { background: var(--red-dim); border: 1px solid rgba(231,76,60,0.2); }
- .freq-count {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 900;
- font-size: 48px;
- line-height: 1;
- margin-bottom: 4px;
- }
- .fi-green .freq-count { color: var(--green); }
- .fi-yellow .freq-count { color: var(--yellow); }
- .fi-red .freq-count { color: var(--red); }
- .freq-label {
- font-family: 'Barlow Condensed', sans-serif;
- font-weight: 700;
- font-size: 13px;
- letter-spacing: 1.5px;
- text-transform: uppercase;
- margin-bottom: 4px;
- }
- .fi-green .freq-label { color: var(--green); }
- .fi-yellow .freq-label { color: var(--yellow); }
- .fi-red .freq-label { color: var(--red); }
- .freq-pct {
- font-size: 13px;
- color: var(--text-muted);
- }
+  /* OVERALL FREQ */
+  .freq-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-top: 16px;
+  }
+  .freq-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 16px; }
+  .freq-item {
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+  }
+  .freq-item.fi-green { background: var(--green-dim); border: 1px solid rgba(46,204,113,0.2); }
+  .freq-item.fi-yellow { background: var(--yellow-dim); border: 1px solid rgba(243,156,18,0.2); }
+  .freq-item.fi-red { background: var(--red-dim); border: 1px solid rgba(231,76,60,0.2); }
+  .freq-count {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .fi-green .freq-count { color: var(--green); }
+  .fi-yellow .freq-count { color: var(--yellow); }
+  .fi-red .freq-count { color: var(--red); }
+  .freq-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .fi-green .freq-label { color: var(--green); }
+  .fi-yellow .freq-label { color: var(--yellow); }
+  .fi-red .freq-label { color: var(--red); }
+  .freq-pct {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
 
- .empty-state {
- text-align: center;
- padding: 40px;
- color: var(--text-muted);
- font-size: 14px;
- }
+  /* MODALS / EMPTY */
+  .empty-state {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
 
- .business-field {
- display: flex;
- align-items: center;
- gap: 10px;
- margin-bottom: 28px;
- }
- .business-input {
- background: transparent;
- border: none;
- border-bottom: 1px solid var(--border);
- color: var(--text-muted);
- font-family: 'Barlow', sans-serif;
- font-size: 14px;
- padding: 4px 0;
- outline: none;
- width: 220px;
- transition: border-color 0.2s;
- }
- .business-input:focus { border-color: var(--orange); color: var(--text); }
+  /* BUSINESS NAME */
+  .business-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .business-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 4px 0;
+    outline: none;
+    width: 220px;
+    transition: border-color 0.2s;
+  }
+  .business-input:focus { border-color: var(--orange); color: var(--text); }
 
- @media print {
- nav, .add-week-btn, .week-delete, .btn-primary, .btn-ghost { display: none !important; }
- body { background: #fff; color: #000; }
- }
+  /* PRINT */
+  @media print {
+    nav, .add-week-btn, .week-delete, .btn-primary, .btn-ghost { display: none !important; }
+    body { background: #fff; color: #000; }
+  }
 
- .hm-week-dot:hover::after {
- content: attr(data-tip);
- position: absolute;
- bottom: 110%;
- left: 50%;
- transform: translateX(-50%);
- background: var(--surface3);
- border: 1px solid var(--border);
- color: var(--text);
- font-size: 11px;
- white-space: nowrap;
- padding: 4px 8px;
- border-radius: 3px;
- pointer-events: none;
- z-index: 10;
- }
+  /* TOOLTIP */
+  .hm-week-dot:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 11px;
+    white-space: nowrap;
+    padding: 4px 8px;
+    border-radius: 3px;
+    pointer-events: none;
+    z-index: 10;
+  }
 </style>
 </head>
 <body>
 
 <nav>
- <div class="nav-brand">VINCERE COACHING</div>
- <span class="nav-tag">Weekly Revenue Tracker</span>
- <div class="nav-right">
- <button class="btn-ghost" onclick="exportData()">Export</button>
- <button class="btn-primary" onclick="window.print()">Print / PDF</button>
- </div>
+  <div class="nav-brand">VINCERE COACHING</div>
+  <span class="nav-tag">Weekly Revenue Tracker</span>
+  <div class="nav-right">
+    <button class="btn-ghost" onclick="exportData()">Export</button>
+    <button class="btn-primary" onclick="window.print()">Print / PDF</button>
+  </div>
 </nav>
 
 <div class="page">
 
- <div class="business-field">
- <span style="font-size:13px;color:var(--text-muted);font-weight:600;">Business:</span>
- <input class="business-input" id="businessName" type="text" placeholder="Enter business name" onblur="save()">
- </div>
+  <div class="business-field">
+    <span style="font-size:13px;color:var(--text-muted);font-weight:600;">Business:</span>
+    <input class="business-input" id="businessName" type="text" placeholder="Enter business name" onblur="save()">
+  </div>
 
- <div class="month-nav">
- <button class="month-btn" onclick="changeMonth(-1)">&#8249;</button>
- <h1 id="monthTitle"></h1>
- <button class="month-btn" onclick="changeMonth(1)">&#8250;</button>
- </div>
+  <!-- Month Nav -->
+  <div class="month-nav">
+    <button class="month-btn" onclick="changeMonth(-1)">&#8249;</button>
+    <h1 id="monthTitle"></h1>
+    <button class="month-btn" onclick="changeMonth(1)">&#8250;</button>
+  </div>
 
- <div class="targets-card">
- <div class="card-title">Monthly Revenue Targets</div>
- <div class="targets-grid">
- <div class="target-item red-target">
- <div class="target-label red-label">&#9632; Red — Danger Zone</div>
- <div class="target-desc">Break even or below. Any weekly revenue at or under this amount triggers red.</div>
- <div style="display:flex;align-items:center;gap:6px;">
- <span style="color:var(--text-muted);font-weight:700;font-size:16px;">$</span>
- <input class="target-input" id="targetRed" type="number" placeholder="0" onblur="save();renderWeeks();" style="color:var(--red);">
- </div>
- <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">Per week breakeven target</div>
- </div>
- <div class="target-item yellow-target">
- <div class="target-label yellow-label">&#9632; Yellow — Watch Zone</div>
- <div class="target-desc">Automatically calculated as anything between your Red and Green targets.</div>
- <div style="display:flex;align-items:center;gap:6px;margin-top:10px;">
- <span style="color:var(--text-muted);font-weight:700;font-size:16px;">$</span>
- <div id="yellowRange" style="font-family:'Barlow',sans-serif;font-size:18px;font-weight:700;color:var(--yellow);padding:8px 12px;background:var(--surface3);border-radius:4px;border:1px solid var(--border);flex:1;">—</div>
- </div>
- <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">Auto-calculated from Red &amp; Green</div>
- </div>
- <div class="target-item green-target">
- <div class="target-label green-label">&#9632; Green — On Track</div>
- <div class="target-desc">At or above target. Business is performing where it needs to be.</div>
- <div style="display:flex;align-items:center;gap:6px;">
- <span style="color:var(--text-muted);font-weight:700;font-size:16px;">$</span>
- <input class="target-input" id="targetGreen" type="number" placeholder="0" onblur="save();renderWeeks();" style="color:var(--green);">
- </div>
- <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">Per week revenue goal</div>
- </div>
- </div>
- </div>
+  <!-- Targets Card -->
+  <div class="targets-card">
+    <div class="card-title">Monthly Revenue Targets</div>
+    <div class="targets-grid">
+      <div class="target-item red-target">
+        <div class="target-label red-label">&#9632; Red — Danger Zone</div>
+        <div class="target-desc">Break even or below. Any weekly revenue at or under this amount triggers red.</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="color:var(--text-muted);font-weight:700;font-size:16px;">$</span>
+        <input class="target-input" id="targetRed" type="number" placeholder="0" onblur="save();renderWeeks();" style="color:var(--red);">
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">Per week breakeven target</div>
+      </div>
+      <div class="target-item yellow-target">
+        <div class="target-label yellow-label">&#9632; Yellow — Watch Zone</div>
+        <div class="target-desc">Automatically calculated as anything between your Red and Green targets.</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:10px;">
+          <span style="color:var(--text-muted);font-weight:700;font-size:16px;">$</span>
+          <div id="yellowRange" style="font-family:'Barlow',sans-serif;font-size:18px;font-weight:700;color:var(--yellow);padding:8px 12px;background:var(--surface3);border-radius:4px;border:1px solid var(--border);flex:1;">—</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">Auto-calculated from Red &amp; Green</div>
+      </div>
+      <div class="target-item green-target">
+        <div class="target-label green-label">&#9632; Green — On Track</div>
+        <div class="target-desc">At or above target. Business is performing where it needs to be.</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="color:var(--text-muted);font-weight:700;font-size:16px;">$</span>
+        <input class="target-input" id="targetGreen" type="number" placeholder="0" onblur="save();renderWeeks();" style="color:var(--green);">
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">Per week revenue goal</div>
+      </div>
+    </div>
+  </div>
 
- <div class="weeks-header">
- <div class="weeks-title">Weekly Revenue</div>
- <button class="add-week-btn" onclick="addWeek()">+ Add Week</button>
- </div>
+  <!-- Weeks -->
+  <div class="weeks-header">
+    <div class="weeks-title">Weekly Revenue</div>
+    <button class="add-week-btn" onclick="addWeek()">+ Add Week</button>
+  </div>
 
- <div class="weeks-list" id="weeksList"></div>
+  <div class="weeks-list" id="weeksList"></div>
 
- <div class="summary-card" id="summaryCard">
- <div class="card-title">Month Summary</div>
- <div class="summary-grid" id="summaryGrid"></div>
- </div>
+  <!-- Month Summary -->
+  <div class="summary-card" id="summaryCard">
+    <div class="card-title">Month Summary</div>
+    <div class="summary-grid" id="summaryGrid"></div>
+  </div>
 
- <div class="history-section" id="historySection">
- <div class="history-title">Historical Performance</div>
- <div class="freq-card">
- <div class="card-title">All-Time Week Frequency</div>
- <div class="freq-grid" id="freqGrid"></div>
- </div>
- <div class="history-months" id="historyMonths" style="margin-top:20px;"></div>
- </div>
+  <!-- History -->
+  <div class="history-section" id="historySection">
+    <div class="history-title">Historical Performance</div>
+    <div class="freq-card">
+      <div class="card-title">All-Time Week Frequency</div>
+      <div class="freq-grid" id="freqGrid"></div>
+    </div>
+    <div class="history-months" id="historyMonths" style="margin-top:20px;"></div>
+  </div>
 
 </div>
 
@@ -671,9 +689,9 @@ let state = { businessName:'', currentYear: new Date().getFullYear(), currentMon
 function monthKey(y,m){ return y+'-'+String(m+1).padStart(2,'0'); }
 
 function getMonth(y,m){
- const k = monthKey(y,m);
- if(!state.data[k]) state.data[k] = { targetRed:'', targetYellow:'', targetGreen:'', weeks:[] };
- return state.data[k];
+  const k = monthKey(y,m);
+  if(!state.data[k]) state.data[k] = { targetRed:'', targetYellow:'', targetGreen:'', weeks:[] };
+  return state.data[k];
 }
 
 function currentMonthData(){ return getMonth(state.currentYear, state.currentMonth); }
@@ -681,287 +699,296 @@ function currentMonthData(){ return getMonth(state.currentYear, state.currentMon
 function fmt(n){ if(n===''||n===null||n===undefined) return '—'; return '$' + Number(n).toLocaleString('en-AU'); }
 
 function getStatus(rev, tRed, tYellow, tGreen){
- if(rev===''||rev===null) return 'none';
- const r = Number(rev), rd = Number(tRed)||0, rg = Number(tGreen)||0;
- if(!tGreen && !tRed) return 'none';
- if(rg && r >= rg) return 'green';
- if(rd && r <= rd) return 'red';
- if(rd || rg) return 'yellow';
- return 'none';
+  if(rev===''||rev===null) return 'none';
+  const r = Number(rev), rd = Number(tRed)||0, rg = Number(tGreen)||0;
+  if(!tGreen && !tRed) return 'none';
+  if(rg && r >= rg) return 'green';
+  if(rd && r <= rd) return 'red';
+  if(rd || rg) return 'yellow';
+  return 'none';
 }
 
 function save(){
- const md = currentMonthData();
- md.targetRed = document.getElementById('targetRed').value;
- md.targetGreen = document.getElementById('targetGreen').value;
- state.businessName = document.getElementById('businessName').value;
- const inputs = document.querySelectorAll('.week-revenue-input');
- inputs.forEach((inp,i)=>{ if(md.weeks[i]) md.weeks[i].revenue = inp.value; });
- updateYellowRange();
- localStorage.setItem('vincere_revenue_tracker', JSON.stringify(state));
- renderSummary();
- renderHistory();
+  const md = currentMonthData();
+  md.targetRed = document.getElementById('targetRed').value;
+  md.targetGreen = document.getElementById('targetGreen').value;
+  state.businessName = document.getElementById('businessName').value;
+  // save weeks from inputs
+  const inputs = document.querySelectorAll('.week-revenue-input');
+  inputs.forEach((inp,i)=>{ if(md.weeks[i]) md.weeks[i].revenue = inp.value; });
+  updateYellowRange();
+  localStorage.setItem('vincere_revenue_tracker', JSON.stringify(state));
+  renderSummary();
+  renderHistory();
 }
 
 function updateYellowRange(){
- const md = currentMonthData();
- const rd = Number(md.targetRed)||0, rg = Number(md.targetGreen)||0;
- const el = document.getElementById('yellowRange');
- if(!el) return;
- if(rd && rg && rg > rd){
- el.textContent = '$' + (rd+1).toLocaleString('en-AU') + ' \u2013 $' + (rg-1).toLocaleString('en-AU');
- } else {
- el.textContent = '—';
- }
+  const md = currentMonthData();
+  const rd = Number(md.targetRed)||0, rg = Number(md.targetGreen)||0;
+  const el = document.getElementById('yellowRange');
+  if(!el) return;
+  if(rd && rg && rg > rd){
+    el.textContent = '$' + (rd+1).toLocaleString('en-AU') + ' – $' + (rg-1).toLocaleString('en-AU');
+  } else {
+    el.textContent = '—';
+  }
 }
 
 function load(){
- const raw = localStorage.getItem('vincere_revenue_tracker');
- if(raw){ try{ state = JSON.parse(raw); }catch(e){} }
+  const raw = localStorage.getItem('vincere_revenue_tracker');
+  if(raw){ try{ state = JSON.parse(raw); }catch(e){} }
 }
 
 function changeMonth(dir){
- state.currentMonth += dir;
- if(state.currentMonth > 11){ state.currentMonth = 0; state.currentYear++; }
- if(state.currentMonth < 0){ state.currentMonth = 11; state.currentYear--; }
- renderAll();
+  state.currentMonth += dir;
+  if(state.currentMonth > 11){ state.currentMonth = 0; state.currentYear++; }
+  if(state.currentMonth < 0){ state.currentMonth = 11; state.currentYear--; }
+  renderAll();
 }
 
 function addWeek(){
- const md = currentMonthData();
- const num = md.weeks.length + 1;
- const weekStart = new Date(state.currentYear, state.currentMonth, 1 + (num-1)*7);
- const weekEnd = new Date(weekStart); weekEnd.setDate(weekEnd.getDate()+6);
- const fmt2 = d => d.getDate()+'/'+(d.getMonth()+1);
- md.weeks.push({ label:'Week '+num, dates: fmt2(weekStart)+' \u2013 '+fmt2(weekEnd), revenue:'' });
- save();
- renderWeeks();
+  const md = currentMonthData();
+  const num = md.weeks.length + 1;
+  // Estimate date range for this week in the month
+  const weekStart = new Date(state.currentYear, state.currentMonth, 1 + (num-1)*7);
+  const weekEnd = new Date(weekStart); weekEnd.setDate(weekEnd.getDate()+6);
+  const fmt2 = d => d.getDate()+'/'+(d.getMonth()+1);
+  md.weeks.push({ label:'Week '+num, dates: fmt2(weekStart)+' – '+fmt2(weekEnd), revenue:'' });
+  save();
+  renderWeeks();
 }
 
 function deleteWeek(idx){
- const md = currentMonthData();
- const inputs = document.querySelectorAll('.week-revenue-input');
- inputs.forEach((inp,i)=>{ if(md.weeks[i]) md.weeks[i].revenue = inp.value; });
- md.weeks.splice(idx,1);
- md.weeks.forEach((w,i)=>{ w.label = 'Week '+(i+1); });
- save();
- renderWeeks();
+  const md = currentMonthData();
+  // save current inputs first
+  const inputs = document.querySelectorAll('.week-revenue-input');
+  inputs.forEach((inp,i)=>{ if(md.weeks[i]) md.weeks[i].revenue = inp.value; });
+  md.weeks.splice(idx,1);
+  // relabel
+  md.weeks.forEach((w,i)=>{ w.label = 'Week '+(i+1); });
+  save();
+  renderWeeks();
 }
 
 function renderWeeks(){
- const md = currentMonthData();
- const tR = md.targetRed, tY = md.targetYellow, tG = md.targetGreen;
- const list = document.getElementById('weeksList');
- if(md.weeks.length === 0){
- list.innerHTML = '<div class="empty-state">No weeks added yet. Click <strong>+ Add Week</strong> to start tracking.</div>';
- renderSummary(); return;
- }
- list.innerHTML = md.weeks.map((w,i)=>{
- const status = getStatus(w.revenue, tR, tY, tG);
- const badgeLabel = status==='green'?'On Track':status==='yellow'?'Watch':status==='red'?'Danger':'Pending';
- let varHtml = '';
- if(w.revenue !== '' && tG){
- const diff = Number(w.revenue) - Number(tG);
- const cls = diff >= 0 ? 'var-green' : 'var-red';
- varHtml = '<div class="week-variance '+cls+'">'+(diff>=0?'+':'')+fmt(diff)+'</div>';
- } else {
- varHtml = '<div class="week-variance"></div>';
- }
- return '<div class="week-card">'
- +'<div class="week-status-bar status-'+status+'"></div>'
- +'<div class="week-inner">'
- +'<div class="week-number">'+String(i+1).padStart(2,'0')+'</div>'
- +'<div class="week-label">'
- +'<div class="week-label-main">'+w.label+'</div>'
- +'<div class="week-label-dates">'+w.dates+'</div>'
- +'</div>'
- +'<div class="week-revenue-wrap">'
- +'<span class="dollar-sign">$</span>'
- +'<input class="week-revenue-input" type="number" value="'+w.revenue+'" placeholder="Enter revenue"'
- +' onblur="weekBlur('+i+')" oninput="weekLive('+i+', this.value)">'
- +'</div>'
- +'<div class="week-badge badge-'+status+'">'+badgeLabel+'</div>'
- +varHtml
- +'<button class="week-delete" onclick="deleteWeek('+i+')" title="Remove week">&#10005;</button>'
- +'</div>'
- +'</div>';
- }).join('');
- renderSummary();
+  const md = currentMonthData();
+  const tR = md.targetRed, tY = md.targetYellow, tG = md.targetGreen;
+  const list = document.getElementById('weeksList');
+  if(md.weeks.length === 0){
+    list.innerHTML = '<div class="empty-state">No weeks added yet. Click <strong>+ Add Week</strong> to start tracking.</div>';
+    renderSummary(); return;
+  }
+  list.innerHTML = md.weeks.map((w,i)=>{
+    const status = getStatus(w.revenue, tR, tY, tG);
+    const badgeLabel = status==='green'?'On Track':status==='yellow'?'Watch':status==='red'?'Danger':'Pending';
+    let varHtml = '';
+    if(w.revenue !== '' && tG){
+      const diff = Number(w.revenue) - Number(tG);
+      const cls = diff >= 0 ? 'var-green' : 'var-red';
+      varHtml = `<div class="week-variance ${cls}">${diff>=0?'+':''}${fmt(diff)}</div>`;
+    } else {
+      varHtml = '<div class="week-variance"></div>';
+    }
+    return `<div class="week-card">
+      <div class="week-status-bar status-${status}"></div>
+      <div class="week-inner">
+        <div class="week-number">${String(i+1).padStart(2,'0')}</div>
+        <div class="week-label">
+          <div class="week-label-main">${w.label}</div>
+          <div class="week-label-dates">${w.dates}</div>
+        </div>
+        <div class="week-revenue-wrap">
+          <span class="dollar-sign">$</span>
+          <input class="week-revenue-input" type="number" value="${w.revenue}" placeholder="Enter revenue" 
+            onblur="weekBlur(${i})" oninput="weekLive(${i}, this.value)">
+        </div>
+        <div class="week-badge badge-${status}">${badgeLabel}</div>
+        ${varHtml}
+        <button class="week-delete" onclick="deleteWeek(${i})" title="Remove week">&#10005;</button>
+      </div>
+    </div>`;
+  }).join('');
+  renderSummary();
 }
 
 function weekBlur(idx){
- const md = currentMonthData();
- const inputs = document.querySelectorAll('.week-revenue-input');
- if(inputs[idx]) md.weeks[idx].revenue = inputs[idx].value;
- save();
- renderWeeks();
+  const md = currentMonthData();
+  const inputs = document.querySelectorAll('.week-revenue-input');
+  if(inputs[idx]) md.weeks[idx].revenue = inputs[idx].value;
+  save();
+  renderWeeks();
 }
 
 function weekLive(idx, val){
- const md = currentMonthData();
- md.weeks[idx].revenue = val;
- const cards = document.querySelectorAll('.week-card');
- if(cards[idx]){
- const bar = cards[idx].querySelector('.week-status-bar');
- const badge = cards[idx].querySelector('.week-badge');
- const variance = cards[idx].querySelector('.week-variance');
- const status = getStatus(val, md.targetRed, md.targetYellow, md.targetGreen);
- bar.className = 'week-status-bar status-'+status;
- const badgeLabel = status==='green'?'On Track':status==='yellow'?'Watch':status==='red'?'Danger':'Pending';
- badge.className = 'week-badge badge-'+status;
- badge.textContent = badgeLabel;
- if(variance && val !== '' && md.targetGreen){
- const diff = Number(val) - Number(md.targetGreen);
- variance.className = 'week-variance '+(diff>=0?'var-green':'var-red');
- variance.textContent = (diff>=0?'+':'')+fmt(diff);
- }
- }
- renderSummary();
+  const md = currentMonthData();
+  md.weeks[idx].revenue = val;
+  // live-update status bar only
+  const cards = document.querySelectorAll('.week-card');
+  if(cards[idx]){
+    const bar = cards[idx].querySelector('.week-status-bar');
+    const badge = cards[idx].querySelector('.week-badge');
+    const variance = cards[idx].querySelector('.week-variance');
+    const status = getStatus(val, md.targetRed, md.targetYellow, md.targetGreen);
+    bar.className = 'week-status-bar status-'+status;
+    const badgeLabel = status==='green'?'On Track':status==='yellow'?'Watch':status==='red'?'Danger':'Pending';
+    badge.className = 'week-badge badge-'+status;
+    badge.textContent = badgeLabel;
+    if(variance && val !== '' && md.targetGreen){
+      const diff = Number(val) - Number(md.targetGreen);
+      variance.className = 'week-variance '+(diff>=0?'var-green':'var-red');
+      variance.textContent = (diff>=0?'+':'')+fmt(diff);
+    }
+  }
+  renderSummary();
 }
 
 function renderSummary(){
- const md = currentMonthData();
- const tR = md.targetRed, tY = md.targetYellow, tG = md.targetGreen;
- const filled = md.weeks.filter(w=>w.revenue!=='');
- const total = filled.reduce((a,w)=>a+Number(w.revenue),0);
- const greens = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='green').length;
- const yellows = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='yellow').length;
- const reds = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='red').length;
- const avg = filled.length ? Math.round(total/filled.length) : 0;
+  const md = currentMonthData();
+  const tR = md.targetRed, tY = md.targetYellow, tG = md.targetGreen;
+  const filled = md.weeks.filter(w=>w.revenue!=='');
+  const total = filled.reduce((a,w)=>a+Number(w.revenue),0);
+  const greens = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='green').length;
+  const yellows = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='yellow').length;
+  const reds = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='red').length;
+  const avg = filled.length ? Math.round(total/filled.length) : 0;
 
- document.getElementById('summaryGrid').innerHTML =
- '<div class="summary-stat">'
- +'<div class="summary-stat-value" style="color:var(--orange)">'+fmt(total)+'</div>'
- +'<div class="summary-stat-label">Month Revenue (to date)</div>'
- +'</div>'
- +'<div class="summary-stat">'
- +'<div class="summary-stat-value" style="color:var(--text)">'+fmt(avg)+'</div>'
- +'<div class="summary-stat-label">Avg Weekly Revenue</div>'
- +'</div>'
- +'<div class="summary-stat">'
- +'<div class="summary-stat-value" style="color:var(--green)">'+greens+' <span style="font-size:18px;color:var(--text-muted)">/ '+filled.length+'</span></div>'
- +'<div class="summary-stat-label">Green Weeks</div>'
- +'</div>'
- +'<div class="summary-stat">'
- +'<div class="summary-stat-value" style="color:'+(reds>0?'var(--red)':'var(--text-muted)')+'">'+reds+' <span style="font-size:18px;color:var(--text-muted)">/ '+filled.length+'</span></div>'
- +'<div class="summary-stat-label">Red Weeks</div>'
- +'</div>';
+  document.getElementById('summaryGrid').innerHTML = `
+    <div class="summary-stat">
+      <div class="summary-stat-value" style="color:var(--orange)">${fmt(total)}</div>
+      <div class="summary-stat-label">Month Revenue (to date)</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-stat-value" style="color:var(--text)">${fmt(avg)}</div>
+      <div class="summary-stat-label">Avg Weekly Revenue</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-stat-value" style="color:var(--green)">${greens} <span style="font-size:18px;color:var(--text-muted)">/ ${filled.length}</span></div>
+      <div class="summary-stat-label">Green Weeks</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-stat-value" style="color:${reds>0?'var(--red)':'var(--text-muted)'}">${reds} <span style="font-size:18px;color:var(--text-muted)">/ ${filled.length}</span></div>
+      <div class="summary-stat-label">Red Weeks</div>
+    </div>
+  `;
 }
 
 function renderHistory(){
- let allG=0, allY=0, allR=0;
- const monthKeys = Object.keys(state.data).sort();
- const histContainer = document.getElementById('historyMonths');
- const currentK = monthKey(state.currentYear, state.currentMonth);
+  // All-time frequency
+  let allG=0, allY=0, allR=0;
+  const monthKeys = Object.keys(state.data).sort();
+  const histContainer = document.getElementById('historyMonths');
+  const currentK = monthKey(state.currentYear, state.currentMonth);
 
- const pastMonths = monthKeys.filter(k=>{
- const md = state.data[k];
- return k !== currentK && md.weeks && md.weeks.some(w=>w.revenue!=='');
- });
+  const pastMonths = monthKeys.filter(k=>{
+    const md = state.data[k];
+    return k !== currentK && md.weeks && md.weeks.some(w=>w.revenue!=='');
+  });
 
- pastMonths.forEach(k=>{
- const md = state.data[k];
- const tR=md.targetRed, tY=md.targetYellow, tG=md.targetGreen;
- md.weeks.forEach(w=>{
- if(w.revenue==='') return;
- const s = getStatus(w.revenue,tR,tY,tG);
- if(s==='green') allG++;
- else if(s==='yellow') allY++;
- else if(s==='red') allR++;
- });
- });
- const cmd = currentMonthData();
- cmd.weeks.forEach(w=>{
- if(w.revenue==='') return;
- const s = getStatus(w.revenue,cmd.targetRed,cmd.targetYellow,cmd.targetGreen);
- if(s==='green') allG++;
- else if(s==='yellow') allY++;
- else if(s==='red') allR++;
- });
+  pastMonths.forEach(k=>{
+    const md = state.data[k];
+    const tR=md.targetRed, tY=md.targetYellow, tG=md.targetGreen;
+    md.weeks.forEach(w=>{
+      if(w.revenue==='') return;
+      const s = getStatus(w.revenue,tR,tY,tG);
+      if(s==='green') allG++;
+      else if(s==='yellow') allY++;
+      else if(s==='red') allR++;
+    });
+  });
+  // also include current month
+  const cmd = currentMonthData();
+  cmd.weeks.forEach(w=>{
+    if(w.revenue==='') return;
+    const s = getStatus(w.revenue,cmd.targetRed,cmd.targetYellow,cmd.targetGreen);
+    if(s==='green') allG++;
+    else if(s==='yellow') allY++;
+    else if(s==='red') allR++;
+  });
 
- const total = allG+allY+allR;
- const pct = v => total ? Math.round(v/total*100) : 0;
+  const total = allG+allY+allR;
+  const pct = v => total ? Math.round(v/total*100) : 0;
 
- document.getElementById('freqGrid').innerHTML =
- '<div class="freq-item fi-green">'
- +'<div class="freq-count">'+allG+'</div>'
- +'<div class="freq-label">Green Weeks</div>'
- +'<div class="freq-pct">'+pct(allG)+'% of all weeks</div>'
- +'</div>'
- +'<div class="freq-item fi-yellow">'
- +'<div class="freq-count">'+allY+'</div>'
- +'<div class="freq-label">Yellow Weeks</div>'
- +'<div class="freq-pct">'+pct(allY)+'% of all weeks</div>'
- +'</div>'
- +'<div class="freq-item fi-red">'
- +'<div class="freq-count">'+allR+'</div>'
- +'<div class="freq-label">Red Weeks</div>'
- +'<div class="freq-pct">'+pct(allR)+'% of all weeks</div>'
- +'</div>';
+  document.getElementById('freqGrid').innerHTML = `
+    <div class="freq-item fi-green">
+      <div class="freq-count">${allG}</div>
+      <div class="freq-label">Green Weeks</div>
+      <div class="freq-pct">${pct(allG)}% of all weeks</div>
+    </div>
+    <div class="freq-item fi-yellow">
+      <div class="freq-count">${allY}</div>
+      <div class="freq-label">Yellow Weeks</div>
+      <div class="freq-pct">${pct(allY)}% of all weeks</div>
+    </div>
+    <div class="freq-item fi-red">
+      <div class="freq-count">${allR}</div>
+      <div class="freq-label">Red Weeks</div>
+      <div class="freq-pct">${pct(allR)}% of all weeks</div>
+    </div>
+  `;
 
- if(pastMonths.length === 0){
- histContainer.innerHTML = '<div class="empty-state" style="padding:20px;">Historical month data will appear here as you track over time.</div>';
- return;
- }
+  if(pastMonths.length === 0){
+    histContainer.innerHTML = '<div class="empty-state" style="padding:20px;">Historical month data will appear here as you track over time.</div>';
+    return;
+  }
 
- histContainer.innerHTML = pastMonths.slice().reverse().map(k=>{
- const md = state.data[k];
- const tR=md.targetRed, tY=md.targetYellow, tG=md.targetGreen;
- const parts = k.split('-');
- const monthName = MONTHS[parseInt(parts[1])-1]+' '+parts[0];
- const filled = md.weeks.filter(w=>w.revenue!=='');
- const mTotal = filled.reduce((a,w)=>a+Number(w.revenue),0);
- const weekDots = md.weeks.map((w,i)=>{
- const s = w.revenue!=='' ? getStatus(w.revenue,tR,tY,tG) : 'none';
- const tip = w.revenue!=='' ? fmt(Number(w.revenue)) : 'No data';
- return '<div class="hm-week-dot dot-'+s+'" data-tip="W'+(i+1)+': '+tip+'">'+(i+1)+'</div>';
- }).join('');
+  histContainer.innerHTML = pastMonths.slice().reverse().map(k=>{
+    const md = state.data[k];
+    const tR=md.targetRed, tY=md.targetYellow, tG=md.targetGreen;
+    const [yr,mo] = k.split('-');
+    const monthName = MONTHS[parseInt(mo)-1]+' '+yr;
+    const filled = md.weeks.filter(w=>w.revenue!=='');
+    const mTotal = filled.reduce((a,w)=>a+Number(w.revenue),0);
+    const weekDots = md.weeks.map((w,i)=>{
+      const s = w.revenue!=='' ? getStatus(w.revenue,tR,tY,tG) : 'none';
+      const tip = w.revenue!=='' ? fmt(Number(w.revenue)) : 'No data';
+      return `<div class="hm-week-dot dot-${s}" data-tip="W${i+1}: ${tip}">${i+1}</div>`;
+    }).join('');
 
- const g = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='green').length;
- const y = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='yellow').length;
- const r = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='red').length;
- const n = md.weeks.length - filled.length;
- const tot = md.weeks.length;
- const barW = v => tot ? Math.round(v/tot*100) : 0;
+    const g = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='green').length;
+    const y = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='yellow').length;
+    const r = filled.filter(w=>getStatus(w.revenue,tR,tY,tG)==='red').length;
+    const n = md.weeks.length - filled.length;
+    const tot = md.weeks.length;
+    const barW = (v) => tot ? Math.round(v/tot*100) : 0;
 
- return '<div class="history-month-card">'
- +'<div class="hm-header">'
- +'<div class="hm-name">'+monthName+'</div>'
- +'<div class="hm-total">'+(mTotal>0?fmt(mTotal):'No data')+'</div>'
- +'</div>'
- +'<div class="hm-weeks">'+weekDots+'</div>'
- +'<div class="hm-bars">'
- +'<div class="hm-bar bar-green" style="width:'+barW(g)+'%"></div>'
- +'<div class="hm-bar bar-yellow" style="width:'+barW(y)+'%"></div>'
- +'<div class="hm-bar bar-red" style="width:'+barW(r)+'%"></div>'
- +'<div class="hm-bar bar-none" style="width:'+barW(n)+'%"></div>'
- +'</div>'
- +'<div class="hm-tally">'
- +'<div class="hm-tally-item"><div class="tally-dot tg"></div>'+g+' Green</div>'
- +'<div class="hm-tally-item"><div class="tally-dot ty"></div>'+y+' Yellow</div>'
- +'<div class="hm-tally-item"><div class="tally-dot tr"></div>'+r+' Red</div>'
- +'</div>'
- +'</div>';
- }).join('');
+    return `<div class="history-month-card">
+      <div class="hm-header">
+        <div class="hm-name">${monthName}</div>
+        <div class="hm-total">${mTotal>0?fmt(mTotal):'No data'}</div>
+      </div>
+      <div class="hm-weeks">${weekDots}</div>
+      <div class="hm-bars">
+        <div class="hm-bar bar-green" style="width:${barW(g)}%"></div>
+        <div class="hm-bar bar-yellow" style="width:${barW(y)}%"></div>
+        <div class="hm-bar bar-red" style="width:${barW(r)}%"></div>
+        <div class="hm-bar bar-none" style="width:${barW(n)}%"></div>
+      </div>
+      <div class="hm-tally">
+        <div class="hm-tally-item"><div class="tally-dot tg"></div>${g} Green</div>
+        <div class="hm-tally-item"><div class="tally-dot ty"></div>${y} Yellow</div>
+        <div class="hm-tally-item"><div class="tally-dot tr"></div>${r} Red</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function renderAll(){
- const md = currentMonthData();
- document.getElementById('monthTitle').textContent = MONTHS[state.currentMonth] + ' ' + state.currentYear;
- document.getElementById('targetRed').value = md.targetRed||'';
- document.getElementById('targetGreen').value = md.targetGreen||'';
- document.getElementById('businessName').value = state.businessName || '';
- updateYellowRange();
- renderWeeks();
- renderHistory();
+  const md = currentMonthData();
+  document.getElementById('monthTitle').textContent = MONTHS[state.currentMonth] + ' ' + state.currentYear;
+  document.getElementById('targetRed').value = md.targetRed||'';
+  document.getElementById('targetGreen').value = md.targetGreen||'';
+  document.getElementById('businessName').value = state.businessName || '';
+  updateYellowRange();
+  renderWeeks();
+  renderHistory();
 }
 
 function exportData(){
- const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
- const url = URL.createObjectURL(blob);
- const a = document.createElement('a');
- a.href=url; a.download='vincere-revenue-tracker.json'; a.click();
- URL.revokeObjectURL(url);
+  const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download='vincere-revenue-tracker.json'; a.click();
+  URL.revokeObjectURL(url);
 }
 
 load();
