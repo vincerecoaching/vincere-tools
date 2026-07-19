@@ -1,0 +1,100 @@
+{
+  "name": "Marshall Plumbing Solutions",
+  "overheads": {
+    "items": [
+      {"name": "Accounting", "yearly": 7261.09, "quarterly": 1815.27, "monthly": 605.09, "weekly": 139.64},
+      {"name": "Advertising", "yearly": 28163.79, "quarterly": 7040.95, "monthly": 2346.98, "weekly": 541.61},
+      {"name": "Asset Replacement", "yearly": 17432.35, "quarterly": 4358.09, "monthly": 1452.70, "weekly": 335.24},
+      {"name": "Bad Debt", "yearly": 512.49, "quarterly": 128.12, "monthly": 42.71, "weekly": 9.86},
+      {"name": "Bank Fees", "yearly": 10097.25, "quarterly": 2524.31, "monthly": 841.44, "weekly": 194.18},
+      {"name": "Bonuses", "yearly": "", "quarterly": "", "monthly": "", "weekly": ""},
+      {"name": "Cleaning/Rubbish Removal", "yearly": 5658.18, "quarterly": 1414.55, "monthly": 471.52, "weekly": 108.81},
+      {"name": "Donations", "yearly": 9718.99, "quarterly": 2429.75, "monthly": 809.92, "weekly": 186.90},
+      {"name": "Entertainment", "yearly": 11153.48, "quarterly": 2788.37, "monthly": 929.46, "weekly": 214.49},
+      {"name": "Filing Fees", "yearly": 90.91, "quarterly": 22.73, "monthly": 7.58, "weekly": 1.75},
+      {"name": "Fines", "yearly": 868.00, "quarterly": 217.00, "monthly": 72.33, "weekly": 16.69},
+      {"name": "Freight & Courier", "yearly": "", "quarterly": "", "monthly": "", "weekly": ""},
+      {"name": "Insurance - Business General", "yearly": 14962.19, "quarterly": 3740.55, "monthly": 1246.85, "weekly": 287.74},
+      {"name": "Insurance - Public Liability", "yearly": "", "quarterly": "", "monthly": "", "weekly": ""},
+      {"name": "Insurance - Work Cover", "yearly": 16716.50, "quarterly": 4179.13, "monthly": 1393.04, "weekly": 321.47},
+      {"name": "Interest Expense", "yearly": 1356.00, "quarterly": 339.00, "monthly": 113.00, "weekly": 26.08},
+      {"name": "Motor Vehicle - Fuel", "yearly": 41646.43, "quarterly": 10411.61, "monthly": 3470.54, "weekly": 800.89},
+      {"name": "Motor Vehicle - Insurance & Rego (combined in Xero 447)", "yearly": 36078.42, "quarterly": 9019.61, "monthly": 3006.54, "weekly": 693.82},
+      {"name": "Motor Vehicle - Rego", "yearly": "", "quarterly": "", "monthly": "", "weekly": ""},
+      {"name": "Motor Vehicle - Repairs", "yearly": 19336.39, "quarterly": 4834.10, "monthly": 1611.37, "weekly": 371.85},
+      {"name": "Motor Vehicle - Tolls/Parking", "yearly": 323.65, "quarterly": 80.91, "monthly": 26.97, "weekly": 6.22},
+      {"name": "PPE", "yearly": "", "quarterly": "", "monthly": "", "weekly": ""},
+      {"name": "Printing & Stationery / Office", "yearly": 27238.64, "quarterly": 6809.66, "monthly": 2269.89, "weekly": 523.82},
+      {"name": "Rent & Utilities", "yearly": 60788.35, "quarterly": 15197.09, "monthly": 5065.70, "weekly": 1169.01},
+      {"name": "Subscriptions & Memberships", "yearly": 7769.70, "quarterly": 1942.43, "monthly": 647.48, "weekly": 149.42},
+      {"name": "Telephone & Internet", "yearly": 8570.49, "quarterly": 2142.62, "monthly": 714.21, "weekly": 164.82},
+      {"name": "Tools", "yearly": 56127.83, "quarterly": 14031.96, "monthly": 4677.32, "weekly": 1079.38},
+      {"name": "Training Fees", "yearly": 1561.47, "quarterly": 390.37, "monthly": 130.12, "weekly": 30.03},
+      {"name": "Travel", "yearly": 1131.70, "quarterly": 282.93, "monthly": 94.31, "weekly": 21.76},
+      {"name": "Uniforms", "yearly": 7997.67, "quarterly": 1999.42, "monthly": 666.47, "weekly": 153.80},
+      {"name": "Vehicle Finance", "yearly": "", "quarterly": "", "monthly": "", "weekly": ""},
+      {"name": "Tax Debt (Personal)", "yearly": "", "quarterly": "", "monthly": "", "weekly": ""},
+      {"name": "Tax Debt (Business)", "yearly": "", "quarterly": "", "monthly": "", "weekly": ""},
+      {"name": "Asset Repayments", "yearly": "", "quarterly": "", "monthly": "", "weekly": ""},
+      {"name": "Payroll Tax / Rates & Taxes", "yearly": 5035.10, "quarterly": 1258.78, "monthly": 419.59, "weekly": 96.83},
+      {"name": "Long Service Leave", "yearly": "", "quarterly": "", "monthly": "", "weekly": ""},
+      {"name": "Body Corporate", "yearly": 5531.91, "quarterly": 1382.98, "monthly": 460.99, "weekly": 106.38, "custom": true},
+      {"name": "Consulting", "yearly": 20692.12, "quarterly": 5173.03, "monthly": 1724.34, "weekly": 397.93, "custom": true},
+      {"name": "Gifts", "yearly": 16161.30, "quarterly": 4040.33, "monthly": 1346.78, "weekly": 310.79, "custom": true},
+      {"name": "Hire of Equipment", "yearly": 6382.41, "quarterly": 1595.60, "monthly": 531.87, "weekly": 122.74, "custom": true},
+      {"name": "Licences", "yearly": 4588.49, "quarterly": 1147.12, "monthly": 382.37, "weekly": 88.24, "custom": true},
+      {"name": "General Expenses", "yearly": 762.38, "quarterly": 190.60, "monthly": 63.53, "weekly": 14.66, "custom": true},
+      {"name": "Security", "yearly": 3293.72, "quarterly": 823.43, "monthly": 274.48, "weekly": 63.34, "custom": true},
+      {"name": "Staff Amenities", "yearly": 9924.94, "quarterly": 2481.24, "monthly": 827.08, "weekly": 190.87, "custom": true},
+      {"name": "Website Costs", "yearly": 764.90, "quarterly": 191.23, "monthly": 63.74, "weekly": 14.71, "custom": true},
+      {"name": "Google Ads (COGS)", "yearly": 21756.54, "quarterly": 5439.14, "monthly": 1813.05, "weekly": 418.39, "custom": true}
+    ],
+    "buffer": 10,
+    "vehRepay": 0,
+    "vehInsure": 0,
+    "vehRego": 0,
+    "vehFuel": 0,
+    "vehIns2": 0,
+    "vehUniform": 0,
+    "vehTolls": 0,
+    "vehTradies": 0
+  },
+  "labour": {
+    "superRate": 0.115,
+    "owners": [
+      {"role": "Owner 1", "name": "Owner", "salary": 135000, "billable": 40, "nonBillable": 20}
+    ],
+    "staff": [
+      {"name": "Tradie 1", "rate": 0, "hrs": 0},
+      {"name": "Tradie 2", "rate": 0, "hrs": 0},
+      {"name": "Tradie 3", "rate": 0, "hrs": 0}
+    ],
+    "apprentices": [
+      {"name": "Apprentice 1", "rate": 0, "hrs": 0, "util": 0},
+      {"name": "Apprentice 2", "rate": 0, "hrs": 0, "util": 0},
+      {"name": "Apprentice 3", "rate": 0, "hrs": 0, "util": 0}
+    ],
+    "admin": [
+      {"name": "Admin 1", "rate": 0, "hrs": 0},
+      {"name": "VA", "rate": 0, "hrs": 0},
+      {"name": "BDM", "rate": 0, "hrs": 0}
+    ]
+  },
+  "costOfOps": {
+    "year": 2026,
+    "totalDays": 365,
+    "weekends": 105,
+    "ph": 12,
+    "al": 20,
+    "sick": 10,
+    "rain": 4
+  },
+  "forecasting": {
+    "chargeRate": 145,
+    "efficiency": 0.8,
+    "matSpend": 50044.62,
+    "matMarkup": 0.35,
+    "subSpend": 11562.38,
+    "subMarkup": 0.7
+  }
+}
