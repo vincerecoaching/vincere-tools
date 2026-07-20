@@ -4,854 +4,1033 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SMART Goal Tracker | Vincere Coaching</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
- :root{
- --orange:#E85C2B;
- --orange-dark:#C94A1F;
- --black:#171512;
- --charcoal:#26221D;
- --grey-100:#F6F4F1;
- --grey-200:#ECE9E4;
- --grey-400:#B9B2A8;
- --grey-600:#7C766C;
- --yellow:#FFF6C8;
- --yellow-border:#E8D97A;
- --green:#2E8B4F;
- --green-bg:#E7F4EC;
- --amber:#C9821F;
- --amber-bg:#FBF0DC;
- --red:#C0392B;
- --red-bg:#FBE6E3;
- --grey-bg:#EEEBE6;
- --white:#FFFFFF;
- --radius:10px;
- --shadow:0 2px 10px rgba(23,21,18,0.08);
- --shadow-lg:0 12px 32px rgba(23,21,18,0.18);
- }
- *{box-sizing:border-box;margin:0;padding:0;}
- body{
- font-family:'Barlow',sans-serif;
- background:var(--grey-100);
- color:var(--black);
- padding-bottom:60px;
- }
- h1,h2,h3,h4,.condensed{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.02em;}
+  :root {
+    --orange: #E85C2B;
+    --orange-light: #FF7A4D;
+    --orange-dim: rgba(232,92,43,0.15);
+    --black: #0A0A0A;
+    --surface: #141414;
+    --surface2: #1E1E1E;
+    --surface3: #282828;
+    --border: rgba(255,255,255,0.08);
+    --text: #F0F0F0;
+    --text-muted: #888;
+    --green: #2ECC71;
+    --green-dim: rgba(46,204,113,0.15);
+    --yellow: #F39C12;
+    --yellow-dim: rgba(243,156,18,0.15);
+    --red: #E74C3C;
+    --red-dim: rgba(231,76,60,0.15);
+    --blue: #3E7CB1;
+    --blue-dim: rgba(62,124,177,0.15);
+    --purple: #6E5AA0;
+    --purple-dim: rgba(110,90,160,0.15);
+    --amber: #C9821F;
+    --amber-dim: rgba(201,130,31,0.15);
+  }
 
- /* HEADER */
- header{
- position:sticky;top:0;z-index:100;
- background:var(--black);
- color:var(--white);
- border-bottom:4px solid var(--orange);
- }
- .header-inner{
- max-width:1240px;margin:0 auto;
- display:flex;align-items:center;justify-content:space-between;
- padding:14px 24px;flex-wrap:wrap;gap:12px;
- }
- .brand{display:flex;align-items:center;gap:14px;}
- .brand-text{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;letter-spacing:.04em;}
- .brand-text span{color:var(--orange);}
- .tool-tag{
- font-family:'Barlow Condensed',sans-serif;
- font-size:12px;font-weight:700;letter-spacing:.12em;
- background:var(--orange);color:var(--white);
- padding:4px 10px;border-radius:4px;text-transform:uppercase;
- }
- .header-actions{display:flex;gap:10px;flex-wrap:wrap;}
- .btn{
- font-family:'Barlow Condensed',sans-serif;
- font-weight:700;font-size:14px;letter-spacing:.04em;text-transform:uppercase;
- padding:10px 18px;border-radius:6px;border:2px solid transparent;
- cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:6px;
- }
- .btn-primary{background:var(--orange);color:var(--white);}
- .btn-primary:hover{background:var(--orange-dark);}
- .btn-ghost{background:transparent;color:var(--white);border-color:rgba(255,255,255,.35);}
- .btn-ghost:hover{border-color:var(--white);}
- .btn-outline{background:var(--white);color:var(--black);border-color:var(--grey-400);}
- .btn-outline:hover{border-color:var(--black);}
- .btn-sm{padding:6px 12px;font-size:12px;}
- .btn-danger{background:var(--red-bg);color:var(--red);border-color:var(--red);}
- .btn-danger:hover{background:var(--red);color:var(--white);}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
- /* LAYOUT */
- .wrap{max-width:1240px;margin:0 auto;padding:28px 24px;}
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
 
- /* SUMMARY STRIP */
- .summary-strip{
- display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:26px;
- }
- .summary-card{
- background:var(--white);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);
- border-left:5px solid var(--orange);
- }
- .summary-card .num{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:32px;line-height:1;}
- .summary-card .label{font-size:12px;color:var(--grey-600);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:4px;}
- .summary-card.on-track{border-left-color:var(--green);}
- .summary-card.at-risk{border-left-color:var(--amber);}
- .summary-card.complete{border-left-color:#3E7CB1;}
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    color: var(--orange);
+    letter-spacing: 1px;
+  }
+  .nav-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 3px;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-primary:hover { background: var(--orange-light); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+  .btn-danger {
+    background: var(--red-dim);
+    color: var(--red);
+    border: 1px solid var(--red);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-danger:hover { background: var(--red); color: #fff; }
+  .btn-outline {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--text); color: var(--text); }
 
- /* FILTERS */
- .filter-bar{
- display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;
- }
- .filter-group{display:flex;gap:6px;background:var(--white);padding:4px;border-radius:8px;box-shadow:var(--shadow);}
- .filter-btn{
- font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.03em;
- padding:7px 14px;border-radius:6px;border:none;background:transparent;color:var(--grey-600);cursor:pointer;text-transform:uppercase;
- }
- .filter-btn.active{background:var(--black);color:var(--white);}
- .search-input{
- font-family:'Barlow',sans-serif;padding:9px 14px;border-radius:8px;border:1px solid var(--grey-400);
- min-width:220px;font-size:14px;flex:1;
- }
+  /* LAYOUT */
+  .page { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
 
- /* GOAL GRID */
- .goal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;}
- .goal-card{
- background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);
- padding:18px 20px;display:flex;flex-direction:column;gap:10px;cursor:pointer;
- border-top:4px solid var(--grey-400);transition:transform .12s ease, box-shadow .12s ease;
- }
- .goal-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
- .goal-card.type-business{border-top-color:var(--orange);}
- .goal-card.type-team{border-top-color:#3E7CB1;}
- .goal-card.type-personal{border-top-color:#6E5AA0;}
- .goal-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
- .goal-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;text-transform:none;line-height:1.15;}
- .badge-row{display:flex;gap:6px;flex-wrap:wrap;}
- .badge{
- font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;
- padding:3px 9px;border-radius:20px;text-transform:uppercase;white-space:nowrap;
- }
- .badge-business{background:#FDE6DB;color:var(--orange-dark);}
- .badge-team{background:#DCEBF6;color:#2C5C80;}
- .badge-personal{background:#EAE3F3;color:#5B4685;}
- .badge-status.on-track{background:var(--green-bg);color:var(--green);}
- .badge-status.at-risk{background:var(--amber-bg);color:var(--amber);}
- .badge-status.not-started{background:var(--grey-bg);color:var(--grey-600);}
- .badge-status.complete{background:#DCEBF6;color:#2C5C80;}
- .goal-owner{font-size:13px;color:var(--grey-600);font-weight:600;}
- .goal-meta-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--grey-600);font-weight:600;}
- .progress-track{height:8px;border-radius:6px;background:var(--grey-200);overflow:hidden;}
- .progress-fill{height:100%;background:var(--orange);border-radius:6px;transition:width .3s ease;}
- .progress-fill.complete-fill{background:#3E7CB1;}
- .progress-fill.at-risk-fill{background:var(--amber);}
- .card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px;}
- .milestone-count{font-size:12px;color:var(--grey-600);}
+  /* SUMMARY STRIP */
+  .summary-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-bottom: 26px;
+  }
+  .summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    border-left: 4px solid var(--orange);
+  }
+  .summary-card .num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--text);
+  }
+  .summary-card .label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+  }
+  .summary-card.on-track { border-left-color: var(--green); }
+  .summary-card.at-risk { border-left-color: var(--yellow); }
+  .summary-card.complete { border-left-color: var(--blue); }
 
- .empty-state{
- grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--grey-600);
- background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);
- }
- .empty-state h3{font-size:22px;margin-bottom:8px;color:var(--black);}
+  /* FILTERS */
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .filter-group {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 4px;
+    border-radius: 6px;
+  }
+  .filter-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+  .filter-btn.active { background: var(--orange); color: #fff; }
+  .filter-btn:hover:not(.active) { color: var(--text); }
+  .search-input {
+    font-family: 'Barlow', sans-serif;
+    padding: 9px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    min-width: 220px;
+    font-size: 14px;
+    flex: 1;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input::placeholder { color: var(--text-muted); }
+  .search-input:focus { border-color: var(--orange); }
 
- /* MODAL */
- .modal-overlay{
- display:none;position:fixed;inset:0;background:rgba(23,21,18,.55);z-index:200;
- align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;
- }
- .modal-overlay.open{display:flex;}
- .modal{
- background:var(--white);border-radius:12px;max-width:720px;width:100%;
- box-shadow:var(--shadow-lg);overflow:hidden;margin-bottom:40px;
- }
- .modal-header{
- background:var(--black);color:var(--white);padding:18px 26px;
- display:flex;justify-content:space-between;align-items:center;
- }
- .modal-header h2{font-size:22px;}
- .modal-close{background:transparent;border:none;color:var(--white);font-size:22px;cursor:pointer;line-height:1;}
- .modal-body{padding:26px;display:flex;flex-direction:column;gap:20px;}
+  /* GOAL GRID */
+  .goal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .goal-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    border-top: 4px solid var(--border);
+    transition: transform 0.12s ease, border-color 0.2s;
+  }
+  .goal-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.15); }
+  .goal-card.type-business { border-top-color: var(--orange); }
+  .goal-card.type-team { border-top-color: var(--blue); }
+  .goal-card.type-personal { border-top-color: var(--purple); }
 
- .field-group label{
- display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
- letter-spacing:.04em;text-transform:uppercase;color:var(--black);margin-bottom:6px;
- }
- .field-hint{font-size:12px;color:var(--grey-600);margin-top:4px;font-weight:400;text-transform:none;letter-spacing:0;}
- input[type=text],input[type=date],textarea,select{
- width:100%;font-family:'Barlow',sans-serif;font-size:14px;padding:10px 12px;
- border:1px solid var(--grey-400);border-radius:6px;background:var(--yellow);
- border-color:var(--yellow-border);
- }
- select{background:var(--yellow);}
- textarea{resize:vertical;min-height:64px;font-family:'Barlow',sans-serif;}
- input:focus,textarea:focus,select:focus{outline:2px solid var(--orange);outline-offset:1px;}
- .row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
- .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .goal-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--text);
+    line-height: 1.15;
+  }
+  .badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .badge-business { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(232,92,43,0.3); }
+  .badge-team { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(62,124,177,0.3); }
+  .badge-personal { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(110,90,160,0.3); }
+  .badge-status.on-track { background: var(--green-dim); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
+  .badge-status.at-risk { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(243,156,18,0.3); }
+  .badge-status.not-started { background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
+  .badge-status.complete { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(62,124,177,0.3); }
 
- .smart-block{
- border:1px solid var(--grey-200);border-radius:8px;padding:16px;background:var(--grey-100);
- display:flex;flex-direction:column;gap:14px;
- }
- .smart-letter{
- display:inline-flex;align-items:center;justify-content:center;
- width:26px;height:26px;border-radius:50%;background:var(--orange);color:var(--white);
- font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;margin-right:8px;
- }
+  .goal-owner { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+  .goal-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .progress-track { height: 6px; border-radius: 4px; background: var(--surface2); overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--orange); border-radius: 4px; transition: width 0.3s ease; }
+  .progress-fill.complete-fill { background: var(--blue); }
+  .progress-fill.at-risk-fill { background: var(--yellow); }
 
- .milestones-section{display:flex;flex-direction:column;gap:10px;}
- .milestone-row{
- display:flex;align-items:center;gap:10px;background:var(--grey-100);
- padding:10px 12px;border-radius:6px;border:1px solid var(--grey-200);
- }
- .milestone-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--orange);flex-shrink:0;}
- .milestone-row input[type=text]{flex:2;background:var(--white);border-color:var(--grey-400);}
- .milestone-row input[type=date]{flex:1;background:var(--white);border-color:var(--grey-400);}
- .milestone-row.done input[type=text]{text-decoration:line-through;color:var(--grey-600);}
- .icon-btn{
- background:transparent;border:none;cursor:pointer;color:var(--grey-600);font-size:16px;padding:4px 8px;
- }
- .icon-btn:hover{color:var(--red);}
- .add-milestone-btn{
- align-self:flex-start;font-family:'Barlow Condensed',sans-serif;font-weight:700;
- font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--orange);
- background:transparent;border:1px dashed var(--orange);border-radius:6px;padding:8px 14px;cursor:pointer;
- }
- .add-milestone-btn:hover{background:#FDE6DB;}
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .empty-state h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; margin-bottom: 8px; color: var(--text); }
 
- .modal-footer{
- display:flex;justify-content:space-between;align-items:center;
- padding:16px 26px;border-top:1px solid var(--grey-200);background:var(--grey-100);
- }
+  /* MODALS */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 16px;
+    overflow-y: auto;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    max-width: 720px;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+  .modal-header {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-header h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    color: var(--text);
+  }
+  .modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal-body { padding: 26px; display: flex; flex-direction: column; gap: 20px; }
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 26px;
+    border-top: 1px solid var(--border);
+    background: var(--surface2);
+  }
 
- /* DETAIL VIEW */
- .detail-body{padding:26px;}
- .detail-smart-grid{display:flex;flex-direction:column;gap:16px;margin:20px 0;}
- .detail-smart-item{background:var(--grey-100);border-radius:8px;padding:14px 16px;border-left:4px solid var(--orange);}
- .detail-smart-item h4{font-size:13px;color:var(--orange-dark);margin-bottom:4px;font-weight:700;}
- .detail-smart-item p{font-size:14px;color:var(--black);line-height:1.5;text-transform:none;font-family:'Barlow',sans-serif;}
- .detail-milestone{
- display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--grey-200);
- }
- .detail-milestone:last-child{border-bottom:none;}
- .detail-milestone .dot{width:10px;height:10px;border-radius:50%;background:var(--grey-400);flex-shrink:0;}
- .detail-milestone.done .dot{background:var(--green);}
- .detail-milestone.done span.mtext{text-decoration:line-through;color:var(--grey-600);}
- .detail-milestone .mdate{margin-left:auto;font-size:12px;color:var(--grey-600);font-weight:600;}
+  /* FORM FIELDS */
+  .field-group label {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  input[type=text], input[type=date], textarea, select {
+    width: 100%;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface2);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus { border-color: var(--orange); }
+  select { background: var(--surface2); }
+  textarea { resize: vertical; min-height: 64px; }
+  input::placeholder, textarea::placeholder { color: var(--text-muted); }
 
- footer.export-footer{display:none;}
+  select option { background: var(--surface3); color: var(--text); }
 
- /* BULK PRINT VIEW (hidden on screen, shown only in print) */
- .print-view{display:none;}
- .print-header{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--orange);padding-bottom:10px;margin-bottom:20px;}
- .print-header .brand-text{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;color:var(--black);}
- .print-header .brand-text span{color:var(--orange);}
- .print-header .print-date{font-size:12px;color:var(--grey-600);font-weight:600;}
- .print-goal{page-break-inside:avoid;border-bottom:1px solid var(--grey-200);padding-bottom:16px;margin-bottom:18px;}
- .print-goal h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;text-transform:none;margin-bottom:6px;}
- .print-goal .badge-row{margin-bottom:8px;}
- .print-smart-item{margin-bottom:8px;}
- .print-smart-item h4{font-size:12px;color:var(--orange-dark);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;}
- .print-smart-item p{font-size:13px;line-height:1.4;}
- .print-milestones{margin-top:8px;}
- .print-milestones .pm-row{font-size:13px;padding:3px 0;}
- .print-milestones .pm-row.done{color:var(--grey-600);text-decoration:line-through;}
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
- /* PRINT / PDF */
- @media print{
- header, .filter-bar, .summary-strip, .header-actions, .no-print, .add-milestone-btn, .icon-btn, .modal-footer{display:none !important;}
- body{background:#fff;padding:0;}
- .goal-grid{display:none;}
- .modal-overlay{display:none;}
- .modal-overlay.open{position:static;background:none;padding:0;display:block;}
- .modal{box-shadow:none;max-width:100%;}
- .modal-header{background:var(--black) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
- body.print-mode .print-view{display:block;}
- .badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
- }
+  /* SMART BLOCK */
+  .smart-block {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    background: var(--surface2);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .smart-block input[type=text], .smart-block input[type=date], .smart-block textarea, .smart-block select {
+    background: var(--surface3);
+  }
+  .smart-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    margin-right: 6px;
+    flex-shrink: 0;
+  }
+  .field-group label { display: flex; align-items: center; }
 
- @media (max-width:900px){
- .summary-strip{grid-template-columns:repeat(2,1fr);}
- .row-2,.row-3{grid-template-columns:1fr;}
- }
+  /* MILESTONES */
+  .milestones-section { display: flex; flex-direction: column; gap: 10px; }
+  .milestone-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface2);
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .milestone-row input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--orange);
+    flex-shrink: 0;
+  }
+  .milestone-row input[type=text] { flex: 2; background: var(--surface3); }
+  .milestone-row input[type=date] { flex: 1; background: var(--surface3); }
+  .milestone-row.done input[type=text] { text-decoration: line-through; color: var(--text-muted); }
+  .icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 16px;
+    padding: 4px 8px;
+    transition: color 0.2s;
+  }
+  .icon-btn:hover { color: var(--red); }
+  .add-milestone-btn {
+    align-self: flex-start;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--orange);
+    background: var(--orange-dim);
+    border: 1px dashed var(--orange);
+    border-radius: 4px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .add-milestone-btn:hover { background: var(--orange); color: #fff; }
+
+  /* DETAIL VIEW */
+  .detail-body { padding: 26px; }
+  .detail-smart-grid { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+  .detail-smart-item {
+    background: var(--surface2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--orange);
+  }
+  .detail-smart-item h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+  .detail-smart-item p { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .detail-milestone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .detail-milestone:last-child { border-bottom: none; }
+  .detail-milestone .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--surface3); flex-shrink: 0; }
+  .detail-milestone.done .dot { background: var(--green); }
+  .detail-milestone.done span.mtext { text-decoration: line-through; color: var(--text-muted); }
+  .detail-milestone .mdate { margin-left: auto; font-size: 12px; color: var(--text-muted); font-weight: 600; }
+
+  /* PRINT */
+  .print-view { display: none; }
+  .print-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 3px solid var(--orange); padding-bottom: 10px; margin-bottom: 20px; }
+  .print-goal { page-break-inside: avoid; border-bottom: 1px solid #ddd; padding-bottom: 16px; margin-bottom: 18px; }
+  .print-goal h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 19px; margin-bottom: 6px; }
+  .print-smart-item { margin-bottom: 8px; }
+  .print-smart-item h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; color: #c94a1f; }
+  .print-smart-item p { font-size: 13px; line-height: 1.4; }
+  .print-milestones .pm-row { font-size: 13px; padding: 3px 0; }
+  .print-milestones .pm-row.done { color: #888; text-decoration: line-through; }
+
+  @media print {
+    nav, .filter-bar, .summary-strip, .nav-right, .no-print, .add-milestone-btn, .icon-btn, .modal-footer { display: none !important; }
+    body { background: #fff; color: #000; padding: 0; }
+    .goal-grid { display: none; }
+    .modal-overlay { display: none; }
+    body.print-mode .print-view { display: block; }
+    body.print-mode .modal-overlay { display: none !important; }
+  }
+
+  @media (max-width: 900px) {
+    .summary-strip { grid-template-columns: repeat(2, 1fr); }
+    .row-2 { grid-template-columns: 1fr; }
+    .nav-tag { display: none; }
+  }
 </style>
 </head>
 <body>
 
-<header>
- <div class="header-inner">
- <div class="brand">
- <div class="brand-text">VINCERE <span>COACHING</span></div>
- <div class="tool-tag">SMART Goal Tracker</div>
- </div>
- <div class="header-actions no-print">
- <button class="btn btn-ghost btn-sm" id="printAllBtn">Print / Export PDF</button>
- <button class="btn btn-ghost btn-sm" id="exportJsonBtn">Export JSON</button>
- <label class="btn btn-ghost btn-sm" style="cursor:pointer;">
- Import JSON
- <input type="file" id="importJsonInput" accept=".json" style="display:none;">
- </label>
- <button class="btn btn-primary" id="newGoalBtn">+ New Goal</button>
- </div>
- </div>
-</header>
+<nav>
+  <div class="nav-brand">VINCERE COACHING</div>
+  <span class="nav-tag">SMART Goal Tracker</span>
+  <div class="nav-right no-print">
+    <button class="btn-ghost" id="printAllBtn">Print / PDF</button>
+    <button class="btn-ghost" id="exportJsonBtn">Export</button>
+    <label class="btn-ghost" style="cursor:pointer;">
+      Import
+      <input type="file" id="importJsonInput" accept=".json" style="display:none;">
+    </label>
+    <button class="btn-primary" id="newGoalBtn">+ New Goal</button>
+  </div>
+</nav>
 
-<div class="wrap">
+<div class="page">
 
- <div class="summary-strip">
- <div class="summary-card">
- <div class="num" id="statTotal">0</div>
- <div class="label">Total Goals</div>
- </div>
- <div class="summary-card on-track">
- <div class="num" id="statOnTrack">0</div>
- <div class="label">On Track</div>
- </div>
- <div class="summary-card at-risk">
- <div class="num" id="statAtRisk">0</div>
- <div class="label">At Risk</div>
- </div>
- <div class="summary-card complete">
- <div class="num" id="statComplete">0</div>
- <div class="label">Completed</div>
- </div>
- <div class="summary-card">
- <div class="num" id="statAvgProgress">0%</div>
- <div class="label">Avg. Progress</div>
- </div>
- </div>
+  <!-- SUMMARY STRIP -->
+  <div class="summary-strip">
+    <div class="summary-card">
+      <div class="num" id="statTotal">0</div>
+      <div class="label">Total Goals</div>
+    </div>
+    <div class="summary-card on-track">
+      <div class="num" id="statOnTrack">0</div>
+      <div class="label">On Track</div>
+    </div>
+    <div class="summary-card at-risk">
+      <div class="num" id="statAtRisk">0</div>
+      <div class="label">At Risk</div>
+    </div>
+    <div class="summary-card complete">
+      <div class="num" id="statComplete">0</div>
+      <div class="label">Completed</div>
+    </div>
+    <div class="summary-card">
+      <div class="num" id="statAvgProgress">0%</div>
+      <div class="label">Avg. Progress</div>
+    </div>
+  </div>
 
- <div class="filter-bar no-print">
- <div class="filter-group" id="typeFilterGroup">
- <button class="filter-btn active" data-filter-type="all">All</button>
- <button class="filter-btn" data-filter-type="business">Business</button>
- <button class="filter-btn" data-filter-type="team">Team</button>
- <button class="filter-btn" data-filter-type="personal">Personal</button>
- </div>
- <div class="filter-group" id="statusFilterGroup">
- <button class="filter-btn active" data-filter-status="all">All Status</button>
- <button class="filter-btn" data-filter-status="not-started">Not Started</button>
- <button class="filter-btn" data-filter-status="on-track">On Track</button>
- <button class="filter-btn" data-filter-status="at-risk">At Risk</button>
- <button class="filter-btn" data-filter-status="complete">Complete</button>
- </div>
- <input type="text" class="search-input" id="searchInput" placeholder="Search goals or owner...">
- </div>
+  <!-- FILTERS -->
+  <div class="filter-bar no-print">
+    <div class="filter-group" id="typeFilterGroup">
+      <button class="filter-btn active" data-filter-type="all">All</button>
+      <button class="filter-btn" data-filter-type="business">Business</button>
+      <button class="filter-btn" data-filter-type="team">Team</button>
+      <button class="filter-btn" data-filter-type="personal">Personal</button>
+    </div>
+    <div class="filter-group" id="statusFilterGroup">
+      <button class="filter-btn active" data-filter-status="all">All Status</button>
+      <button class="filter-btn" data-filter-status="not-started">Not Started</button>
+      <button class="filter-btn" data-filter-status="on-track">On Track</button>
+      <button class="filter-btn" data-filter-status="at-risk">At Risk</button>
+      <button class="filter-btn" data-filter-status="complete">Complete</button>
+    </div>
+    <input type="text" class="search-input" id="searchInput" placeholder="Search goals or owner...">
+  </div>
 
- <div class="goal-grid" id="goalGrid"></div>
+  <!-- GOAL GRID -->
+  <div class="goal-grid" id="goalGrid"></div>
 
 </div>
 
+<!-- PRINT VIEW -->
 <div class="print-view" id="printView"></div>
 
 <!-- ADD / EDIT MODAL -->
 <div class="modal-overlay no-print" id="editModalOverlay">
- <div class="modal">
- <div class="modal-header">
- <h2 id="editModalTitle">New Goal</h2>
- <button class="modal-close" id="editModalClose">&times;</button>
- </div>
- <div class="modal-body">
- <div class="row-2">
- <div class="field-group">
- <label>Goal Type</label>
- <select id="fType">
- <option value="business">Business Goal</option>
- <option value="team">Team Goal</option>
- <option value="personal">Personal Goal</option>
- </select>
- </div>
- <div class="field-group">
- <label>Owner / Assigned To</label>
- <input type="text" id="fOwner" placeholder="e.g. Kirk, or team member name">
- </div>
- </div>
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="editModalTitle">New Goal</h2>
+      <button class="modal-close" id="editModalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="row-2">
+        <div class="field-group">
+          <label>Goal Type</label>
+          <select id="fType">
+            <option value="business">Business Goal</option>
+            <option value="team">Team Goal</option>
+            <option value="personal">Personal Goal</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Owner / Assigned To</label>
+          <input type="text" id="fOwner" placeholder="e.g. Kirk, or team member name">
+        </div>
+      </div>
 
- <div class="field-group">
- <label>Goal Title</label>
- <input type="text" id="fTitle" placeholder="Short, clear goal name">
- </div>
+      <div class="field-group">
+        <label>Goal Title</label>
+        <input type="text" id="fTitle" placeholder="Short, clear goal name">
+      </div>
 
- <div class="smart-block">
- <div class="field-group">
- <label><span class="smart-letter">S</span>Specific</label>
- <textarea id="fSpecific" placeholder="What exactly do you want to achieve? Be precise."></textarea>
- </div>
- <div class="field-group">
- <label><span class="smart-letter">M</span>Measurable</label>
- <textarea id="fMeasurable" placeholder="How will you measure progress and success? Numbers, %, $."></textarea>
- </div>
- <div class="field-group">
- <label><span class="smart-letter">A</span>Achievable</label>
- <textarea id="fAchievable" placeholder="Is this realistic given current resources/capacity? What's needed to get there?"></textarea>
- </div>
- <div class="field-group">
- <label><span class="smart-letter">R</span>Relevant</label>
- <textarea id="fRelevant" placeholder="Why does this goal matter to the business/team right now?"></textarea>
- </div>
- <div class="row-2">
- <div class="field-group">
- <label><span class="smart-letter">T</span>Target Date</label>
- <input type="date" id="fTargetDate">
- </div>
- <div class="field-group">
- <label>Status</label>
- <select id="fStatus">
- <option value="not-started">Not Started</option>
- <option value="on-track">On Track</option>
- <option value="at-risk">At Risk</option>
- <option value="complete">Complete</option>
- </select>
- </div>
- </div>
- </div>
+      <div class="smart-block">
+        <div class="field-group">
+          <label><span class="smart-letter">S</span>Specific</label>
+          <textarea id="fSpecific" placeholder="What exactly do you want to achieve? Be precise."></textarea>
+        </div>
+        <div class="field-group">
+          <label><span class="smart-letter">M</span>Measurable</label>
+          <textarea id="fMeasurable" placeholder="How will you measure progress and success? Numbers, %, $."></textarea>
+        </div>
+        <div class="field-group">
+          <label><span class="smart-letter">A</span>Achievable</label>
+          <textarea id="fAchievable" placeholder="Is this realistic given current resources? What's needed to get there?"></textarea>
+        </div>
+        <div class="field-group">
+          <label><span class="smart-letter">R</span>Relevant</label>
+          <textarea id="fRelevant" placeholder="Why does this goal matter to the business right now?"></textarea>
+        </div>
+        <div class="row-2">
+          <div class="field-group">
+            <label><span class="smart-letter">T</span>Target Date</label>
+            <input type="date" id="fTargetDate">
+          </div>
+          <div class="field-group">
+            <label>Status</label>
+            <select id="fStatus">
+              <option value="not-started">Not Started</option>
+              <option value="on-track">On Track</option>
+              <option value="at-risk">At Risk</option>
+              <option value="complete">Complete</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
- <div class="milestones-section">
- <label style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;">Milestones</label>
- <div id="milestoneList"></div>
- <button class="add-milestone-btn" id="addMilestoneBtn">+ Add Milestone</button>
- </div>
+      <div class="milestones-section">
+        <label style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);">Milestones</label>
+        <div id="milestoneList"></div>
+        <button class="add-milestone-btn" id="addMilestoneBtn">+ Add Milestone</button>
+      </div>
 
- <div class="field-group">
- <label>Notes</label>
- <textarea id="fNotes" placeholder="Optional notes, blockers, context..."></textarea>
- </div>
- </div>
- <div class="modal-footer">
- <button class="btn btn-danger no-print" id="deleteGoalBtn" style="display:none;">Delete Goal</button>
- <div style="display:flex;gap:10px;margin-left:auto;">
- <button class="btn btn-outline" id="cancelEditBtn">Cancel</button>
- <button class="btn btn-primary" id="saveGoalBtn">Save Goal</button>
- </div>
- </div>
- </div>
+      <div class="field-group">
+        <label>Notes</label>
+        <textarea id="fNotes" placeholder="Optional notes, blockers, context..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-danger no-print" id="deleteGoalBtn" style="display:none;">Delete Goal</button>
+      <div style="display:flex;gap:10px;margin-left:auto;">
+        <button class="btn-outline" id="cancelEditBtn">Cancel</button>
+        <button class="btn-primary" id="saveGoalBtn">Save Goal</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- DETAIL / VIEW MODAL -->
 <div class="modal-overlay" id="detailModalOverlay">
- <div class="modal" id="detailModalContent">
- <!-- populated by JS -->
- </div>
+  <div class="modal" id="detailModalContent"></div>
 </div>
 
 <script>
 (function(){
- const STORAGE_KEY = 'vincere_smart_goals_v1';
- let goals = [];
- let activeTypeFilter = 'all';
- let activeStatusFilter = 'all';
- let searchTerm = '';
- let editingGoalId = null;
- let milestoneDraft = [];
+  const STORAGE_KEY = 'vincere_smart_goals_v1';
+  let goals = [];
+  let activeTypeFilter = 'all';
+  let activeStatusFilter = 'all';
+  let searchTerm = '';
+  let editingGoalId = null;
+  let milestoneDraft = [];
 
- function uid(prefix){ return prefix + '_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,7); }
+  function uid(prefix){ return prefix + '_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,7); }
 
- function loadGoals(){
- try{
- const raw = localStorage.getItem(STORAGE_KEY);
- goals = raw ? JSON.parse(raw) : [];
- }catch(e){ goals = []; }
- }
- function saveGoals(){
- localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
- }
+  function loadGoals(){
+    try{ const raw = localStorage.getItem(STORAGE_KEY); goals = raw ? JSON.parse(raw) : []; }
+    catch(e){ goals = []; }
+  }
+  function saveGoals(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(goals)); }
 
- function milestoneProgress(goal){
- if(!goal.milestones || goal.milestones.length === 0) return goal.status === 'complete' ? 100 : 0;
- const done = goal.milestones.filter(m=>m.done).length;
- return Math.round((done / goal.milestones.length) * 100);
- }
+  function milestoneProgress(goal){
+    if(!goal.milestones || goal.milestones.length === 0) return goal.status === 'complete' ? 100 : 0;
+    const done = goal.milestones.filter(m=>m.done).length;
+    return Math.round((done / goal.milestones.length) * 100);
+  }
 
- function statusLabel(s){
- return {'not-started':'Not Started','on-track':'On Track','at-risk':'At Risk','complete':'Complete'}[s] || s;
- }
+  function statusLabel(s){ return {'not-started':'Not Started','on-track':'On Track','at-risk':'At Risk','complete':'Complete'}[s]||s; }
+  function typeLabel(t){ return {'business':'Business','team':'Team','personal':'Personal'}[t]||t; }
 
- function typeLabel(t){
- return {'business':'Business','team':'Team','personal':'Personal'}[t] || t;
- }
+  function fmtDate(d){
+    if(!d) return '—';
+    const dt = new Date(d+'T00:00:00');
+    if(isNaN(dt)) return d;
+    return dt.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'});
+  }
 
- function fmtDate(d){
- if(!d) return '—';
- const dt = new Date(d + 'T00:00:00');
- if(isNaN(dt)) return d;
- return dt.toLocaleDateString('en-AU', {day:'numeric',month:'short',year:'numeric'});
- }
+  function daysUntil(d){
+    if(!d) return null;
+    const target = new Date(d+'T00:00:00');
+    const now = new Date(); now.setHours(0,0,0,0);
+    return Math.round((target-now)/86400000);
+  }
 
- function daysUntil(d){
- if(!d) return null;
- const target = new Date(d + 'T00:00:00');
- const now = new Date(); now.setHours(0,0,0,0);
- return Math.round((target - now) / 86400000);
- }
+  function renderStats(){
+    const total = goals.length;
+    const onTrack = goals.filter(g=>g.status==='on-track').length;
+    const atRisk = goals.filter(g=>g.status==='at-risk').length;
+    const complete = goals.filter(g=>g.status==='complete').length;
+    const avg = total ? Math.round(goals.reduce((s,g)=>s+milestoneProgress(g),0)/total) : 0;
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statOnTrack').textContent = onTrack;
+    document.getElementById('statAtRisk').textContent = atRisk;
+    document.getElementById('statComplete').textContent = complete;
+    document.getElementById('statAvgProgress').textContent = avg+'%';
+  }
 
- // ---------- RENDER ----------
- function renderStats(){
- const total = goals.length;
- const onTrack = goals.filter(g=>g.status==='on-track').length;
- const atRisk = goals.filter(g=>g.status==='at-risk').length;
- const complete = goals.filter(g=>g.status==='complete').length;
- const avg = total ? Math.round(goals.reduce((s,g)=>s+milestoneProgress(g),0)/total) : 0;
- document.getElementById('statTotal').textContent = total;
- document.getElementById('statOnTrack').textContent = onTrack;
- document.getElementById('statAtRisk').textContent = atRisk;
- document.getElementById('statComplete').textContent = complete;
- document.getElementById('statAvgProgress').textContent = avg + '%';
- }
+  function filteredGoals(){
+    return goals.filter(g=>{
+      if(activeTypeFilter !== 'all' && g.type !== activeTypeFilter) return false;
+      if(activeStatusFilter !== 'all' && g.status !== activeStatusFilter) return false;
+      if(searchTerm){ const hay=(g.title+' '+(g.owner||'')).toLowerCase(); if(!hay.includes(searchTerm.toLowerCase())) return false; }
+      return true;
+    });
+  }
 
- function filteredGoals(){
- return goals.filter(g=>{
- if(activeTypeFilter !== 'all' && g.type !== activeTypeFilter) return false;
- if(activeStatusFilter !== 'all' && g.status !== activeStatusFilter) return false;
- if(searchTerm){
- const hay = (g.title + ' ' + (g.owner||'')).toLowerCase();
- if(!hay.includes(searchTerm.toLowerCase())) return false;
- }
- return true;
- });
- }
+  function renderGrid(){
+    const grid = document.getElementById('goalGrid');
+    const list = filteredGoals();
+    if(list.length === 0){
+      grid.innerHTML = '<div class="empty-state"><h3>No goals yet</h3><p>Click "+ New Goal" to set your first SMART goal.</p></div>';
+      return;
+    }
+    grid.innerHTML = list.map(g=>{
+      const progress = milestoneProgress(g);
+      const fillClass = g.status==='complete'?'complete-fill':(g.status==='at-risk'?'at-risk-fill':'');
+      const du = daysUntil(g.targetDate);
+      let dueText = fmtDate(g.targetDate);
+      if(du !== null && g.status !== 'complete'){
+        if(du < 0) dueText += ` (${Math.abs(du)}d overdue)`;
+        else if(du <= 14) dueText += ` (${du}d left)`;
+      }
+      const msDone = (g.milestones||[]).filter(m=>m.done).length;
+      const msTotal = (g.milestones||[]).length;
+      return `<div class="goal-card type-${g.type}" data-id="${g.id}">
+        <div class="goal-title">${esc(g.title||'Untitled Goal')}</div>
+        <div class="badge-row">
+          <span class="badge badge-${g.type}">${typeLabel(g.type)}</span>
+          <span class="badge badge-status ${g.status}">${statusLabel(g.status)}</span>
+        </div>
+        ${g.owner?`<div class="goal-owner">${esc(g.owner)}</div>`:''}
+        <div class="progress-track"><div class="progress-fill ${fillClass}" style="width:${progress}%"></div></div>
+        <div class="goal-meta-row">
+          <span>${msDone}/${msTotal} milestones</span>
+          <span>${progress}%</span>
+        </div>
+        <div class="goal-meta-row" style="margin-top:2px;">
+          <span style="font-weight:700;color:var(--text-muted);">Target: ${dueText}</span>
+        </div>
+      </div>`;
+    }).join('');
+    grid.querySelectorAll('.goal-card').forEach(card=>{
+      card.addEventListener('click',()=>openDetail(card.dataset.id));
+    });
+  }
 
- function renderGrid(){
- const grid = document.getElementById('goalGrid');
- const list = filteredGoals();
- if(list.length === 0){
- grid.innerHTML = `<div class="empty-state"><h3>No goals yet</h3><p>Click "+ New Goal" to set your first SMART goal.</p></div>`;
- return;
- }
- grid.innerHTML = list.map(g=>{
- const progress = milestoneProgress(g);
- const fillClass = g.status === 'complete' ? 'complete-fill' : (g.status === 'at-risk' ? 'at-risk-fill' : '');
- const du = daysUntil(g.targetDate);
- let dueText = fmtDate(g.targetDate);
- if(du !== null && g.status !== 'complete'){
- if(du < 0) dueText += ` (${Math.abs(du)}d overdue)`;
- else if(du <= 14) dueText += ` (${du}d left)`;
- }
- const msDone = (g.milestones||[]).filter(m=>m.done).length;
- const msTotal = (g.milestones||[]).length;
- return `
- <div class="goal-card type-${g.type}" data-id="${g.id}">
- <div class="goal-card-top">
- <div class="goal-title">${escapeHtml(g.title || 'Untitled Goal')}</div>
- </div>
- <div class="badge-row">
- <span class="badge badge-${g.type}">${typeLabel(g.type)}</span>
- <span class="badge badge-status ${g.status}">${statusLabel(g.status)}</span>
- </div>
- ${g.owner ? `<div class="goal-owner">${escapeHtml(g.owner)}</div>` : ''}
- <div class="progress-track"><div class="progress-fill ${fillClass}" style="width:${progress}%;"></div></div>
- <div class="goal-meta-row">
- <span class="milestone-count">${msDone}/${msTotal} milestones</span>
- <span>${progress}%</span>
- </div>
- <div class="card-footer">
- <span class="goal-meta-row" style="font-weight:700;">Target: ${dueText}</span>
- </div>
- </div>`;
- }).join('');
+  function esc(str){
+    if(!str) return '';
+    const d = document.createElement('div'); d.textContent=str; return d.innerHTML;
+  }
 
- grid.querySelectorAll('.goal-card').forEach(card=>{
- card.addEventListener('click', ()=> openDetail(card.dataset.id));
- });
- }
+  function renderAll(){ renderStats(); renderGrid(); }
 
- function escapeHtml(str){
- if(!str) return '';
- const d = document.createElement('div');
- d.textContent = str;
- return d.innerHTML;
- }
+  // EDIT MODAL
+  const editOverlay = document.getElementById('editModalOverlay');
+  const detailOverlay = document.getElementById('detailModalOverlay');
 
- function renderAll(){
- renderStats();
- renderGrid();
- }
+  function openEditModal(goalId){
+    editingGoalId = goalId||null;
+    const goal = goalId ? goals.find(g=>g.id===goalId) : null;
+    document.getElementById('editModalTitle').textContent = goal ? 'Edit Goal' : 'New Goal';
+    document.getElementById('fType').value = goal ? goal.type : 'business';
+    document.getElementById('fOwner').value = goal ? (goal.owner||'') : '';
+    document.getElementById('fTitle').value = goal ? (goal.title||'') : '';
+    document.getElementById('fSpecific').value = goal ? (goal.specific||'') : '';
+    document.getElementById('fMeasurable').value = goal ? (goal.measurable||'') : '';
+    document.getElementById('fAchievable').value = goal ? (goal.achievable||'') : '';
+    document.getElementById('fRelevant').value = goal ? (goal.relevant||'') : '';
+    document.getElementById('fTargetDate').value = goal ? (goal.targetDate||'') : '';
+    document.getElementById('fStatus').value = goal ? goal.status : 'not-started';
+    document.getElementById('fNotes').value = goal ? (goal.notes||'') : '';
+    milestoneDraft = goal ? JSON.parse(JSON.stringify(goal.milestones||[])) : [];
+    document.getElementById('deleteGoalBtn').style.display = goal ? 'inline-flex' : 'none';
+    renderMilestoneDraft();
+    editOverlay.classList.add('open');
+  }
 
- // ---------- EDIT MODAL ----------
- const editOverlay = document.getElementById('editModalOverlay');
- const detailOverlay = document.getElementById('detailModalOverlay');
+  function closeEditModal(){ editOverlay.classList.remove('open'); editingGoalId = null; }
 
- function openEditModal(goalId){
- editingGoalId = goalId || null;
- const goal = goalId ? goals.find(g=>g.id===goalId) : null;
- document.getElementById('editModalTitle').textContent = goal ? 'Edit Goal' : 'New Goal';
- document.getElementById('fType').value = goal ? goal.type : 'business';
- document.getElementById('fOwner').value = goal ? (goal.owner||'') : '';
- document.getElementById('fTitle').value = goal ? (goal.title||'') : '';
- document.getElementById('fSpecific').value = goal ? (goal.specific||'') : '';
- document.getElementById('fMeasurable').value = goal ? (goal.measurable||'') : '';
- document.getElementById('fAchievable').value = goal ? (goal.achievable||'') : '';
- document.getElementById('fRelevant').value = goal ? (goal.relevant||'') : '';
- document.getElementById('fTargetDate').value = goal ? (goal.targetDate||'') : '';
- document.getElementById('fStatus').value = goal ? goal.status : 'not-started';
- document.getElementById('fNotes').value = goal ? (goal.notes||'') : '';
- milestoneDraft = goal ? JSON.parse(JSON.stringify(goal.milestones||[])) : [];
- document.getElementById('deleteGoalBtn').style.display = goal ? 'inline-flex' : 'none';
- renderMilestoneDraft();
- editOverlay.classList.add('open');
- }
+  function renderMilestoneDraft(){
+    const list = document.getElementById('milestoneList');
+    if(milestoneDraft.length === 0){
+      list.innerHTML = '<div style="font-size:13px;color:var(--text-muted);padding:6px 2px;">No milestones yet.</div>';
+      return;
+    }
+    list.innerHTML = milestoneDraft.map((m,i)=>`
+      <div class="milestone-row ${m.done?'done':''}" data-idx="${i}">
+        <input type="checkbox" class="ms-done" ${m.done?'checked':''}>
+        <input type="text" class="ms-text" placeholder="Milestone description" value="${esc(m.text)}">
+        <input type="date" class="ms-date" value="${m.dueDate||''}">
+        <button class="icon-btn ms-remove" title="Remove">&times;</button>
+      </div>`).join('');
 
- function closeEditModal(){
- editOverlay.classList.remove('open');
- editingGoalId = null;
- }
+    list.querySelectorAll('.milestone-row').forEach(row=>{
+      const idx = parseInt(row.dataset.idx,10);
+      row.querySelector('.ms-done').addEventListener('change',e=>{
+        milestoneDraft[idx].done=e.target.checked;
+        row.classList.toggle('done',e.target.checked);
+      });
+      row.querySelector('.ms-text').addEventListener('blur',e=>{ milestoneDraft[idx].text=e.target.value; });
+      row.querySelector('.ms-date').addEventListener('change',e=>{ milestoneDraft[idx].dueDate=e.target.value; });
+      row.querySelector('.ms-remove').addEventListener('click',()=>{ milestoneDraft.splice(idx,1); renderMilestoneDraft(); });
+    });
+  }
 
- function renderMilestoneDraft(){
- const list = document.getElementById('milestoneList');
- if(milestoneDraft.length === 0){
- list.innerHTML = `<div style="font-size:13px;color:var(--grey-600);padding:6px 2px;">No milestones yet.</div>`;
- return;
- }
- list.innerHTML = milestoneDraft.map((m,i)=>`
- <div class="milestone-row ${m.done ? 'done':''}" data-idx="${i}">
- <input type="checkbox" class="ms-done" ${m.done?'checked':''}>
- <input type="text" class="ms-text" placeholder="Milestone description" value="${escapeHtml(m.text)}">
- <input type="date" class="ms-date" value="${m.dueDate||''}">
- <button class="icon-btn ms-remove" title="Remove">&times;</button>
- </div>
- `).join('');
+  document.getElementById('addMilestoneBtn').addEventListener('click',()=>{
+    milestoneDraft.push({id:uid('ms'),text:'',dueDate:'',done:false});
+    renderMilestoneDraft();
+  });
 
- list.querySelectorAll('.milestone-row').forEach(row=>{
- const idx = parseInt(row.dataset.idx,10);
- row.querySelector('.ms-done').addEventListener('change', e=>{
- milestoneDraft[idx].done = e.target.checked;
- row.classList.toggle('done', e.target.checked);
- });
- row.querySelector('.ms-text').addEventListener('blur', e=>{
- milestoneDraft[idx].text = e.target.value;
- });
- row.querySelector('.ms-date').addEventListener('change', e=>{
- milestoneDraft[idx].dueDate = e.target.value;
- });
- row.querySelector('.ms-remove').addEventListener('click', ()=>{
- milestoneDraft.splice(idx,1);
- renderMilestoneDraft();
- });
- });
- }
+  document.getElementById('newGoalBtn').addEventListener('click',()=>openEditModal(null));
+  document.getElementById('editModalClose').addEventListener('click',closeEditModal);
+  document.getElementById('cancelEditBtn').addEventListener('click',closeEditModal);
+  editOverlay.addEventListener('click',e=>{ if(e.target===editOverlay) closeEditModal(); });
 
- document.getElementById('addMilestoneBtn').addEventListener('click', ()=>{
- milestoneDraft.push({id: uid('ms'), text:'', dueDate:'', done:false});
- renderMilestoneDraft();
- });
+  document.getElementById('saveGoalBtn').addEventListener('click',()=>{
+    const title = document.getElementById('fTitle').value.trim();
+    if(!title){ alert('Please enter a goal title.'); return; }
+    document.querySelectorAll('#milestoneList .milestone-row').forEach(row=>{
+      const idx=parseInt(row.dataset.idx,10);
+      milestoneDraft[idx].text=row.querySelector('.ms-text').value;
+      milestoneDraft[idx].dueDate=row.querySelector('.ms-date').value;
+    });
+    const data = {
+      type: document.getElementById('fType').value,
+      owner: document.getElementById('fOwner').value.trim(),
+      title,
+      specific: document.getElementById('fSpecific').value.trim(),
+      measurable: document.getElementById('fMeasurable').value.trim(),
+      achievable: document.getElementById('fAchievable').value.trim(),
+      relevant: document.getElementById('fRelevant').value.trim(),
+      targetDate: document.getElementById('fTargetDate').value,
+      status: document.getElementById('fStatus').value,
+      notes: document.getElementById('fNotes').value.trim(),
+      milestones: milestoneDraft.filter(m=>m.text.trim()!=='')
+    };
+    if(editingGoalId){
+      const idx=goals.findIndex(g=>g.id===editingGoalId);
+      goals[idx]=Object.assign({},goals[idx],data);
+    } else {
+      data.id=uid('goal');
+      data.createdDate=new Date().toISOString().slice(0,10);
+      goals.push(data);
+    }
+    saveGoals(); renderAll(); closeEditModal();
+  });
 
- document.getElementById('newGoalBtn').addEventListener('click', ()=> openEditModal(null));
- document.getElementById('editModalClose').addEventListener('click', closeEditModal);
- document.getElementById('cancelEditBtn').addEventListener('click', closeEditModal);
- editOverlay.addEventListener('click', e=>{ if(e.target === editOverlay) closeEditModal(); });
+  document.getElementById('deleteGoalBtn').addEventListener('click',()=>{
+    if(!editingGoalId) return;
+    if(confirm('Delete this goal? This cannot be undone.')){
+      goals=goals.filter(g=>g.id!==editingGoalId);
+      saveGoals(); renderAll(); closeEditModal();
+    }
+  });
 
- document.getElementById('saveGoalBtn').addEventListener('click', ()=>{
- const title = document.getElementById('fTitle').value.trim();
- if(!title){ alert('Please enter a goal title.'); return; }
+  // DETAIL MODAL
+  function openDetail(goalId){
+    const g=goals.find(x=>x.id===goalId);
+    if(!g) return;
+    const progress=milestoneProgress(g);
+    const fillClass=g.status==='complete'?'complete-fill':(g.status==='at-risk'?'at-risk-fill':'');
+    const milestonesHtml=(g.milestones||[]).length
+      ? (g.milestones||[]).map(m=>`<div class="detail-milestone ${m.done?'done':''}">
+          <div class="dot"></div>
+          <span class="mtext">${esc(m.text)}</span>
+          <span class="mdate">${m.dueDate?fmtDate(m.dueDate):''}</span>
+        </div>`).join('')
+      : '<div style="font-size:13px;color:var(--text-muted);">No milestones added.</div>';
 
- // capture any in-progress text/date edits not yet blurred
- document.querySelectorAll('#milestoneList .milestone-row').forEach(row=>{
- const idx = parseInt(row.dataset.idx,10);
- milestoneDraft[idx].text = row.querySelector('.ms-text').value;
- milestoneDraft[idx].dueDate = row.querySelector('.ms-date').value;
- });
+    document.getElementById('detailModalContent').innerHTML = `
+      <div class="modal-header">
+        <h2>${esc(g.title)}</h2>
+        <button class="modal-close no-print" id="detailModalClose">&times;</button>
+      </div>
+      <div class="detail-body">
+        <div class="badge-row" style="margin-bottom:14px;">
+          <span class="badge badge-${g.type}">${typeLabel(g.type)} Goal</span>
+          <span class="badge badge-status ${g.status}">${statusLabel(g.status)}</span>
+          ${g.owner?`<span class="badge" style="background:var(--surface2);color:var(--text-muted);border:1px solid var(--border);">${esc(g.owner)}</span>`:''}
+        </div>
+        <div class="progress-track"><div class="progress-fill ${fillClass}" style="width:${progress}%"></div></div>
+        <div class="goal-meta-row" style="margin-top:6px;">
+          <span>${progress}% complete</span>
+          <span>Target: ${fmtDate(g.targetDate)}</span>
+        </div>
+        <div class="detail-smart-grid">
+          <div class="detail-smart-item"><h4>Specific</h4><p>${esc(g.specific)||'—'}</p></div>
+          <div class="detail-smart-item"><h4>Measurable</h4><p>${esc(g.measurable)||'—'}</p></div>
+          <div class="detail-smart-item"><h4>Achievable</h4><p>${esc(g.achievable)||'—'}</p></div>
+          <div class="detail-smart-item"><h4>Relevant</h4><p>${esc(g.relevant)||'—'}</p></div>
+          <div class="detail-smart-item"><h4>Time-bound</h4><p>${fmtDate(g.targetDate)}</p></div>
+        </div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:15px;letter-spacing:0.5px;margin-bottom:8px;">Milestones</h3>
+        <div style="margin-bottom:16px;">${milestonesHtml}</div>
+        ${g.notes?`<h3 style="font-family:'Barlow Condensed',sans-serif;font-size:15px;letter-spacing:0.5px;margin-bottom:8px;">Notes</h3><p style="font-size:14px;line-height:1.5;color:var(--text-muted);">${esc(g.notes)}</p>`:''}
+      </div>
+      <div class="modal-footer no-print">
+        <button class="btn-outline" id="detailPdfBtn">Export PDF</button>
+        <div style="display:flex;gap:10px;margin-left:auto;">
+          <button class="btn-outline" id="detailCloseBtn">Close</button>
+          <button class="btn-primary" id="detailEditBtn">Edit Goal</button>
+        </div>
+      </div>`;
+    detailOverlay.classList.add('open');
+    document.getElementById('detailModalClose').addEventListener('click',closeDetail);
+    document.getElementById('detailCloseBtn').addEventListener('click',closeDetail);
+    document.getElementById('detailEditBtn').addEventListener('click',()=>{ closeDetail(); openEditModal(g.id); });
+    document.getElementById('detailPdfBtn').addEventListener('click',()=>window.print());
+  }
+  function closeDetail(){ detailOverlay.classList.remove('open'); }
+  detailOverlay.addEventListener('click',e=>{ if(e.target===detailOverlay) closeDetail(); });
 
- const data = {
- type: document.getElementById('fType').value,
- owner: document.getElementById('fOwner').value.trim(),
- title: title,
- specific: document.getElementById('fSpecific').value.trim(),
- measurable: document.getElementById('fMeasurable').value.trim(),
- achievable: document.getElementById('fAchievable').value.trim(),
- relevant: document.getElementById('fRelevant').value.trim(),
- targetDate: document.getElementById('fTargetDate').value,
- status: document.getElementById('fStatus').value,
- notes: document.getElementById('fNotes').value.trim(),
- milestones: milestoneDraft.filter(m=>m.text.trim() !== '')
- };
+  // FILTERS
+  document.getElementById('typeFilterGroup').addEventListener('click',e=>{
+    if(!e.target.dataset.filterType) return;
+    activeTypeFilter=e.target.dataset.filterType;
+    document.querySelectorAll('#typeFilterGroup .filter-btn').forEach(b=>b.classList.toggle('active',b===e.target));
+    renderGrid();
+  });
+  document.getElementById('statusFilterGroup').addEventListener('click',e=>{
+    if(!e.target.dataset.filterStatus) return;
+    activeStatusFilter=e.target.dataset.filterStatus;
+    document.querySelectorAll('#statusFilterGroup .filter-btn').forEach(b=>b.classList.toggle('active',b===e.target));
+    renderGrid();
+  });
+  document.getElementById('searchInput').addEventListener('input',e=>{ searchTerm=e.target.value; renderGrid(); });
 
- if(editingGoalId){
- const idx = goals.findIndex(g=>g.id===editingGoalId);
- goals[idx] = Object.assign({}, goals[idx], data);
- } else {
- data.id = uid('goal');
- data.createdDate = new Date().toISOString().slice(0,10);
- goals.push(data);
- }
- saveGoals();
- renderAll();
- closeEditModal();
- });
+  // IMPORT / EXPORT
+  document.getElementById('exportJsonBtn').addEventListener('click',()=>{
+    const blob=new Blob([JSON.stringify(goals,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download='vincere_smart_goals_'+new Date().toISOString().slice(0,10)+'.json'; a.click();
+    URL.revokeObjectURL(url);
+  });
+  document.getElementById('importJsonInput').addEventListener('change',e=>{
+    const file=e.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=evt=>{
+      try{
+        const imported=JSON.parse(evt.target.result);
+        if(Array.isArray(imported)){ goals=imported; saveGoals(); renderAll(); alert('Goals imported successfully.'); }
+        else { alert('Invalid file format.'); }
+      }catch(err){ alert('Could not read file: '+err.message); }
+    };
+    reader.readAsText(file); e.target.value='';
+  });
 
- document.getElementById('deleteGoalBtn').addEventListener('click', ()=>{
- if(!editingGoalId) return;
- if(confirm('Delete this goal? This cannot be undone.')){
- goals = goals.filter(g=>g.id !== editingGoalId);
- saveGoals();
- renderAll();
- closeEditModal();
- }
- });
+  // PRINT
+  function buildPrintView(){
+    const list=filteredGoals();
+    const dateStr=new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
+    const goalsHtml=list.map(g=>{
+      const progress=milestoneProgress(g);
+      const msHtml=(g.milestones||[]).length
+        ? (g.milestones||[]).map(m=>`<div class="pm-row ${m.done?'done':''}">${m.done?'☑':'☐'} ${esc(m.text)}${m.dueDate?' — '+fmtDate(m.dueDate):''}</div>`).join('')
+        : '<div class="pm-row" style="color:#888;">No milestones added.</div>';
+      return `<div class="print-goal">
+        <h3>${esc(g.title||'Untitled Goal')}</h3>
+        <div class="badge-row" style="margin-bottom:8px;">
+          <span class="badge badge-${g.type}">${typeLabel(g.type)}</span>
+          <span class="badge badge-status ${g.status}">${statusLabel(g.status)}</span>
+          ${g.owner?`<span class="badge">${esc(g.owner)}</span>`:''}
+          <span class="badge">${progress}% complete — Target: ${fmtDate(g.targetDate)}</span>
+        </div>
+        <div class="print-smart-item"><h4>Specific</h4><p>${esc(g.specific)||'—'}</p></div>
+        <div class="print-smart-item"><h4>Measurable</h4><p>${esc(g.measurable)||'—'}</p></div>
+        <div class="print-smart-item"><h4>Achievable</h4><p>${esc(g.achievable)||'—'}</p></div>
+        <div class="print-smart-item"><h4>Relevant</h4><p>${esc(g.relevant)||'—'}</p></div>
+        ${g.notes?`<div class="print-smart-item"><h4>Notes</h4><p>${esc(g.notes)}</p></div>`:''}
+        <div class="print-milestones"><h4 style="font-size:11px;color:#c94a1f;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:8px;margin-bottom:4px;">Milestones</h4>${msHtml}</div>
+      </div>`;
+    }).join('');
+    document.getElementById('printView').innerHTML = `
+      <div class="print-header">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;">VINCERE COACHING — SMART Goal Tracker</div>
+        <div style="font-size:12px;color:#888;">${dateStr}</div>
+      </div>
+      ${goalsHtml||'<p>No goals to display.</p>'}`;
+  }
+  document.getElementById('printAllBtn').addEventListener('click',()=>{
+    buildPrintView();
+    document.body.classList.add('print-mode');
+    window.print();
+  });
+  window.addEventListener('afterprint',()=>{ document.body.classList.remove('print-mode'); });
 
- // ---------- DETAIL MODAL ----------
- function openDetail(goalId){
- const g = goals.find(x=>x.id===goalId);
- if(!g) return;
- const progress = milestoneProgress(g);
- const fillClass = g.status === 'complete' ? 'complete-fill' : (g.status === 'at-risk' ? 'at-risk-fill' : '');
-
- const milestonesHtml = (g.milestones||[]).length ? (g.milestones||[]).map(m=>`
- <div class="detail-milestone ${m.done?'done':''}">
- <div class="dot"></div>
- <span class="mtext">${escapeHtml(m.text)}</span>
- <span class="mdate">${m.dueDate ? fmtDate(m.dueDate) : ''}</span>
- </div>
- `).join('') : `<div style="font-size:13px;color:var(--grey-600);">No milestones added.</div>`;
-
- document.getElementById('detailModalContent').innerHTML = `
- <div class="modal-header">
- <h2>${escapeHtml(g.title)}</h2>
- <button class="modal-close no-print" id="detailModalClose">&times;</button>
- </div>
- <div class="detail-body">
- <div class="badge-row" style="margin-bottom:14px;">
- <span class="badge badge-${g.type}">${typeLabel(g.type)} Goal</span>
- <span class="badge badge-status ${g.status}">${statusLabel(g.status)}</span>
- ${g.owner ? `<span class="badge" style="background:var(--grey-bg);color:var(--black);">${escapeHtml(g.owner)}</span>` : ''}
- </div>
- <div class="progress-track"><div class="progress-fill ${fillClass}" style="width:${progress}%;"></div></div>
- <div class="goal-meta-row" style="margin-top:6px;">
- <span>${progress}% complete</span>
- <span>Target: ${fmtDate(g.targetDate)}</span>
- </div>
-
- <div class="detail-smart-grid">
- <div class="detail-smart-item"><h4>Specific</h4><p>${escapeHtml(g.specific) || '—'}</p></div>
- <div class="detail-smart-item"><h4>Measurable</h4><p>${escapeHtml(g.measurable) || '—'}</p></div>
- <div class="detail-smart-item"><h4>Achievable</h4><p>${escapeHtml(g.achievable) || '—'}</p></div>
- <div class="detail-smart-item"><h4>Relevant</h4><p>${escapeHtml(g.relevant) || '—'}</p></div>
- <div class="detail-smart-item"><h4>Time-bound</h4><p>${fmtDate(g.targetDate)}</p></div>
- </div>
-
- <h3 style="font-size:16px;margin-bottom:8px;">Milestones</h3>
- <div style="margin-bottom:16px;">${milestonesHtml}</div>
-
- ${g.notes ? `<h3 style="font-size:16px;margin-bottom:8px;">Notes</h3><p style="font-family:'Barlow',sans-serif;text-transform:none;font-size:14px;line-height:1.5;">${escapeHtml(g.notes)}</p>` : ''}
- </div>
- <div class="modal-footer no-print">
- <button class="btn btn-outline" id="detailPdfBtn">Export PDF</button>
- <div style="display:flex;gap:10px;margin-left:auto;">
- <button class="btn btn-outline" id="detailCloseBtn">Close</button>
- <button class="btn btn-primary" id="detailEditBtn">Edit Goal</button>
- </div>
- </div>
- `;
- detailOverlay.classList.add('open');
- document.getElementById('detailModalClose').addEventListener('click', closeDetail);
- document.getElementById('detailCloseBtn').addEventListener('click', closeDetail);
- document.getElementById('detailEditBtn').addEventListener('click', ()=>{ closeDetail(); openEditModal(g.id); });
- document.getElementById('detailPdfBtn').addEventListener('click', ()=> window.print());
- }
- function closeDetail(){ detailOverlay.classList.remove('open'); }
- detailOverlay.addEventListener('click', e=>{ if(e.target === detailOverlay) closeDetail(); });
-
- // ---------- FILTERS ----------
- document.getElementById('typeFilterGroup').addEventListener('click', e=>{
- if(!e.target.dataset.filterType) return;
- activeTypeFilter = e.target.dataset.filterType;
- document.querySelectorAll('#typeFilterGroup .filter-btn').forEach(b=>b.classList.toggle('active', b===e.target));
- renderGrid();
- });
- document.getElementById('statusFilterGroup').addEventListener('click', e=>{
- if(!e.target.dataset.filterStatus) return;
- activeStatusFilter = e.target.dataset.filterStatus;
- document.querySelectorAll('#statusFilterGroup .filter-btn').forEach(b=>b.classList.toggle('active', b===e.target));
- renderGrid();
- });
- document.getElementById('searchInput').addEventListener('input', e=>{
- searchTerm = e.target.value;
- renderGrid();
- });
-
- // ---------- IMPORT / EXPORT ----------
- document.getElementById('exportJsonBtn').addEventListener('click', ()=>{
- const blob = new Blob([JSON.stringify(goals, null, 2)], {type:'application/json'});
- const url = URL.createObjectURL(blob);
- const a = document.createElement('a');
- a.href = url;
- a.download = 'vincere_smart_goals_' + new Date().toISOString().slice(0,10) + '.json';
- a.click();
- URL.revokeObjectURL(url);
- });
-
- document.getElementById('importJsonInput').addEventListener('change', e=>{
- const file = e.target.files[0];
- if(!file) return;
- const reader = new FileReader();
- reader.onload = evt=>{
- try{
- const imported = JSON.parse(evt.target.result);
- if(Array.isArray(imported)){
- goals = imported;
- saveGoals();
- renderAll();
- alert('Goals imported successfully.');
- } else {
- alert('Invalid file format.');
- }
- }catch(err){
- alert('Could not read file: ' + err.message);
- }
- };
- reader.readAsText(file);
- e.target.value = '';
- });
-
- // ---------- BULK PRINT / PDF EXPORT ----------
- function buildPrintView(){
- const list = filteredGoals();
- const dateStr = new Date().toLocaleDateString('en-AU', {day:'numeric',month:'long',year:'numeric'});
- const filterNote = (activeTypeFilter !== 'all' || activeStatusFilter !== 'all')
- ? `<div class="print-date">Filtered: ${activeTypeFilter !== 'all' ? typeLabel(activeTypeFilter) : 'All Types'} · ${activeStatusFilter !== 'all' ? statusLabel(activeStatusFilter) : 'All Status'}</div>`
- : '';
-
- const goalsHtml = list.map(g=>{
- const progress = milestoneProgress(g);
- const msHtml = (g.milestones||[]).length ? (g.milestones||[]).map(m=>`
- <div class="pm-row ${m.done?'done':''}">${m.done ? '☑' : '☐'} ${escapeHtml(m.text)}${m.dueDate ? ' — ' + fmtDate(m.dueDate) : ''}</div>
- `).join('') : `<div class="pm-row" style="color:var(--grey-600);">No milestones added.</div>`;
-
- return `
- <div class="print-goal">
- <h3>${escapeHtml(g.title || 'Untitled Goal')}</h3>
- <div class="badge-row">
- <span class="badge badge-${g.type}">${typeLabel(g.type)}</span>
- <span class="badge badge-status ${g.status}">${statusLabel(g.status)}</span>
- ${g.owner ? `<span class="badge" style="background:var(--grey-bg);color:var(--black);">${escapeHtml(g.owner)}</span>` : ''}
- <span class="badge" style="background:var(--grey-bg);color:var(--black);">${progress}% complete</span>
- <span class="badge" style="background:var(--grey-bg);color:var(--black);">Target: ${fmtDate(g.targetDate)}</span>
- </div>
- <div class="print-smart-item"><h4>Specific</h4><p>${escapeHtml(g.specific) || '—'}</p></div>
- <div class="print-smart-item"><h4>Measurable</h4><p>${escapeHtml(g.measurable) || '—'}</p></div>
- <div class="print-smart-item"><h4>Achievable</h4><p>${escapeHtml(g.achievable) || '—'}</p></div>
- <div class="print-smart-item"><h4>Relevant</h4><p>${escapeHtml(g.relevant) || '—'}</p></div>
- ${g.notes ? `<div class="print-smart-item"><h4>Notes</h4><p>${escapeHtml(g.notes)}</p></div>` : ''}
- <div class="print-milestones"><h4 style="font-size:12px;color:var(--orange-dark);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">Milestones</h4>${msHtml}</div>
- </div>`;
- }).join('');
-
- document.getElementById('printView').innerHTML = `
- <div class="print-header">
- <div class="brand-text">VINCERE <span>COACHING</span> — SMART Goal Tracker</div>
- <div>
- <div class="print-date">${dateStr}</div>
- ${filterNote}
- </div>
- </div>
- ${goalsHtml || '<p>No goals to display.</p>'}
- `;
- }
-
- document.getElementById('printAllBtn').addEventListener('click', ()=>{
- buildPrintView();
- document.body.classList.add('print-mode');
- window.print();
- });
- window.addEventListener('afterprint', ()=>{
- document.body.classList.remove('print-mode');
- });
-
- // ---------- INIT ----------
- loadGoals();
- renderAll();
+  // INIT
+  loadGoals();
+  renderAll();
 })();
 </script>
 </body>
