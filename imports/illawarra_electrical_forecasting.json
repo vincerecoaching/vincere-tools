@@ -1,0 +1,383 @@
+{
+  "name": "Illawarra Electrical & Security",
+  "overheads": {
+    "items": [
+      {
+        "name": "Accounting",
+        "yearly": 20136.82,
+        "quarterly": 5034.2,
+        "monthly": 1678.07,
+        "weekly": 387.25
+      },
+      {
+        "name": "Advertising",
+        "yearly": 206447.05,
+        "quarterly": 51611.76,
+        "monthly": 17203.92,
+        "weekly": 3970.14
+      },
+      {
+        "name": "Asset Replacement",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Bad Debt",
+        "yearly": 2600.91,
+        "quarterly": 650.23,
+        "monthly": 216.74,
+        "weekly": 50.02
+      },
+      {
+        "name": "Bank Fees",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Bonuses",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Cleaning/Rubbish Removal",
+        "yearly": 5419.44,
+        "quarterly": 1354.86,
+        "monthly": 451.62,
+        "weekly": 104.22
+      },
+      {
+        "name": "Donations",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Entertainment",
+        "yearly": 2570.2,
+        "quarterly": 642.55,
+        "monthly": 214.18,
+        "weekly": 49.43
+      },
+      {
+        "name": "Filing Fees",
+        "yearly": 621.8,
+        "quarterly": 155.45,
+        "monthly": 51.82,
+        "weekly": 11.96
+      },
+      {
+        "name": "Fines",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Freight & Courier",
+        "yearly": 96.09,
+        "quarterly": 24.02,
+        "monthly": 8.01,
+        "weekly": 1.85
+      },
+      {
+        "name": "Insurance - Business General",
+        "yearly": 9936.63,
+        "quarterly": 2484.16,
+        "monthly": 828.05,
+        "weekly": 191.09
+      },
+      {
+        "name": "Insurance - Public Liability",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Insurance - Work Cover",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Interest Expense",
+        "yearly": 13.94,
+        "quarterly": 3.48,
+        "monthly": 1.16,
+        "weekly": 0.27
+      },
+      {
+        "name": "Motor Vehicle - Fuel",
+        "yearly": 27563.51,
+        "quarterly": 6890.88,
+        "monthly": 2296.96,
+        "weekly": 530.07
+      },
+      {
+        "name": "Motor Vehicle - Insurance",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Motor Vehicle - Rego",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Motor Vehicle - Repairs",
+        "yearly": 26670.41,
+        "quarterly": 6667.6,
+        "monthly": 2222.53,
+        "weekly": 512.89
+      },
+      {
+        "name": "Motor Vehicle - Tolls/Parking",
+        "yearly": 299.78,
+        "quarterly": 74.94,
+        "monthly": 24.98,
+        "weekly": 5.76
+      },
+      {
+        "name": "PPE",
+        "yearly": 2398.98,
+        "quarterly": 599.75,
+        "monthly": 199.91,
+        "weekly": 46.13
+      },
+      {
+        "name": "Printing & Stationery",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Rent & Utilities",
+        "yearly": 40119.89,
+        "quarterly": 10029.97,
+        "monthly": 3343.32,
+        "weekly": 771.54
+      },
+      {
+        "name": "Subscriptions & Memberships",
+        "yearly": 50518.33,
+        "quarterly": 12629.58,
+        "monthly": 4209.86,
+        "weekly": 971.51
+      },
+      {
+        "name": "Telephone & Internet",
+        "yearly": 5353.64,
+        "quarterly": 1338.41,
+        "monthly": 446.14,
+        "weekly": 102.95
+      },
+      {
+        "name": "Tools",
+        "yearly": 6409.94,
+        "quarterly": 1602.48,
+        "monthly": 534.16,
+        "weekly": 123.27
+      },
+      {
+        "name": "Training Fees",
+        "yearly": 4459.02,
+        "quarterly": 1114.76,
+        "monthly": 371.59,
+        "weekly": 85.75
+      },
+      {
+        "name": "Travel",
+        "yearly": 6406.11,
+        "quarterly": 1601.53,
+        "monthly": 533.84,
+        "weekly": 123.19
+      },
+      {
+        "name": "Uniforms",
+        "yearly": 2665.16,
+        "quarterly": 666.29,
+        "monthly": 222.1,
+        "weekly": 51.25
+      },
+      {
+        "name": "Vehicle Finance",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Tax Debt (Personal)",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Tax Debt (Business)",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Asset Repayments",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Payroll Tax",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Long Service Leave",
+        "yearly": "",
+        "quarterly": "",
+        "monthly": "",
+        "weekly": ""
+      },
+      {
+        "name": "Legal Expenses",
+        "yearly": 3105.36,
+        "quarterly": 776.34,
+        "monthly": 258.78,
+        "weekly": 59.72,
+        "custom": true
+      },
+      {
+        "name": "Office Expenses",
+        "yearly": 12923.79,
+        "quarterly": 3230.95,
+        "monthly": 1076.98,
+        "weekly": 248.53,
+        "custom": true
+      },
+      {
+        "name": "General Expenses",
+        "yearly": 1471.93,
+        "quarterly": 367.98,
+        "monthly": 122.66,
+        "weekly": 28.31,
+        "custom": true
+      },
+      {
+        "name": "Bank Fees / Merchant / Stripe",
+        "yearly": 2376.65,
+        "quarterly": 594.16,
+        "monthly": 198.05,
+        "weekly": 45.7,
+        "custom": true
+      }
+    ],
+    "buffer": 10,
+    "vehRepay": 950,
+    "vehInsure": 200,
+    "vehRego": 60,
+    "vehFuel": 400,
+    "vehIns2": 60,
+    "vehUniform": 40,
+    "vehTolls": 0,
+    "vehTradies": 0
+  },
+  "labour": {
+    "superRate": 0.12,
+    "owners": [
+      {
+        "role": "Owner 1",
+        "name": "",
+        "salary": 0,
+        "billable": 0,
+        "nonBillable": 40
+      }
+    ],
+    "staff": [
+      {
+        "name": "",
+        "rate": 0,
+        "hrs": 0
+      },
+      {
+        "name": "",
+        "rate": 0,
+        "hrs": 0
+      },
+      {
+        "name": "",
+        "rate": 0,
+        "hrs": 0
+      }
+    ],
+    "apprentices": [
+      {
+        "name": "",
+        "rate": 0,
+        "hrs": 0,
+        "util": 0
+      },
+      {
+        "name": "",
+        "rate": 0,
+        "hrs": 0,
+        "util": 0
+      },
+      {
+        "name": "",
+        "rate": 0,
+        "hrs": 0,
+        "util": 0
+      }
+    ],
+    "admin": [
+      {
+        "name": "",
+        "rate": 0,
+        "hrs": 0
+      },
+      {
+        "name": "",
+        "rate": 0,
+        "hrs": 0
+      },
+      {
+        "name": "",
+        "rate": 0,
+        "hrs": 0
+      }
+    ]
+  },
+  "costOfOps": {
+    "year": 2026,
+    "totalDays": 365,
+    "weekends": 105,
+    "ph": 12,
+    "al": 20,
+    "sick": 10,
+    "rain": 4
+  },
+  "forecasting": {
+    "chargeRate": 0,
+    "efficiency": 0.85,
+    "matSpend": 399626.78,
+    "matMarkup": 0.35,
+    "subSpend": 29271.84,
+    "subMarkup": 0.75
+  }
+}
