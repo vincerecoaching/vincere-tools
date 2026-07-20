@@ -18,7 +18,6 @@
     font-family: 'Barlow', sans-serif;
     padding: 48px 24px 80px;
   }
-
   .vtm-header {
     text-align: center;
     margin-bottom: 48px;
@@ -48,7 +47,22 @@
     margin: 0 auto;
     line-height: 1.65;
   }
-
+  .vtm-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto 28px;
+  }
+  .vtm-divider-line { flex: 1; height: 1px; background: var(--border); }
+  .vtm-divider-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
   .vtm-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -56,7 +70,6 @@
     max-width: 1200px;
     margin: 0 auto;
   }
-
   .vtm-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -73,7 +86,6 @@
     border-color: rgba(232,92,43,0.4);
     box-shadow: 0 12px 40px rgba(0,0,0,0.4);
   }
-
   .vtm-thumb {
     width: 100%;
     aspect-ratio: 16/9;
@@ -88,20 +100,7 @@
     display: block;
     transition: transform 0.3s ease;
   }
-  .vtm-card:hover .vtm-thumb img {
-    transform: scale(1.03);
-  }
-  .vtm-thumb-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.2s;
-    display: flex;
-    align-items: flex-end;
-    padding: 16px;
-  }
-  .vtm-card:hover .vtm-thumb-overlay { opacity: 1; }
+  .vtm-card:hover .vtm-thumb img { transform: scale(1.03); }
   .vtm-play {
     width: 44px;
     height: 44px;
@@ -110,7 +109,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -118,17 +116,8 @@
     opacity: 0;
     transition: all 0.2s;
   }
-  .vtm-card:hover .vtm-play {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  .vtm-play svg {
-    width: 18px;
-    height: 18px;
-    fill: #fff;
-    margin-left: 3px;
-  }
-
+  .vtm-card:hover .vtm-play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  .vtm-play svg { width: 18px; height: 18px; fill: #fff; margin-left: 3px; }
   .vtm-info {
     padding: 18px 20px 20px;
     display: flex;
@@ -164,26 +153,10 @@
     transition: gap 0.15s;
   }
   .vtm-card:hover .vtm-cta { gap: 10px; }
-  .vtm-cta-arrow { font-size: 14px; }
-
-  .vtm-divider {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    max-width: 1200px;
-    margin: 0 auto 28px;
+  @media (max-width: 768px) {
+    .vtm-grid { grid-template-columns: repeat(2, 1fr); }
   }
-  .vtm-divider-line { flex: 1; height: 1px; background: var(--border); }
-  .vtm-divider-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
-  @media (max-width: 640px) {
+  @media (max-width: 480px) {
     .vtm-grid { grid-template-columns: 1fr; }
     .vtm-wrap { padding: 32px 16px 60px; }
   }
@@ -205,153 +178,123 @@
 
   <div class="vtm-grid">
 
-    <a class="vtm-card" href="https://vincerecoaching.com.au/trade-business-systems-stack">
+    <a class="vtm-card" href="https://links.vincerecoaching.com.au/widget/form/4lreMo6pgsuBbsRa0E2a">
       <div class="vtm-thumb">
         <img src="https://vincerecoaching.github.io/vincere-tools/thumbnails/system-stack.png" alt="Trade Business System Stack" loading="lazy">
-        <div class="vtm-thumb-overlay"></div>
-        <div class="vtm-play">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="vtm-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="vtm-info">
         <h3>Trade Business System Stack</h3>
         <p>30 systems across 6 pillars. Build your business operating system step by step.</p>
-        <span class="vtm-cta">Open Tool <span class="vtm-cta-arrow">→</span></span>
+        <span class="vtm-cta">Access Tool &rarr;</span>
       </div>
     </a>
 
-    <a class="vtm-card" href="https://vincerecoaching.com.au/back-costing-tool">
+    <a class="vtm-card" href="https://links.vincerecoaching.com.au/widget/form/4lreMo6pgsuBbsRa0E2a">
       <div class="vtm-thumb">
         <img src="https://vincerecoaching.github.io/vincere-tools/thumbnails/back-costing-tool.png" alt="Back Costing Tool" loading="lazy">
-        <div class="vtm-thumb-overlay"></div>
-        <div class="vtm-play">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="vtm-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="vtm-info">
         <h3>Back Costing Tool</h3>
         <p>Analyse job profitability and identify exactly where your margin is being lost.</p>
-        <span class="vtm-cta">Open Tool <span class="vtm-cta-arrow">→</span></span>
+        <span class="vtm-cta">Access Tool &rarr;</span>
       </div>
     </a>
 
-    <a class="vtm-card" href="https://vincerecoaching.com.au/price-increase-tool">
+    <a class="vtm-card" href="https://links.vincerecoaching.com.au/widget/form/4lreMo6pgsuBbsRa0E2a">
       <div class="vtm-thumb">
         <img src="https://vincerecoaching.github.io/vincere-tools/thumbnails/price-increase-tool.png" alt="Price Increase Impact Tool" loading="lazy">
-        <div class="vtm-thumb-overlay"></div>
-        <div class="vtm-play">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="vtm-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="vtm-info">
         <h3>Price Increase Impact Tool</h3>
         <p>Model the revenue and margin impact of a rate increase before you make the call.</p>
-        <span class="vtm-cta">Open Tool <span class="vtm-cta-arrow">→</span></span>
+        <span class="vtm-cta">Access Tool &rarr;</span>
       </div>
     </a>
 
-    <a class="vtm-card" href="https://vincerecoaching.com.au/hiring-cost-calculator">
+    <a class="vtm-card" href="https://links.vincerecoaching.com.au/widget/form/4lreMo6pgsuBbsRa0E2a">
       <div class="vtm-thumb">
         <img src="https://vincerecoaching.github.io/vincere-tools/thumbnails/hiring-cost-tool.png" alt="Hiring Cost Calculator" loading="lazy">
-        <div class="vtm-thumb-overlay"></div>
-        <div class="vtm-play">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="vtm-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="vtm-info">
         <h3>Hiring Cost Calculator</h3>
         <p>Calculate the true cost of bringing on a new employee including all on-costs.</p>
-        <span class="vtm-cta">Open Tool <span class="vtm-cta-arrow">→</span></span>
+        <span class="vtm-cta">Access Tool &rarr;</span>
       </div>
     </a>
 
-    <a class="vtm-card" href="https://vincerecoaching.com.au/tradesman-rankingtool">
+    <a class="vtm-card" href="https://links.vincerecoaching.com.au/widget/form/4lreMo6pgsuBbsRa0E2a">
       <div class="vtm-thumb">
         <img src="https://vincerecoaching.github.io/vincere-tools/thumbnails/tradesman-ranking-tool.png" alt="Tradesman Ranking System" loading="lazy">
-        <div class="vtm-thumb-overlay"></div>
-        <div class="vtm-play">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="vtm-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="vtm-info">
         <h3>Tradesman Ranking System</h3>
         <p>Build a structured framework to assess and develop your team objectively.</p>
-        <span class="vtm-cta">Open Tool <span class="vtm-cta-arrow">→</span></span>
+        <span class="vtm-cta">Access Tool &rarr;</span>
       </div>
     </a>
 
-    <a class="vtm-card" href="https://vincerecoaching.com.au/smooth-onboarding-builder">
+    <a class="vtm-card" href="https://links.vincerecoaching.com.au/widget/form/4lreMo6pgsuBbsRa0E2a">
       <div class="vtm-thumb">
         <img src="https://vincerecoaching.github.io/vincere-tools/thumbnails/smooth-onboarding-tool.png" alt="Smooth Onboarding Builder" loading="lazy">
-        <div class="vtm-thumb-overlay"></div>
-        <div class="vtm-play">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="vtm-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="vtm-info">
         <h3>Smooth Onboarding Builder</h3>
         <p>Structure your Day 1 checklist and four-week on-ramp to get new hires productive fast.</p>
-        <span class="vtm-cta">Open Tool <span class="vtm-cta-arrow">→</span></span>
+        <span class="vtm-cta">Access Tool &rarr;</span>
       </div>
     </a>
 
-    <a class="vtm-card" href="https://vincerecoaching.com.au/trade-forecasting-tool">
+    <a class="vtm-card" href="https://links.vincerecoaching.com.au/widget/form/4lreMo6pgsuBbsRa0E2a">
       <div class="vtm-thumb">
         <img src="https://vincerecoaching.github.io/vincere-tools/thumbnails/coo-tool.png" alt="Trade Business Forecasting Tool" loading="lazy">
-        <div class="vtm-thumb-overlay"></div>
-        <div class="vtm-play">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="vtm-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="vtm-info">
         <h3>Trade Business Forecasting Tool</h3>
         <p>Model overheads, labour costs, and charge-out rates to forecast revenue, profit, and margin.</p>
-        <span class="vtm-cta">Open Tool <span class="vtm-cta-arrow">→</span></span>
+        <span class="vtm-cta">Access Tool &rarr;</span>
       </div>
     </a>
 
-    <a class="vtm-card" href="https://vincerecoaching.com.au/efficiency-calculator">
+    <a class="vtm-card" href="https://links.vincerecoaching.com.au/widget/form/4lreMo6pgsuBbsRa0E2a">
       <div class="vtm-thumb">
         <img src="https://vincerecoaching.github.io/vincere-tools/thumbnails/efficiency-tool.png" alt="Efficiency Calculator" loading="lazy">
-        <div class="vtm-thumb-overlay"></div>
-        <div class="vtm-play">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="vtm-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="vtm-info">
         <h3>Efficiency Calculator</h3>
         <p>Track labour efficiency month by month. See billed hours vs capacity and your revenue gap.</p>
-        <span class="vtm-cta">Open Tool <span class="vtm-cta-arrow">→</span></span>
+        <span class="vtm-cta">Access Tool &rarr;</span>
       </div>
     </a>
 
-    <a class="vtm-card" href="https://vincerecoaching.com.au/weekly-revenue-tracker">
+    <a class="vtm-card" href="https://links.vincerecoaching.com.au/widget/form/4lreMo6pgsuBbsRa0E2a">
       <div class="vtm-thumb">
         <img src="https://vincerecoaching.github.io/vincere-tools/thumbnails/revenue-tracker-tool.png" alt="Weekly Revenue Tracker" loading="lazy">
-        <div class="vtm-thumb-overlay"></div>
-        <div class="vtm-play">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="vtm-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="vtm-info">
         <h3>Weekly Revenue Tracker</h3>
         <p>Set red, yellow, and green targets. Track revenue week by week with full month history.</p>
-        <span class="vtm-cta">Open Tool <span class="vtm-cta-arrow">→</span></span>
+        <span class="vtm-cta">Access Tool &rarr;</span>
       </div>
     </a>
 
-    <a class="vtm-card" href="PASTE_SMART_GOAL_TRACKER_URL_HERE">
+    <a class="vtm-card" href="https://links.vincerecoaching.com.au/widget/form/4lreMo6pgsuBbsRa0E2a">
       <div class="vtm-thumb">
         <img src="https://vincerecoaching.github.io/vincere-tools/thumbnails/smart-goal-tracker.png" alt="SMART Goal Tracker" loading="lazy">
-        <div class="vtm-thumb-overlay"></div>
-        <div class="vtm-play">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+        <div class="vtm-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="vtm-info">
         <h3>SMART Goal Tracker</h3>
         <p>Set, track, and manage SMART goals across business, team, and personal categories with milestones.</p>
-        <span class="vtm-cta">Open Tool <span class="vtm-cta-arrow">→</span></span>
+        <span class="vtm-cta">Access Tool &rarr;</span>
       </div>
     </a>
 
