@@ -7,9 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --orange: #E85C2B;
-    --orange-light: #FF7A4D;
-    --orange-dim: rgba(232,92,43,0.15);
+    --orange: #F18321;
+    --orange-light: #F2963E;
+    --orange-dim: rgba(241,131,33,0.15);
     --black: #0A0A0A;
     --surface: #141414;
     --surface2: #1E1E1E;
@@ -278,7 +278,7 @@
     text-transform: uppercase;
     white-space: nowrap;
   }
-  .badge-business { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(232,92,43,0.3); }
+  .badge-business { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(241,131,33,0.3); }
   .badge-team { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(62,124,177,0.3); }
   .badge-personal { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(110,90,160,0.3); }
   .badge-status.on-track { background: var(--green-dim); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
@@ -599,12 +599,12 @@
 
 <!-- ACTIONS SECTION -->
 <div id="results-actions" style="max-width:1200px;margin:32px auto;padding:0 24px;display:flex;gap:16px;flex-wrap:wrap;">
-  <button id="pdf-btn" onclick="downloadPDF()" style="background:#1A1A1A;color:#fff;border:2px solid #E85C2B;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;padding:14px 32px;border-radius:4px;cursor:pointer;">Download PDF</button>
-  <button onclick="document.getElementById('kirk-form').style.display='block';this.style.display='none';" style="background:#1A1A1A;color:#fff;border:2px solid #E85C2B;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;padding:14px 32px;border-radius:4px;cursor:pointer;">Send Results to Kirk</button>
+  <button id="pdf-btn" onclick="downloadPDF()" style="background:#1A1A1A;color:#fff;border:2px solid #F18321;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;padding:14px 32px;border-radius:4px;cursor:pointer;">Download PDF</button>
+  <button onclick="document.getElementById('kirk-form').style.display='block';this.style.display='none';" style="background:#1A1A1A;color:#fff;border:2px solid #F18321;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;padding:14px 32px;border-radius:4px;cursor:pointer;">Send Results to Kirk</button>
 </div>
 
-<div id="kirk-form" style="display:none;max-width:600px;margin:0 auto 48px;padding:32px;background:#111111;border-radius:8px;border:1px solid rgba(232,92,43,0.3);">
-  <p style="color:#E85C2B;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">Send My Results to Kirk</p>
+<div id="kirk-form" style="display:none;max-width:600px;margin:0 auto 48px;padding:32px;background:#111111;border-radius:8px;border:1px solid rgba(241,131,33,0.3);">
+  <p style="color:#F18321;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">Send My Results to Kirk</p>
   <div style="margin-bottom:14px;">
     <label style="color:#777;font-size:0.8rem;display:block;margin-bottom:6px;">Your Name</label>
     <input type="text" id="rc-name" required style="width:100%;padding:10px 14px;background:#000;border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#fff;font-size:0.9rem;box-sizing:border-box;outline:none;">
@@ -618,7 +618,7 @@
     <input type="text" id="rc-trade" style="width:100%;padding:10px 14px;background:#000;border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:#fff;font-size:0.9rem;box-sizing:border-box;outline:none;">
   </div>
   <div id="rc-error" style="display:none;color:#ff5555;font-size:0.85rem;margin-bottom:10px;"></div>
-  <button onclick="sendResults()" id="rc-submit" style="width:100%;background:#E85C2B;color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;padding:14px;border:none;border-radius:4px;cursor:pointer;margin-top:8px;">Send Results</button>
+  <button onclick="sendResults()" id="rc-submit" style="width:100%;background:#F18321;color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;padding:14px;border:none;border-radius:4px;cursor:pointer;margin-top:8px;">Send Results</button>
 </div>
 
 <!-- ADD / EDIT MODAL -->
