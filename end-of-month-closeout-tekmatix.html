@@ -1,0 +1,461 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+#eom-app{
+ --vo:#f18321;
+ --vo-dark:#cf6c15;
+ --vb:#1a1a1a;
+ --vteam:#2E5C8A;
+ --tint-neutral:#F4F4F2;
+ --tint-orange:#FDF1E4;
+ --tint-blue:#EAF1F8;
+ --vy:#FFF3B0;
+ --grey-bg:#f4f4f2;
+ --border:#e2e2e0;
+ --border-strong:#c9c9c6;
+ --text-secondary:#666;
+ --text-muted:#999;
+ font-family:'Barlow',sans-serif;
+ background:var(--grey-bg);
+ color:var(--vb);
+ line-height:1.4;
+ padding-bottom:60px;
+}
+#eom-app *{box-sizing:border-box;margin:0;padding:0;}
+
+/* Header */
+#eom-app header{background:var(--vb);color:#fff;padding:24px 0 22px;border-bottom:4px solid var(--vo);}
+#eom-app .eom-wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+#eom-app .head-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+#eom-app .title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:32px;line-height:1.08;letter-spacing:.02em;text-transform:uppercase;margin:0 0 8px;}
+#eom-app .sub{font-size:12px;letter-spacing:.16em;color:var(--vo);text-transform:uppercase;font-weight:600;}
+#eom-app .logo-text{text-align:right;flex-shrink:0;line-height:1;}
+#eom-app .logo-text .lt-vincere{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;letter-spacing:.03em;color:#fff;}
+#eom-app .logo-text .lt-sub{display:block;font-family:'Barlow',sans-serif;font-weight:600;font-size:11px;letter-spacing:.12em;color:var(--vo);text-transform:uppercase;margin-top:4px;}
+
+/* Instruction banner */
+#eom-app .instruction-banner{background:var(--vo);color:#fff;font-size:13.5px;font-weight:600;line-height:1.5;padding:12px 0;}
+
+/* Control bar */
+#eom-app .eom-bar{background:var(--vb);color:#fff;padding:12px 0;position:sticky;top:0;z-index:49;}
+#eom-app .bar-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13px;}
+#eom-app .bar-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+#eom-app .bar-controls label{font-weight:500;}
+#eom-app .bar-controls input[type=month]{height:32px;border-radius:6px;border:none;padding:0 10px;font-size:13px;font-family:inherit;}
+#eom-app .biz-input{height:32px;border-radius:6px;border:none;padding:0 12px;font-size:13px;font-family:inherit;width:190px;background:#fff;color:var(--vb);}
+#eom-app .biz-input::placeholder{color:var(--text-muted);}
+#eom-app .eom-btn{background:var(--vo);color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.03em;text-transform:uppercase;transition:opacity .15s;}
+#eom-app .eom-btn:hover{opacity:.82;}
+#eom-app .eom-btn-outline{background:transparent;border:1.5px solid #fff;}
+
+#eom-app .progress-wrap{background:#2b2b2b;height:6px;width:100%;position:sticky;top:58px;z-index:48;}
+#eom-app .progress-fill{background:var(--vo);height:6px;width:0%;transition:width .25s;}
+
+/* Jump nav */
+#eom-app .eom-tabs{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:64px;z-index:47;}
+#eom-app .tabs-inner{display:flex;gap:2px;overflow-x:auto;}
+#eom-app .eom-tab{padding:14px 18px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;background:none;border:none;cursor:pointer;color:var(--text-secondary);border-bottom:3px solid transparent;white-space:nowrap;font-family:'Barlow',sans-serif;}
+#eom-app .eom-tab.active{color:var(--vo);border-bottom-color:var(--vo);}
+#eom-app .eom-tab:hover:not(.active){color:var(--vb);}
+
+/* Body */
+#eom-app .eom-body{padding:28px 0 40px;}
+#eom-app .panel{display:block;scroll-margin-top:130px;margin-bottom:12px;}
+#eom-app .section-title{display:flex;align-items:center;margin-bottom:18px;}
+#eom-app .section-title .chip{display:flex;align-items:center;gap:8px;background:var(--accent,var(--vo));color:#fff;padding:9px 18px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
+#eom-app .section-title .chip .icon{font-size:15px;line-height:1;}
+#eom-app .section-title .rule{flex:1;height:2px;background:var(--accent,var(--vo));margin-left:14px;}
+#eom-app .divider{text-align:center;color:var(--accent,var(--vo));font-size:13px;letter-spacing:10px;padding:14px 0 26px;opacity:.55;}
+
+#eom-app .eom-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+#eom-app .eom-step{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent,var(--vo));border-radius:10px;overflow:hidden;}
+#eom-app .step-h{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--tint,var(--tint-neutral));}
+#eom-app .num{width:26px;height:26px;border-radius:50%;background:var(--accent,var(--vo));color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Barlow Condensed',sans-serif;}
+#eom-app .step-title{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;letter-spacing:.03em;text-transform:uppercase;flex:1;color:var(--vb);}
+#eom-app .step-count{font-size:11px;color:var(--text-secondary);font-weight:600;background:#fff;padding:3px 8px;border-radius:10px;}
+#eom-app .step-body{padding:10px 16px 14px;}
+#eom-app .eom-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:14px;line-height:1.45;cursor:pointer;}
+#eom-app .eom-item input{margin-top:3px;width:16px;height:16px;accent-color:var(--vo);cursor:pointer;flex-shrink:0;}
+#eom-app .eom-item.checked .item-text{text-decoration:line-through;color:var(--text-muted);}
+#eom-app .xero-badge{background:#13B5EA;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.03em;margin-left:6px;vertical-align:1px;}
+
+/* KPI */
+#eom-app .kpi-cat{display:flex;align-items:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.05em;color:var(--vb);margin:26px 0 10px;padding-bottom:7px;border-bottom:2px solid var(--accent,var(--vo));}
+#eom-app .kpi-cat .icon{font-size:16px;line-height:1;}
+#eom-app .kpi-cat:first-child{margin-top:0;}
+#eom-app .kpi-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent,var(--vo));border-radius:8px;overflow:hidden;}
+#eom-app .kpi-table th{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-secondary);text-align:center;padding:8px 6px;background:var(--grey-bg);font-weight:600;}
+#eom-app .kpi-table th:first-child{text-align:left;}
+#eom-app .kpi-table td{padding:6px;border-top:1px solid var(--border);}
+#eom-app .kpi-table td:first-child{font-size:13.5px;font-weight:500;padding-left:12px;}
+#eom-app .kpi-table input{width:100%;height:34px;border-radius:6px;border:1px solid var(--border-strong);background:var(--vy);color:var(--vb);text-align:center;font-size:13.5px;padding:0 6px;font-family:inherit;}
+#eom-app .kpi-table input:focus{outline:2px solid var(--vo);outline-offset:1px;}
+
+/* Sign off */
+#eom-app .signoff{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent,var(--vo));border-radius:10px;padding:22px;}
+#eom-app .eom-field{display:flex;flex-direction:column;gap:5px;}
+#eom-app .eom-field label{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-secondary);font-weight:600;}
+#eom-app .eom-field input,#eom-app .eom-field textarea{border:1px solid var(--border-strong);border-radius:6px;background:var(--vy);padding:9px 11px;font-size:14px;color:var(--vb);font-family:inherit;}
+#eom-app .eom-field textarea{resize:vertical;min-height:80px;}
+#eom-app .field-full{grid-column:1/-1;}
+#eom-app .closed-toggle{display:flex;align-items:center;gap:10px;background:#fdf1ec;border:1px solid var(--vo);border-radius:8px;padding:14px 16px;grid-column:1/-1;}
+#eom-app .closed-toggle input{width:19px;height:19px;accent-color:var(--vo);}
+#eom-app .closed-toggle span{font-weight:600;font-size:14px;}
+
+#eom-app footer{text-align:center;font-size:12px;color:var(--text-muted);padding:20px 0;}
+
+@media(max-width:720px){
+ #eom-app .eom-grid{grid-template-columns:1fr;}
+ #eom-app .signoff{grid-template-columns:1fr;}
+ #eom-app .eom-bar{position:static;}
+ #eom-app .progress-wrap,#eom-app .eom-tabs{position:static;}
+ #eom-app .title{font-size:24px;}
+ #eom-app .logo-text .lt-vincere{font-size:20px;}
+}
+
+@media print{
+ #eom-app header,#eom-app .instruction-banner,#eom-app .eom-bar,#eom-app .progress-wrap,#eom-app .eom-tabs,#eom-app footer{display:none!important;}
+ #eom-app{padding:0;background:#fff;}
+ #eom-app .panel{display:block!important;margin-bottom:22px;}
+ #eom-app .divider{display:none;}
+ #eom-app .eom-step,#eom-app .signoff{break-inside:avoid;border:1px solid #ccc;}
+ #eom-app .kpi-table{break-inside:avoid;}
+}
+</style>
+
+<div id="eom-app">
+
+<header>
+ <div class="eom-wrap head-inner">
+ <div>
+ <div class="title">End of Month<br>Close-Out</div>
+ <div class="sub">Financial &middot; Operations &middot; Team &middot; KPIs</div>
+ </div>
+ <div class="logo-text"><span class="lt-vincere">VINCERE</span><span class="lt-sub">Coaching &amp; Consulting</span></div>
+ </div>
+</header>
+
+<div class="instruction-banner">
+ <div class="eom-wrap">Complete every step in order. Do this in the first 5 working days of the new month. Do not move on until each step is done.</div>
+</div>
+
+<div class="eom-bar">
+ <div class="eom-wrap bar-inner">
+ <div class="bar-controls">
+ <input type="text" id="eom-bizName" class="biz-input" placeholder="Business Name">
+ <label for="eom-month">Month:</label>
+ <input type="month" id="eom-month">
+ <span id="eom-progress-text">0 of 56 steps complete</span>
+ </div>
+ <div class="bar-controls">
+ <button class="eom-btn eom-btn-outline" id="eom-reset-btn">Reset month</button>
+ <button class="eom-btn" id="eom-print-btn">Print / Export PDF</button>
+ </div>
+ </div>
+</div>
+<div class="progress-wrap"><div class="progress-fill" id="eom-progress-fill"></div></div>
+
+<div class="eom-tabs">
+ <div class="eom-wrap tabs-inner" id="eom-tabs"></div>
+</div>
+
+<div class="eom-wrap eom-body" id="eom-body"></div>
+
+<footer>Vincere Coaching &amp; Consulting | kirk@vincerecoaching.com.au | 0413 848 292 | vincerecoaching.com.au</footer>
+
+</div><!-- #eom-app -->
+
+<script>
+(function(){
+var DATA=[
+{id:'financial',label:'Financial',icon:'&#128176;',steps:[
+ {n:1,t:'Invoice Sweep',items:[
+ {t:"Confirm every completed job from last month is invoiced"},
+ {t:"Raise and send any outstanding invoices",x:1},
+ {t:"Finalise any jobs that were partially billed"},
+ {t:"Close all completed jobs in your system"}]},
+ {n:2,t:'Work In Progress (WIP)',items:[
+ {t:"List every active job currently in progress"},
+ {t:"Record total value and hours allocated per job"},
+ {t:"Calculate total unbilled WIP dollar value"},
+ {t:"Flag any WIP stalling. Why has it not converted?"}]},
+ {n:3,t:'Debtor Chase',items:[
+ {t:"Run Aged Receivables report",x:1},
+ {t:"7+ days overdue: call or email today, no exceptions"},
+ {t:"30+ days overdue: escalate and consider stopping work"},
+ {t:"Apply all payments received to correct invoices",x:1}]},
+ {n:4,t:'Bills, Expenses & Reconciliation',items:[
+ {t:"Enter all supplier bills into Xero",x:1},
+ {t:"Reconcile all business credit cards and upload receipts"},
+ {t:"Code every transaction to the correct account"},
+ {t:"Reconcile all bank accounts in Xero. Target: zero unmatched items before moving on",x:1}]}
+]},
+{id:'operations',label:'Operations',icon:'&#9881;&#65039;',steps:[
+ {n:5,t:'Jobs Review',items:[
+ {t:"List all jobs by status: complete / in progress / overdue"},
+ {t:"Check job profitability. Any budget blow-outs? Why?"},
+ {t:"Assign a close date to every overdue job today"},
+ {t:"Confirm next month's booked jobs are scheduled"}]},
+ {n:6,t:'Quoting Pipeline',items:[
+ {t:"Follow up all outstanding quotes 5+ days old"},
+ {t:"Record outcomes: won / lost / pending"},
+ {t:"Calculate quote conversion rate for the month"},
+ {t:"Not enough booked for next month? Act on it now"}]},
+ {n:7,t:'Equipment & Compliance',items:[
+ {t:"Check vehicles and equipment. Servicing due?"},
+ {t:"Rego, insurance, and warranty renewals coming up?"},
+ {t:"Tool register. Anything lost, broken, or needs replacing?"},
+ {t:"Log any maintenance completed this month"}]},
+ {n:8,t:'Materials & Stock',items:[
+ {t:"Check stock levels. Anything running low?"},
+ {t:"Place orders for materials needed next month now"},
+ {t:"Review supplier pricing. Any better deals available?"},
+ {t:"Clear out unused or excess stock"}]}
+]},
+{id:'team',label:'Team',icon:'&#128101;',steps:[
+ {n:9,t:'Performance Review',items:[
+ {t:"Review each team member's output this month"},
+ {t:"Any performance issues that need addressing?"},
+ {t:"Who stood out? Recognise them. Don't let it slide"},
+ {t:"Any client feedback about your team, good or bad?"}]},
+ {n:10,t:'Licences & Tickets',items:[
+ {t:"Check all trade licences. Anything expiring in 60 days?"},
+ {t:"White cards, working at heights, first aid. All current?"},
+ {t:"Any mandatory training or inductions due?"},
+ {t:"Book renewals now. Don't leave it to the last minute"}]},
+ {n:11,t:'Projected Leave Next Month',items:[
+ {t:"Who has approved leave next month? List them"},
+ {t:"Plan cover now, not the week before"},
+ {t:"Adjust capacity and job scheduling accordingly"},
+ {t:"Flag if leave creates a revenue or delivery risk"}]},
+ {n:12,t:'Team Communication',items:[
+ {t:"Hold a brief team meeting or toolbox talk"},
+ {t:"Share month summary: wins, focus, what's coming"},
+ {t:"Is the team clear on next month's priorities?"},
+ {t:"Any morale or team tension issues to address?"}]}
+]},
+{id:'prep',label:'Next Month Prep',icon:'&#127919;',steps:[
+ {n:13,t:'Cash Flow & Pipeline Forecast',items:[
+ {t:"Forecast cash in vs out for next month"},
+ {t:"What WIP is expected to convert and invoice?"},
+ {t:"Any large bills or commitments due? Plan for them now"},
+ {t:"Set revenue and profit targets for next month"}]},
+ {n:14,t:'Your One Focus for Next Month',items:[
+ {t:"What did this month's numbers tell you to fix?"},
+ {t:"What is the single biggest lever you can pull?"},
+ {t:"Write it down. One focus, not five"},
+ {t:"Bring your numbers and focus to your next coaching session"}]}
+]}
+];
+
+var DEF=['Target','Actual','Next mth'];
+var KPI=[
+{cat:'Financial',icon:'&#128176;',metrics:[
+ {l:'Revenue (month)',c:DEF},{l:'Gross profit %',c:DEF},{l:'Net profit %',c:DEF},
+ {l:'WIP value (unbilled)',c:['Last mth','This mth','Next mth']},
+ {l:'Outstanding debtors',c:DEF},{l:'Cash in bank (EOM)',c:DEF}]},
+{cat:'Operations',icon:'&#9881;&#65039;',metrics:[
+ {l:'Jobs completed',c:DEF},{l:'Average job value',c:DEF},{l:'Quotes sent',c:DEF},
+ {l:'Quote conversion %',c:DEF},{l:'New leads / enquiries',c:DEF},
+ {l:'Pipeline value (booked)',c:['Last mth','This mth','Next mth']}]},
+{cat:'Team',icon:'&#128101;',metrics:[
+ {l:'Billable hours (total)',c:DEF},{l:'Team utilisation %',c:DEF},{l:'Sick days (team total)',c:DEF},
+ {l:'Training completed',c:DEF},{l:'Projected leave days (next mth)',c:['Approved','Cover?','Next mth']},
+ {l:'HR issues outstanding',c:['Count','Resolved?','Next mth']}]},
+{cat:'Customer',icon:'&#11088;',metrics:[
+ {l:'Google reviews (new)',c:DEF},{l:'Google rating (current)',c:['Last mth','This mth','Next mth']},
+ {l:'Complaints / callbacks',c:DEF},{l:'Referrals received',c:DEF},
+ {l:'Repeat customers',c:DEF},{l:'Customer satisfaction score',c:DEF}]}
+];
+
+var ACCENTS={financial:'#1a1a1a',operations:'#F18321',team:'#2E5C8A',prep:'#F18321',kpi:'#1a1a1a',signoff:'#1a1a1a'};
+var TINTS={financial:'var(--tint-neutral)',operations:'var(--tint-orange)',team:'var(--tint-blue)',prep:'var(--tint-orange)',kpi:'var(--tint-neutral)',signoff:'var(--tint-neutral)'};
+var KPI_ACCENTS={'Financial':'#1a1a1a','Operations':'#F18321','Team':'#2E5C8A','Customer':'#F18321'};
+
+var TABS=DATA.map(function(s){return {id:s.id,label:s.label};});
+TABS.push({id:'kpi',label:'KPI Scorecard'});
+TABS.push({id:'signoff',label:'Sign-Off'});
+
+function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function monthKey(){var v=document.getElementById('eom-month').value;return v||'default';}
+function storeKey(){return 'vincere_eom_closeout_'+monthKey();}
+function loadState(){
+ try{var raw=localStorage.getItem(storeKey());return raw?JSON.parse(raw):{c:{},k:{},s:{}};}
+ catch(e){return {c:{},k:{},s:{}};}
+}
+function saveState(){try{localStorage.setItem(storeKey(),JSON.stringify(state));}catch(e){}}
+var state=loadState();
+
+function loadBizName(){try{return localStorage.getItem('vincere_eom_closeout_bizname')||'';}catch(e){return '';}}
+function saveBizName(v){try{localStorage.setItem('vincere_eom_closeout_bizname',v);}catch(e){}}
+
+function totalItems(){var n=0;DATA.forEach(function(sec){sec.steps.forEach(function(st){n+=st.items.length;});});return n;}
+function checkedCount(){var n=0;for(var k in state.c){if(state.c[k])n++;}return n;}
+function updateProgress(){
+ var total=totalItems(),done=checkedCount();
+ var pct=total?Math.round(done/total*100):0;
+ document.getElementById('eom-progress-fill').style.width=pct+'%';
+ document.getElementById('eom-progress-text').textContent=done+' of '+total+' steps complete ('+pct+'%)';
+}
+function stepCount(step){
+ var n=0;step.items.forEach(function(it,i){if(state.c['s'+step.n+'-'+i])n++;});
+ return n;
+}
+
+function renderChecklistPanel(sec){
+ var html='<div class="eom-grid">';
+ sec.steps.forEach(function(st){
+ html+='<div class="eom-step"><div class="step-h"><div class="num">'+st.n+'</div><div class="step-title">'+esc(st.t)+'</div><div class="step-count" data-stepcount="'+st.n+'">'+stepCount(st)+'/'+st.items.length+'</div></div><div class="step-body">';
+ st.items.forEach(function(it,i){
+ var id='s'+st.n+'-'+i;
+ var checked=!!state.c[id];
+ html+='<label class="eom-item'+(checked?' checked':'')+'" data-item="'+id+'"><input type="checkbox" data-item-cb="'+id+'" '+(checked?'checked':'')+'><span class="item-text">'+esc(it.t)+(it.x?'<span class="xero-badge">XERO</span>':'')+'</span></label>';
+ });
+ html+='</div></div>';
+ });
+ html+='</div>';
+ return html;
+}
+
+function renderKpiPanel(){
+ var html='';
+ KPI.forEach(function(cat,ci){
+ var accent=KPI_ACCENTS[cat.cat]||'#3C5A73';
+ html+='<div style="--accent:'+accent+'">';
+ html+='<div class="kpi-cat"><span class="icon">'+cat.icon+'</span>'+esc(cat.cat)+'</div>';
+ html+='<table class="kpi-table"><thead><tr><th></th>';
+ cat.metrics[0].c.forEach(function(cl){html+='<th>'+esc(cl)+'</th>';});
+ html+='</tr></thead><tbody>';
+ cat.metrics.forEach(function(m,mi){
+ html+='<tr><td>'+esc(m.l)+'</td>';
+ m.c.forEach(function(cl,coli){
+ var id='k'+ci+'-'+mi+'-'+coli;
+ var val=state.k[id]||'';
+ html+='<td><input type="text" inputmode="decimal" data-kpi="'+id+'" value="'+esc(val)+'"></td>';
+ });
+ html+='</tr>';
+ });
+ html+='</tbody></table></div>';
+ });
+ return html;
+}
+
+function renderSignoffPanel(){
+ var s=state.s||{};
+ function v(k){return esc(s[k]);}
+ var closed=!!s.closed;
+ return '<div class="signoff">'+
+ '<div class="closed-toggle"><input type="checkbox" id="eom-closed-cb" '+(closed?'checked':'')+'><span>Mark this month as closed</span></div>'+
+ '<div class="eom-field"><label>Date completed</label><input type="date" id="f-date" value="'+v('date')+'"></div>'+
+ '<div class="eom-field"><label>Revenue (month)</label><input type="text" id="f-revenue" value="'+v('revenue')+'"></div>'+
+ '<div class="eom-field"><label>Net profit %</label><input type="text" id="f-np" value="'+v('np')+'"></div>'+
+ '<div class="eom-field"><label>WIP value (unbilled)</label><input type="text" id="f-wip" value="'+v('wip')+'"></div>'+
+ '<div class="eom-field field-full"><label>Cash in bank (EOM)</label><input type="text" id="f-cash" value="'+v('cash')+'"></div>'+
+ '<div class="eom-field field-full"><label>One focus for next month</label><textarea id="f-focus">'+v('focus')+'</textarea></div>'+
+ '</div>';
+}
+
+function renderTabs(){
+ var html='';
+ TABS.forEach(function(tb){
+ html+='<button class="eom-tab" data-tab="'+tb.id+'">'+esc(tb.label)+'</button>';
+ });
+ document.getElementById('eom-tabs').innerHTML=html;
+}
+
+function sectionTitle(label,icon){
+ return '<div class="section-title"><div class="chip">'+(icon?'<span class="icon">'+icon+'</span>':'')+esc(label)+'</div><div class="rule"></div></div>';
+}
+
+function renderBody(){
+ var html='';
+ DATA.forEach(function(sec,i){
+ var accent=ACCENTS[sec.id]||'#F18321';
+ var tint=TINTS[sec.id]||'var(--tint-neutral)';
+ html+='<div class="panel" id="panel-'+sec.id+'" data-panel="'+sec.id+'" style="--accent:'+accent+';--tint:'+tint+'">'+sectionTitle(sec.label,sec.icon)+renderChecklistPanel(sec)+'</div>';
+ if(i<DATA.length-1)html+='<div class="divider" style="--accent:'+accent+'">&#9660; &#9660; &#9660;</div>';
+ });
+ html+='<div class="divider" style="--accent:'+ACCENTS.prep+'">&#9660; &#9660; &#9660;</div>';
+ html+='<div class="panel" id="panel-kpi" data-panel="kpi" style="--accent:'+ACCENTS.kpi+';--tint:'+TINTS.kpi+'">'+sectionTitle('KPI Scorecard','&#128202;')+renderKpiPanel()+'</div>';
+ html+='<div class="divider" style="--accent:'+ACCENTS.kpi+'">&#9660; &#9660; &#9660;</div>';
+ html+='<div class="panel" id="panel-signoff" data-panel="signoff" style="--accent:'+ACCENTS.signoff+';--tint:'+TINTS.signoff+'">'+sectionTitle('Sign-Off','&#9989;')+renderSignoffPanel()+'</div>';
+ document.getElementById('eom-body').innerHTML=html;
+}
+
+function wireEvents(){
+ document.querySelectorAll('#eom-app .eom-tab').forEach(function(btn){
+ btn.addEventListener('click',function(){
+ var target=document.getElementById('panel-'+btn.getAttribute('data-tab'));
+ if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+ });
+ });
+ if('IntersectionObserver' in window){
+ var spy=new IntersectionObserver(function(entries){
+ entries.forEach(function(entry){
+ if(entry.isIntersecting){
+ var id=entry.target.getAttribute('data-panel');
+ document.querySelectorAll('#eom-app .eom-tab').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===id);});
+ }
+ });
+ },{rootMargin:'-130px 0px -70% 0px',threshold:0});
+ document.querySelectorAll('#eom-app .panel').forEach(function(p){spy.observe(p);});
+ }
+ document.querySelectorAll('#eom-app [data-item-cb]').forEach(function(cb){
+ cb.addEventListener('change',function(){
+ var id=cb.getAttribute('data-item-cb');
+ state.c[id]=cb.checked;
+ saveState();
+ var label=document.querySelector('#eom-app .eom-item[data-item="'+id+'"]');
+ label.classList.toggle('checked',cb.checked);
+ var stepN=id.split('-')[0].substring(1);
+ var stepObj=null;
+ DATA.forEach(function(sec){sec.steps.forEach(function(st){if(String(st.n)===stepN)stepObj=st;});});
+ if(stepObj){document.querySelector('[data-stepcount="'+stepObj.n+'"]').textContent=stepCount(stepObj)+'/'+stepObj.items.length;}
+ updateProgress();
+ });
+ });
+ document.querySelectorAll('#eom-app [data-kpi]').forEach(function(inp){
+ inp.addEventListener('input',function(){
+ state.k[inp.getAttribute('data-kpi')]=inp.value;
+ saveState();
+ });
+ });
+ var closedCb=document.getElementById('eom-closed-cb');
+ if(closedCb)closedCb.addEventListener('change',function(){state.s=state.s||{};state.s.closed=closedCb.checked;saveState();});
+ [['f-date','date'],['f-revenue','revenue'],['f-np','np'],['f-wip','wip'],['f-cash','cash'],['f-focus','focus']].forEach(function(pair){
+ var el=document.getElementById(pair[0]);
+ if(el)el.addEventListener('input',function(){state.s=state.s||{};state.s[pair[1]]=el.value;saveState();});
+ });
+ document.getElementById('eom-reset-btn').addEventListener('click',function(){
+ if(confirm('Reset all checklist items, KPIs and sign-off for this month? This cannot be undone.')){
+ state={c:{},k:{},s:{}};
+ saveState();
+ rebuild();
+ }
+ });
+ document.getElementById('eom-print-btn').addEventListener('click',function(){window.print();});
+ document.getElementById('eom-month').addEventListener('change',function(){
+ state=loadState();
+ rebuild();
+ });
+}
+
+function rebuild(){
+ renderTabs();
+ renderBody();
+ wireEvents();
+ updateProgress();
+}
+
+var mi=document.getElementById('eom-month');
+var now=new Date();
+mi.value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+state=loadState();
+var bizInput=document.getElementById('eom-bizName');
+bizInput.value=loadBizName();
+bizInput.addEventListener('input',function(){saveBizName(bizInput.value);});
+rebuild();
+})();
+</script>
