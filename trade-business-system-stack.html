@@ -21,6 +21,14 @@
       .no-print { display: none !important; }
       .print-break { page-break-before: always; }
     }
+
+    @media(max-width:600px) {
+      body { font-size: 14px; }
+      .no-print { flex-direction: column !important; gap: 8px !important; }
+      .no-print button { width: 100% !important; }
+      .no-print input { width: 100% !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -235,7 +243,23 @@
       const totalCount = allSystems.length;
       const overallPct = Math.round(((activeCount + inProgressCount * 0.5) / totalCount) * 100);
 
-      const handlePrint = () => { setIsPrinting(true); setTimeout(() => { window.print(); setIsPrinting(false); }, 300); };
+      const handlePrint = () => {
+        var el = document.getElementById('root') || document.body;
+        var css = '';
+        document.querySelectorAll('style').forEach(function(s){ css += s.innerHTML; });
+        css = css.replace(/@media\s+print\s*\{(?:[^{}]|\{[^{}]*\})*\}/g, '');
+        var pw = window.open('', '_blank', 'width=1100,height=900,scrollbars=yes');
+        if (!pw) { window.print(); return; }
+        pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Trade Business System Stack – Vincere</title>' +
+          '<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">' +
+          '<style>' + css + '</style>' +
+          '<style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}.no-print{display:none!important;}@media print{@page{margin:10mm;size:A4;}}</style>' +
+          '</head><body>' + el.outerHTML +
+          '<script>setTimeout(function(){window.print();},600);<\/script>' +
+          '</body></html>');
+        pw.document.close();
+        pw.focus();
+      };
       const displayPillars = activePillar ? PILLARS.filter(p => p.id === activePillar) : PILLARS;
 
       return (
