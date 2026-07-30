@@ -556,6 +556,24 @@ header {
 .checklist-group:hover .delete-group-btn { color: #444; border-color: #333; }
 .delete-group-btn:hover { color: var(--orange) !important; border-color: var(--orange) !important; }
 
+@media(max-width:600px) {
+  .wrapper { padding: 20px 14px 40px; }
+  header { padding: 10px 16px; flex-wrap: wrap; gap: 8px; }
+  .page-title h1 { font-size: 1.6rem; }
+  .page-title p { font-size: 0.85rem; }
+  .week-grid { grid-template-columns: 1fr !important; }
+  .stats-row { grid-template-columns: 1fr !important; }
+  .cal-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  input[type="text"], input[type="number"], select, textarea {
+    font-size: 1rem !important;
+    padding: 10px 12px !important;
+    min-height: 44px;
+  }
+  .actions { flex-direction: column; gap: 10px; }
+  .actions .btn, .actions button { width: 100%; text-align: center; }
+  button.btn { width: 100%; }
+}
+
 @media print {
   .add-task-row, .add-group-row, .delete-btn, .delete-group-btn { display: none !important; }
 }
@@ -659,6 +677,23 @@ header {
 </div>
 
 <script>
+
+function buildPrintWindow() {
+  var el = document.querySelector('.wrapper') || document.querySelector('.app') || document.querySelector('main') || document.body;
+  var css = document.querySelector('style') ? document.querySelector('style').textContent : '';
+  css = css.replace(/@media\s+print\s*\{(?:[^{}]|\{[^{}]*\})*\}/g, '');
+  var pw = window.open('', '_blank', 'width=1100,height=900,scrollbars=yes');
+  pw.document.write('<!DOCTYPE html><html><head>' +
+    '<meta charset="UTF-8"><title>Smooth Onboarding Builder – Vincere Coaching</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">' +
+    '<style>' + css + '</style>' +
+    '<style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}.actions{display:none!important;}@media print{@page{margin:10mm;size:A4;}}</style>' +
+    '</head><body>' + el.outerHTML +
+    '<script>setTimeout(function(){window.print();},600);<\/script>' +
+    '</body></html>');
+  pw.document.close();
+  pw.focus();
+}
 const state = {
   checks: {},
   sessions: {},
@@ -957,7 +992,7 @@ function resetAll() {
 }
 
 function exportPDF() {
-  window.print();
+  buildPrintWindow();
 }
 
 buildChecklist();
