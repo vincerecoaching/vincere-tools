@@ -494,6 +494,28 @@ tbody td:first-child {
 }
 
 /* PRINT */
+/* TABLE SCROLL — mobile horizontal scroll */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+.table-scroll table { min-width: 460px; }
+
+@media(max-width:600px) {
+  .wrapper { padding: 20px 14px 40px; }
+  header { padding: 10px 16px; flex-wrap: wrap; gap: 8px; }
+  .page-title h1 { font-size: 1.6rem; }
+  .page-title p { font-size: 0.85rem; }
+  .main-grid { grid-template-columns: 1fr !important; }
+  .form-grid, .form-grid.three { grid-template-columns: 1fr !important; }
+  .card { overflow: visible; }
+  input[type="text"], input[type="number"], select, textarea {
+    font-size: 1rem !important;
+    padding: 10px 12px !important;
+    min-height: 44px;
+  }
+  .actions { flex-direction: column; gap: 10px; }
+  .actions .btn, .actions button { width: 100%; text-align: center; }
+  button.btn { width: 100%; }
+}
+
 @media print {
   header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .summary-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -831,7 +853,7 @@ tbody td:first-child {
         <input type="number" class="eff-input" id="eff5" value="100" min="0" max="100" oninput="calculate()"> M5
         <input type="number" class="eff-input" id="eff6" value="100" min="0" max="100" oninput="calculate()"> M6
       </div>
-      <div style="overflow-x:auto;">
+      <div class="table-scroll">
         <table>
           <thead>
             <tr>
@@ -851,7 +873,7 @@ tbody td:first-child {
   </div>
 
   <div class="actions">
-    <button class="btn btn-primary" onclick="window.print()">🖨 Print / Save as PDF</button>
+    <button class="btn btn-primary" onclick="buildPrintWindow()">🖨 Print / Save as PDF</button>
     <button class="btn btn-secondary" onclick="resetAll()">↺ Reset to Defaults</button>
   </div>
 
@@ -873,6 +895,23 @@ function setScenario(s) {
   event.target.classList.add('active');
   document.getElementById('customEffRow').style.display = s === 'custom' ? 'flex' : 'none';
   calculate();
+}
+
+function buildPrintWindow() {
+  var el = document.querySelector('.wrapper') || document.querySelector('.app') || document.querySelector('main') || document.body;
+  var css = document.querySelector('style') ? document.querySelector('style').textContent : '';
+  css = css.replace(/@media\s+print\s*\{(?:[^{}]|\{[^{}]*\})*\}/g, '');
+  var pw = window.open('', '_blank', 'width=1100,height=900,scrollbars=yes');
+  pw.document.write('<!DOCTYPE html><html><head>' +
+    '<meta charset="UTF-8"><title>Hiring Cost Calculator – Vincere Coaching</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">' +
+    '<style>' + css + '</style>' +
+    '<style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}.actions{display:none!important;}@media print{@page{margin:10mm;size:A4;}}</style>' +
+    '</head><body>' + el.outerHTML +
+    '<script>setTimeout(function(){window.print();},600);<\/script>' +
+    '</body></html>');
+  pw.document.close();
+  pw.focus();
 }
 
 function fmt(n) {
