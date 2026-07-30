@@ -335,6 +335,26 @@ tbody td:nth-child(2) { text-align: left; }
 }
 .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
 
+/* TABLE SCROLL WRAPPER — allows horizontal scroll on mobile */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+.table-scroll table { min-width: 460px; }
+
+@media(max-width:600px) {
+  .wrapper { padding: 20px 14px 40px; }
+  header { padding: 10px 16px; flex-wrap: wrap; gap: 8px; }
+  .page-title h1 { font-size: 1.6rem; }
+  .page-title p { font-size: 0.85rem; }
+  .card { overflow: visible; }
+  .tbl-input { font-size: 0.82rem; padding: 6px 8px; }
+  .tbl-input.num { width: 68px; }
+  .tbl-input.name { min-width: 110px; }
+  .tbl-input.wide { min-width: 140px; }
+  .s-value { font-size: 1.3rem; }
+  .actions { flex-direction: column; gap: 10px; }
+  .actions .btn { width: 100%; text-align: center; }
+  .field input[type="text"], .field input[type="number"] { font-size: 1rem; padding: 12px 14px; }
+}
+
 @media print {
   header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
@@ -381,7 +401,7 @@ tbody td:nth-child(2) { text-align: left; }
       <h3>Labour Costs</h3>
       <button class="add-btn" onclick="addLabourRow()">+ Add Row</button>
     </div>
-    <table>
+    <div class="table-scroll"><table>
       <thead>
         <tr>
           <th>Role</th>
@@ -394,7 +414,7 @@ tbody td:nth-child(2) { text-align: left; }
         </tr>
       </thead>
       <tbody id="labourBody"></tbody>
-    </table>
+    </table></div>
     <div class="card-total">
       <span>Labour Total</span>
       <span class="total-val" id="labourTotal">$0</span>
@@ -408,7 +428,7 @@ tbody td:nth-child(2) { text-align: left; }
       <h3>Material Costs</h3>
       <button class="add-btn" onclick="addMaterialRow()">+ Add Row</button>
     </div>
-    <table>
+    <div class="table-scroll"><table>
       <thead>
         <tr>
           <th>Description</th>
@@ -420,7 +440,7 @@ tbody td:nth-child(2) { text-align: left; }
         </tr>
       </thead>
       <tbody id="materialsBody"></tbody>
-    </table>
+    </table></div>
     <div class="card-total">
       <span>Materials Total</span>
       <span class="total-val" id="materialsTotal">$0</span>
@@ -434,7 +454,7 @@ tbody td:nth-child(2) { text-align: left; }
       <h3>Subcontractor Costs</h3>
       <button class="add-btn" onclick="addSubRow()">+ Add Row</button>
     </div>
-    <table>
+    <div class="table-scroll"><table>
       <thead>
         <tr>
           <th>Subcontractor</th>
@@ -445,7 +465,7 @@ tbody td:nth-child(2) { text-align: left; }
         </tr>
       </thead>
       <tbody id="subBody"></tbody>
-    </table>
+    </table></div>
     <div class="card-total">
       <span>Subcontractors Total</span>
       <span class="total-val" id="subTotal">$0</span>
@@ -552,7 +572,7 @@ tbody td:nth-child(2) { text-align: left; }
   </div>
 
   <div class="actions">
-    <button class="btn btn-primary" onclick="window.print()">🖨 Print / Save as PDF</button>
+    <button class="btn btn-primary" onclick="buildPrintWindow()">🖨 Print / Save as PDF</button>
     <button class="btn btn-secondary" onclick="if(confirm('Reset all data?')) location.reload()">↺ Reset</button>
   </div>
 
@@ -631,6 +651,28 @@ function addMaterialRow() {
   materialRows.push({ desc: '', po: '', cost: 0, qty: 1 });
   renderMaterials(); calculate();
 }
+function buildPrintWindow() {
+  var el = document.querySelector('.wrapper');
+  if (!el) return;
+  var jobNum = document.getElementById('jobNum') ? document.getElementById('jobNum').value : '';
+  var jobAddr = document.getElementById('jobAddress') ? document.getElementById('jobAddress').value : '';
+  var css = document.querySelector('style') ? document.querySelector('style').textContent : '';
+  // Strip print media rules (we add our own)
+  css = css.replace(/@media\s+print\s*\{(?:[^{}]|\{[^{}]*\})*\}/g, '');
+  var pw = window.open('', '_blank', 'width=1100,height=900,scrollbars=yes');
+  pw.document.write('<!DOCTYPE html><html><head>' +
+    '<meta charset="UTF-8"><title>Back Costing Tool' + (jobNum ? ' – Job #' + jobNum : '') + '</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">' +
+    '<style>' + css + '</style>' +
+    '<style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}body{background:#0D0D0D!important;}.actions{display:none!important;}@media print{@page{margin:10mm;size:A4;}}</style>' +
+    '</head><body>' +
+    el.outerHTML +
+    '<script>setTimeout(function(){window.print();},600);<\/script>' +
+    '</body></html>');
+  pw.document.close();
+  pw.focus();
+}
+
 function addSubRow() {
   subRows.push({ name: '', po: '', cost: 0 });
   renderSubs(); calculate();
