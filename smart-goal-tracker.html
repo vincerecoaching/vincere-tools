@@ -527,6 +527,24 @@
     .row-2 { grid-template-columns: 1fr; }
     .nav-tag { display: none; }
   }
+
+  @media(max-width:600px) {
+    nav { padding: 0 12px; flex-wrap: wrap; gap: 8px; }
+    .page { padding: 16px 12px 60px; }
+    .summary-strip { grid-template-columns: 1fr 1fr !important; }
+    .row-2 { grid-template-columns: 1fr !important; }
+    .goals-grid { grid-template-columns: 1fr !important; }
+    input[type="text"], input[type="number"], input[type="date"], select, textarea {
+      font-size: 1rem !important;
+      padding: 8px 10px !important;
+      min-height: 44px;
+    }
+    .toolbar { flex-wrap: wrap; gap: 8px; }
+    .btn-primary, .btn-outline { width: 100%; }
+    .modal-footer { flex-direction: column; gap: 8px; }
+    .modal-footer > div { width: 100%; justify-content: space-between; }
+  }
+
 </style>
 </head>
 <body>
@@ -909,7 +927,7 @@
         ${g.notes?`<h3 style="font-family:'Barlow Condensed',sans-serif;font-size:15px;letter-spacing:0.5px;margin-bottom:8px;">Notes</h3><p style="font-size:14px;line-height:1.5;color:var(--text-muted);">${esc(g.notes)}</p>`:''}
       </div>
       <div class="modal-footer">
-        <button class="btn-outline" onclick="window.print()">Export PDF</button>
+        <button class="btn-outline" onclick="downloadPDF()">Export PDF</button>
         <div style="display:flex;gap:10px;margin-left:auto;">
           <button class="btn-outline" id="dcb">Close</button>
           <button class="btn-primary" id="deb">Edit Goal</button>
