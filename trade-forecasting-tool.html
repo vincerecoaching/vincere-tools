@@ -295,6 +295,29 @@
     .tabs { padding: 0 16px; }
   }
 
+  /* TABLE SCROLL — mobile horizontal scroll */
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+  .table-scroll table { min-width: 460px; }
+
+  @media(max-width:600px) {
+    body { font-size: 14px; }
+    header { padding: 0 12px; flex-wrap: wrap; gap: 6px; }
+    .main { padding: 12px; }
+    .tabs { padding: 0 12px; }
+    .card { overflow: visible; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
+    .stat-grid { grid-template-columns: 1fr 1fr !important; }
+    input[type="text"], input[type="number"], select, textarea {
+      font-size: 1rem !important;
+      padding: 8px 10px !important;
+      min-height: 44px;
+    }
+    .field-input { font-size: 1rem !important; }
+    .actions-bar { flex-direction: column; gap: 10px; }
+    .actions-bar .btn { width: 100%; }
+  }
+
+
   /* Tooltip */
   .tooltip { position: relative; }
   .tooltip::after {
@@ -348,6 +371,7 @@
     <button class="btn btn-ghost" onclick="openNewClientModal()">+ New Client</button>
     <button class="btn btn-ghost" onclick="exportData()">Export JSON</button>
     <label class="btn btn-ghost" style="cursor:pointer">Import JSON<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    <button class="btn btn-primary" onclick="buildPrintWindow()">🖨 Print / PDF</button>
   </div>
 </header>
 
@@ -444,7 +468,7 @@
 
   <div class="card">
     <div class="card-title">Operating Overheads</div>
-    <table class="data-table">
+    <div class="table-scroll"><table class="data-table">
       <thead><tr>
         <th style="width:28%">Expense</th>
         <th>Yearly ($)</th>
@@ -455,7 +479,7 @@
         <th style="width:32px"></th>
       </tr></thead>
       <tbody id="overheads-tbody"></tbody>
-    </table>
+    </table></div>
     <div style="margin-top:12px">
       <button class="btn btn-ghost" onclick="addOverheadLine()" style="font-size:12px;padding:6px 14px">+ Add Line</button>
     </div>
@@ -522,46 +546,46 @@
 
   <div class="card">
     <div class="card-title">Owners / Directors</div>
-    <table class="data-table">
+    <div class="table-scroll"><table class="data-table">
       <thead><tr>
         <th>Role</th><th>Name</th><th>Annual Salary ($)</th><th>Super ($)</th><th>Billable Hrs/Wk</th><th>Non-Billable Hrs/Wk</th><th>Cost/Week</th>
       </tr></thead>
       <tbody id="owners-tbody"></tbody>
-    </table>
+    </table></div>
     <div style="margin-top:12px"><button class="btn btn-ghost" onclick="addLabourLine('owners')" style="font-size:12px;padding:6px 14px">+ Add Line</button></div>
   </div>
 
   <div class="card">
     <div class="card-title">Field Staff</div>
-    <table class="data-table">
+    <div class="table-scroll"><table class="data-table">
       <thead><tr>
         <th>Name</th><th>Hourly Rate ($)</th><th>Super ($)</th><th>Cost/Hr</th><th>Hrs/Wk</th><th>Cost/Wk</th><th>Annual Cost</th>
       </tr></thead>
       <tbody id="staff-tbody"></tbody>
-    </table>
+    </table></div>
     <div style="margin-top:12px"><button class="btn btn-ghost" onclick="addLabourLine('staff')" style="font-size:12px;padding:6px 14px">+ Add Line</button></div>
   </div>
 
   <div class="card">
     <div class="card-title">Apprentices</div>
     <div class="info-note">Utilisation: ratio of output vs full billable resource. Max 0.8 if attending TAFE.</div>
-    <table class="data-table">
+    <div class="table-scroll"><table class="data-table">
       <thead><tr>
         <th>Name</th><th>Hourly Rate ($)</th><th>Super ($)</th><th>Cost/Hr</th><th>Hrs/Wk</th><th>Cost/Wk</th><th>Annual Cost</th><th>Utilisation %</th>
       </tr></thead>
       <tbody id="apprentices-tbody"></tbody>
-    </table>
+    </table></div>
     <div style="margin-top:12px"><button class="btn btn-ghost" onclick="addLabourLine('apprentices')" style="font-size:12px;padding:6px 14px">+ Add Line</button></div>
   </div>
 
   <div class="card">
     <div class="card-title">Admin</div>
-    <table class="data-table">
+    <div class="table-scroll"><table class="data-table">
       <thead><tr>
         <th>Name</th><th>Hourly Rate ($)</th><th>Super ($)</th><th>Cost/Hr</th><th>Hrs/Wk</th><th>Cost/Wk</th><th>Annual Cost</th>
       </tr></thead>
       <tbody id="admin-tbody"></tbody>
-    </table>
+    </table></div>
     <div style="margin-top:12px"><button class="btn btn-ghost" onclick="addLabourLine('admin')" style="font-size:12px;padding:6px 14px">+ Add Line</button></div>
   </div>
 
@@ -745,6 +769,23 @@
 </div>
 
 <script>
+
+function buildPrintWindow() {
+  var el = document.querySelector('.main') || document.querySelector('.app') || document.querySelector('main') || document.body;
+  var css = document.querySelector('style') ? document.querySelector('style').textContent : '';
+  css = css.replace(/@media\s+print\s*\{(?:[^{}]|\{[^{}]*\})*\}/g, '');
+  var pw = window.open('', '_blank', 'width=1100,height=900,scrollbars=yes');
+  pw.document.write('<!DOCTYPE html><html><head>' +
+    '<meta charset="UTF-8"><title>Trade Business Forecasting Tool – Vincere Coaching</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">' +
+    '<style>' + css + '</style>' +
+    '<style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}.actions{display:none!important;}@media print{@page{margin:10mm;size:A4;}}</style>' +
+    '</head><body>' + el.outerHTML +
+    '<script>setTimeout(function(){window.print();},600);<\/script>' +
+    '</body></html>');
+  pw.document.close();
+  pw.focus();
+}
 // ===================== DATA STORE =====================
 const STORAGE_KEY = 'vincere_forecasting_tool_v1';
 let allClients = {};
