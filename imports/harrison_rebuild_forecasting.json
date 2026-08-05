@@ -1,0 +1,150 @@
+{
+  "name": "Harrison Rebuild Pty Ltd",
+  "overheads": {
+    "items": [
+      {
+        "name": "Accounting",
+        "yearly": 3118.18,
+        "quarterly": 779.54,
+        "monthly": 259.85,
+        "weekly": 59.96
+      },
+      {
+        "name": "Advertising",
+        "yearly": 596.14,
+        "quarterly": 149.03,
+        "monthly": 49.68,
+        "weekly": 11.46
+      },
+      {
+        "name": "Bank Fees",
+        "yearly": 12.07,
+        "quarterly": 3.02,
+        "monthly": 1.01,
+        "weekly": 0.23
+      },
+      {
+        "name": "Donations",
+        "yearly": 200.0,
+        "quarterly": 50.0,
+        "monthly": 16.67,
+        "weekly": 3.85
+      },
+      {
+        "name": "Filing Fees",
+        "yearly": 329.0,
+        "quarterly": 82.25,
+        "monthly": 27.42,
+        "weekly": 6.33
+      },
+      {
+        "name": "Printing & Stationery",
+        "yearly": 195.36,
+        "quarterly": 48.84,
+        "monthly": 16.28,
+        "weekly": 3.76
+      },
+      {
+        "name": "Subscriptions & Memberships",
+        "yearly": 1285.09,
+        "quarterly": 321.27,
+        "monthly": 107.09,
+        "weekly": 24.71
+      },
+      {
+        "name": "Telephone & Internet",
+        "yearly": 454.55,
+        "quarterly": 113.64,
+        "monthly": 37.88,
+        "weekly": 8.74
+      },
+      {
+        "name": "Insurance (Combined - Needs Splitting)",
+        "yearly": 10952.51,
+        "quarterly": 2738.13,
+        "monthly": 912.71,
+        "weekly": 210.63,
+        "custom": true
+      },
+      {
+        "name": "General Expenses",
+        "yearly": 8475.71,
+        "quarterly": 2118.93,
+        "monthly": 706.31,
+        "weekly": 162.99,
+        "custom": true
+      },
+      {
+        "name": "Motor Vehicle Expenses (Combined - Needs Splitting)",
+        "yearly": 12638.2,
+        "quarterly": 3159.55,
+        "monthly": 1053.18,
+        "weekly": 243.04,
+        "custom": true
+      },
+      {
+        "name": "Office Expenses",
+        "yearly": 696.37,
+        "quarterly": 174.09,
+        "monthly": 58.03,
+        "weekly": 13.39,
+        "custom": true
+      },
+      {
+        "name": "Repairs and Maintenance",
+        "yearly": 815.53,
+        "quarterly": 203.88,
+        "monthly": 67.96,
+        "weekly": 15.68,
+        "custom": true
+      }
+    ],
+    "buffer": 10,
+    "vehRepay": 950,
+    "vehInsure": 200,
+    "vehRego": 60,
+    "vehFuel": 400,
+    "vehIns2": 60,
+    "vehUniform": 40,
+    "vehTolls": 0,
+    "vehTradies": 0
+  },
+  "labour": {
+    "superRate": 0.12,
+    "owners": [
+      {
+        "role": "Owner",
+        "name": "",
+        "salary": 0,
+        "billable": 40,
+        "nonBillable": 20
+      }
+    ],
+    "staff": [
+      {
+        "name": "Staff (placeholder - needs breakdown)",
+        "rate": 0,
+        "hrs": 0
+      }
+    ],
+    "apprentices": [],
+    "admin": []
+  },
+  "costOfOps": {
+    "year": 2026,
+    "totalDays": 365,
+    "weekends": 105,
+    "ph": 12,
+    "al": 20,
+    "sick": 10,
+    "rain": 4
+  },
+  "forecasting": {
+    "chargeRate": 145,
+    "efficiency": 0.8,
+    "matSpend": 39543.25,
+    "matMarkup": 0.35,
+    "subSpend": 84364.31,
+    "subMarkup": 0.7
+  }
+}
